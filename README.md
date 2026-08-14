@@ -12,7 +12,7 @@ This ontology is under active development. Terms, identifiers, and structure may
 
 ## License
 
-This ontology is released under CC BY 4.0.
+This ontology is released under CC0.
 
 ## Feedback
 
