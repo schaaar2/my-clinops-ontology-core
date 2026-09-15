@@ -1,12 +1,12 @@
 [
   {
     "id": "my-ontology",
-    "title": "My Ontology",
+    "title": "ClinOps Core",
     "file": "ontologies/clinops-core.ttl"
   },
   {
     "id": "another-ontology",
-    "title": "Another Ontology",
+    "title": "ClinOps Milestones",
     "file": "ontologies/clinops-milestones.ttl"
   }
 ]
