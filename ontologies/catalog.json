@@ -1,0 +1,12 @@
+[
+  {
+    "id": "my-ontology",
+    "title": "My Ontology",
+    "file": "ontologies/clinops-core.ttl"
+  },
+  {
+    "id": "another-ontology",
+    "title": "Another Ontology",
+    "file": "ontologies/clinops-milestones.ttl"
+  }
+]
