@@ -1,0 +1,41 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f8f9fb;
+  color: #222;
+}
+
+header {
+  background: #263238;
+  color: white;
+  padding: 1rem 2rem;
+}
+
+main {
+  padding: 2rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+section {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+input,
+select,
+button {
+  font-size: 1rem;
+  padding: 0.4rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+#classList {
+  max-height: 400px;
+  overflow-y: auto;
+}
