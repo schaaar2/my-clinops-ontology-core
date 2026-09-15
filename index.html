@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ontology Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Ontology Browser</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Ontologies</h2>
+      <select id="ontologySelect"></select>
+      <button id="loadOntology">Load</button>
+    </section>
+
+    <section>
+      <h2>Search</h2>
+      <input id="searchBox" type="text" placeholder="Search classes by label or IRI">
+    </section>
+
+    <section>
+      <h2>Classes</h2>
+      <ul id="classList"></ul>
+    </section>
+
+    <section>
+      <h2>Details</h2>
+      <div id="details"></div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/n3/browser/n3.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
