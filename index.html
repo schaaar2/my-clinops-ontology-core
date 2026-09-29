@@ -2,45 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ontology Browser</title>
+  <title>ClinOps Ontology Browser</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Ontology Browser</h1>
+    <h1>ClinOps Ontology Browser</h1>
+    <p class="subtitle">Browse classes, properties, individuals, and every triple in the ontology.</p>
   </header>
 
   <main>
-    <section>
-      <h2>Ontologies</h2>
-      <select id="ontologySelect"></select>
-      <button id="loadOntology">Load</button>
-    </section>
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>Ontology</h2>
+        <select id="ontologySelect"></select>
+        <button id="loadOntology">Load</button>
+        <p id="status" class="status"></p>
+      </section>
 
-    <section>
-      <h2>Search</h2>
-      <input id="searchBox" type="text" placeholder="Search by label, IRI, definition, or synonym">
-      <div class="filters">
-        <label><input type="checkbox" id="filter-classes" checked> Classes</label>
-        <label><input type="checkbox" id="filter-object-properties" checked> Object properties</label>
-        <label><input type="checkbox" id="filter-data-properties" checked> Data properties</label>
-        <label><input type="checkbox" id="filter-annotation-properties" checked> Annotation properties</label>
-        <label><input type="checkbox" id="filter-individuals" checked> Individuals</label>
-      </div>
-    </section>
+      <section class="panel">
+        <h2>Search</h2>
+        <input id="searchBox" type="text" placeholder="Search label, IRI, definition, synonym">
+      </section>
 
-    <section>
-      <h2>Entities</h2>
-      <ul id="classList"></ul>
-    </section>
+      <section class="panel filters">
+        <h2>Show</h2>
+        <label><input type="checkbox" data-kind="Class" checked> Classes</label>
+        <label><input type="checkbox" data-kind="Object property" checked> Object properties</label>
+        <label><input type="checkbox" data-kind="Data property" checked> Data properties</label>
+        <label><input type="checkbox" data-kind="Annotation property" checked> Annotation properties</label>
+        <label><input type="checkbox" data-kind="Individual" checked> Individuals</label>
+      </section>
 
-    <section>
+      <section class="panel">
+        <h2>Entities</h2>
+        <ul id="entityList" class="entity-list"></ul>
+      </section>
+    </aside>
+
+    <section class="details-pane">
       <h2>Details</h2>
       <div id="details">
-        <p class="muted">Select an entity to see all of its properties.</p>
+        <p class="muted">Select an entity on the left to see all of its properties.</p>
       </div>
     </section>
   </main>
+
+  <footer>
+    <p>Static ontology browser. Data is parsed in the browser using N3.js.</p>
+  </footer>
 
   <script src="https://unpkg.com/n3/browser/n3.min.js"></script>
   <script src="app.js"></script>
