@@ -7,6 +7,6 @@
   {
     "id": "another-ontology",
     "title": "ClinOps Milestones",
-    "file": "ontologies/clinops-milestones.ttl"
+    "file": "ontologies/USDM.owl"
   }
 ]
