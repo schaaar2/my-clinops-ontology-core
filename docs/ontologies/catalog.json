@@ -1,9 +1,16 @@
 {
-  "default": "./ontologies/clinops-core.ttl",
-  "ontologies": [
+ [
     {
-      "name": "ClinOps ontology (bundled)",
-      "path": "./ontologies/clinops-core.ttl"
-    }
+    "title": "ClinOps Core",
+    "file": "ontologies/clinops-core.ttl"
+  },
+  {
+    "title": "ClinOps Extensions",
+    "file": "ontologies/clinops-extensions.ttl"
+  },
+  {
+    "title": "Example Ontology",
+    "file": "ontologies/example.ttl"
+  }
   ]
 }
