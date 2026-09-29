@@ -826,15 +826,15 @@ function readRdfList(headBnodeId) {
 function wireUi() {
   $("#searchInput").addEventListener("input", () => renderEntityList());
 
-  for (const cb of document.querySelectorAll('input[type="checkbox"][data-kind]').forEach(cb => {
+  document.querySelectorAll('input[type="checkbox"][data-kind]').forEach((cb) => {
     cb.addEventListener("change", () => {
       const kind = cb.getAttribute("data-kind");
       if (!kind) return;
       if (cb.checked) state.activeFilters.add(kind);
       else state.activeFilters.delete(kind);
       renderEntityList();
-    })
-  }
+    });
+  });
 }
 
 async function bootstrap() {
