@@ -1,814 +1,855 @@
-'use strict';
-/* global N3 */
+"use strict";
+
 /**
- * Static Ontology Browser (single-file app.js)
- * Requirements:
- * - Only uses IDs: ontologySelect, loadOntology, status, searchBox, entityList, details
- * - Only uses selector: .filters input[type="checkbox"][data-kind]
- * - Fetches ontologies/catalog.json with [{title,file}]
- * - Parses Turtle in-browser with N3.Parser().parse(ttl)
- * - Indexes outgoing/incoming, blank node contents, types/kinds, labels/defs/comments,
- *   subclass/subproperty, domainOf/rangeOf, inverseOf, and renders details + all triples.
+ * Static Ontology Browser
+ * ----------------------
+ * - Runs entirely in the browser (GitHub Pages friendly)
+ * - Parses Turtle with N3.js (loaded via CDN in index.html)
+ * - Builds indexes for:
+ *     * classes, properties (object/datatype/annotation), individuals
+ *     * outgoing and incoming triples for every node
+ * - Renders:
+ *     * entity list with search + type filters
+ *     * details view with label/definition/comments
+ *     * ALL outgoing triples and ALL incoming triples
+ *
+ * Notes:
+ * - This is a lightweight browser, not a full OWL reasoner.
+ * - It shows asserted triples only (no inference).
  */
 
+/* global N3 */
+
 //////////////////////
-// IRIs
+// Vocabulary constants
 //////////////////////
-const RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
-const RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
-const OWL = 'http://www.w3.org/2002/07/owl#';
-const SKOS = 'http://www.w3.org/2004/02/skos/core#';
-const OBO = 'http://purl.obolibrary.org/obo/';
 
-const RDF_TYPE = RDF + 'type';
-const RDF_FIRST = RDF + 'first';
-const RDF_REST = RDF + 'rest';
-const RDF_NIL = RDF + 'nil';
+const RDF_TYPE                = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+const RDF_PROPERTY            = "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property";
+const RDF_FIRST               = "http://www.w3.org/1999/02/22-rdf-syntax-ns#first";
+const RDF_REST                = "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest";
+const RDF_NIL                 = "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil";
 
-const RDFS_LABEL = RDFS + 'label';
-const RDFS_COMMENT = RDFS + 'comment';
-const RDFS_SUBCLASS_OF = RDFS + 'subClassOf';
-const RDFS_SUBPROPERTY_OF = RDFS + 'subPropertyOf';
-const RDFS_DOMAIN = RDFS + 'domain';
-const RDFS_RANGE = RDFS + 'range';
+const RDFS_CLASS              = "http://www.w3.org/2000/01/rdf-schema#Class";
+const RDFS_LABEL              = "http://www.w3.org/2000/01/rdf-schema#label";
+const RDFS_COMMENT            = "http://www.w3.org/2000/01/rdf-schema#comment";
+const RDFS_SUBCLASS_OF        = "http://www.w3.org/2000/01/rdf-schema#subClassOf";
+const RDFS_SUBPROPERTY_OF     = "http://www.w3.org/2000/01/rdf-schema#subPropertyOf";
+const RDFS_DOMAIN             = "http://www.w3.org/2000/01/rdf-schema#domain";
+const RDFS_RANGE              = "http://www.w3.org/2000/01/rdf-schema#range";
 
-const OWL_CLASS = OWL + 'Class';
-const OWL_OBJECT_PROPERTY = OWL + 'ObjectProperty';
-const OWL_DATATYPE_PROPERTY = OWL + 'DatatypeProperty';
-const OWL_ANNOTATION_PROPERTY = OWL + 'AnnotationProperty';
-const OWL_NAMED_INDIVIDUAL = OWL + 'NamedIndividual';
+const OWL_CLASS               = "http://www.w3.org/2002/07/owl#Class";
+const OWL_NAMED_INDIVIDUAL    = "http://www.w3.org/2002/07/owl#NamedIndividual";
+const OWL_OBJECT_PROPERTY     = "http://www.w3.org/2002/07/owl#ObjectProperty";
+const OWL_DATATYPE_PROPERTY   = "http://www.w3.org/2002/07/owl#DatatypeProperty";
+const OWL_ANNOTATION_PROPERTY = "http://www.w3.org/2002/07/owl#AnnotationProperty";
+const OWL_ONTOLOGY            = "http://www.w3.org/2002/07/owl#Ontology";
 
-const OWL_RESTRICTION = OWL + 'Restriction';
-const OWL_ON_PROPERTY = OWL + 'onProperty';
-const OWL_SOME_VALUES_FROM = OWL + 'someValuesFrom';
-const OWL_ALL_VALUES_FROM = OWL + 'allValuesFrom';
-const OWL_HAS_VALUE = OWL + 'hasValue';
-const OWL_MIN_CARDINALITY = OWL + 'minCardinality';
-const OWL_MAX_CARDINALITY = OWL + 'maxCardinality';
-const OWL_CARDINALITY = OWL + 'cardinality';
-const OWL_INVERSE_OF = OWL + 'inverseOf';
-const OWL_EQUIVALENT_CLASS = OWL + 'equivalentClass';
-const OWL_INTERSECTION_OF = OWL + 'intersectionOf';
-const OWL_UNION_OF = OWL + 'unionOf';
-const OWL_COMPLEMENT_OF = OWL + 'complementOf';
+const OWL_INVERSE_OF          = "http://www.w3.org/2002/07/owl#inverseOf";
+const OWL_EQUIVALENT_CLASS    = "http://www.w3.org/2002/07/owl#equivalentClass";
 
-const IAO_DEF = OBO + 'IAO_0000115';
-const SKOS_DEF = SKOS + 'definition';
+const OWL_ON_PROPERTY         = "http://www.w3.org/2002/07/owl#onProperty";
+const OWL_SOME_VALUES_FROM    = "http://www.w3.org/2002/07/owl#someValuesFrom";
+const OWL_ALL_VALUES_FROM     = "http://www.w3.org/2002/07/owl#allValuesFrom";
+const OWL_HAS_VALUE           = "http://www.w3.org/2002/07/owl#hasValue";
+const OWL_MIN_CARDINALITY     = "http://www.w3.org/2002/07/owl#minCardinality";
+const OWL_MAX_CARDINALITY     = "http://www.w3.org/2002/07/owl#maxCardinality";
+const OWL_CARDINALITY         = "http://www.w3.org/2002/07/owl#cardinality";
+
+const OWL_INTERSECTION_OF     = "http://www.w3.org/2002/07/owl#intersectionOf";
+const OWL_UNION_OF            = "http://www.w3.org/2002/07/owl#unionOf";
+const OWL_COMPLEMENT_OF       = "http://www.w3.org/2002/07/owl#complementOf";
+
+const IAO_DEFINITION          = "http://purl.obolibrary.org/obo/IAO_0000115";
+const SKOS_DEFINITION         = "http://www.w3.org/2004/02/skos/core#definition";
+
+// Used only to show nicer details; all triples are still shown separately.
+const HANDLED_PREDICATES = new Set([
+  RDF_TYPE,
+  RDFS_LABEL,
+  RDFS_COMMENT,
+  IAO_DEFINITION,
+  SKOS_DEFINITION,
+  RDFS_SUBCLASS_OF,
+  RDFS_SUBPROPERTY_OF,
+  RDFS_DOMAIN,
+  RDFS_RANGE,
+  OWL_INVERSE_OF,
+  OWL_EQUIVALENT_CLASS,
+]);
 
 //////////////////////
 // State
 //////////////////////
-const S = {
+
+const state = {
+  // raw quads (N3 quads)
+  store: [],
+
+  // prefix maps for CURIE display (from parsed prefixes)
   prefixes: {},
-  // quads
-  quads: [],
-  // indexes
-  out: new Map(),        // iri -> [quad]
-  inc: new Map(),        // iri -> [quad] (object is iri)
-  bnodes: new Map(),     // bnodeId -> [quad] where subject is bnode
-  // annotations
-  label: new Map(),      // iri -> string
-  defn: new Map(),       // iri -> string
-  comment: new Map(),    // iri -> string
-  // relations
-  parents: new Map(),    // child -> Set(parent)
-  children: new Map(),   // parent -> Set(child)
-  pParents: new Map(),   // childProp -> Set(parentProp)
-  pChildren: new Map(),  // parentProp -> Set(childProp)
-  domain: new Map(),     // prop -> Set(domainClass)
-  range: new Map(),      // prop -> Set(rangeClass)
-  domainOf: new Map(),   // class -> Set(prop)
-  rangeOf: new Map(),    // class -> Set(prop)
-  inverseOf: new Map(),  // prop -> Set(inverseProp)
-  // types/kinds
-  types: new Map(),      // iri -> Set(typeIri)
-  kind: new Map(),       // iri -> kind string
-  // entity list
-  entities: [],          // [{iri, kind, label, defKey}]
+
+  // label / definition / comment maps
+  labels: new Map(),        // iri -> string
+  definitions: new Map(),   // iri -> string
+  comments: new Map(),      // iri -> string (first)
+
+  // all entities known (subject/object IRIs and selected bnodes)
+  entities: [],             // array of { iri, kind, label, sortKey }
+
+  // kinds and type info
+  kinds: new Map(),         // iri -> kind string
+
+  // outgoing and incoming indexes
+  outgoing: new Map(),      // iri -> Array<quad>
+  incoming: new Map(),      // iri -> Array<quad>
+
+  // bnode description index (bnid -> Array<quad>) where bnode is subject
+  blankNodes: new Map(),
+
+  // relationship indexes for convenience
+  parents: new Map(),       // child -> Set(parent)
+  children: new Map(),      // parent -> Set(child)
+  subPropParents: new Map(),// childProp -> Set(parentProp)
+  subPropChildren: new Map(),// parentProp -> Set(childProp)
+  domainOf: new Map(),      // class -> Set(property)
+  rangeOf: new Map(),       // class -> Set(property)
+
   // UI
-  activeKinds: new Set(['Class','Object property','Data property','Annotation property','Individual']),
-  selected: null,
+  activeFilters: new Set(["Class", "Object property", "Data property", "Annotation property", "Individual"]),
+  activeOntology: null,
+  activeEntity: null,
 };
 
 //////////////////////
-// DOM helpers (no innerHTML with user data)
+// DOM helpers
 //////////////////////
-const byId = (id) => document.getElementById(id);
-function ce(tag, attrs) {
+
+const $ = (sel) => document.querySelector(sel);
+const el = (tag, attrs = {}, children = []) => {
   const n = document.createElement(tag);
-  if (attrs) {
-    for (const k of Object.keys(attrs)) {
-      const v = attrs[k];
-      if (k === 'className') n.className = v;
-      else if (k === 'text') n.textContent = v;
-      else if (k === 'type') n.type = v;
-      else if (k === 'value') n.value = v;
-      else if (k === 'disabled') n.disabled = !!v;
-      else if (k === 'href') n.setAttribute('href', v);
-      else if (k === 'title') n.setAttribute('title', v);
-      else if (k.startsWith('on') && typeof v === 'function') n.addEventListener(k.slice(2), v);
-      else n.setAttribute(k, String(v));
-    }
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") n.className = v;
+    else if (k === "html") n.innerHTML = v;
+    else if (k.startsWith("on") && typeof v === "function") n.addEventListener(k.slice(2), v);
+    else if (v !== null && v !== undefined) n.setAttribute(k, String(v));
   }
+  for (const c of children) n.append(c);
   return n;
-}
-function clear(node){ if(node) node.innerHTML=''; }
-function setStatus(msg, isError){
-  const st = byId('status');
-  if (!st) return;
-  st.textContent = msg || '';
-  if (isError) st.style.color = 'crimson';
-  else st.style.color = '';
-}
+};
+
+const escapeHtml = (s) => String(s)
+  .replaceAll("&", "&amp;")
+  .replaceAll("<", "&lt;")
+  .replaceAll(">", "&gt;")
+  .replaceAll('"', "&quot;")
+  .replaceAll("'", "&#039;");
 
 //////////////////////
-// Term helpers
+// CURIE + label helpers
 //////////////////////
-function isNamedNode(t){ return t && t.termType === 'NamedNode'; }
-function isBlankNode(t){ return t && t.termType === 'BlankNode'; }
-function isLiteral(t){ return t && t.termType === 'Literal'; }
-function iri(t){ return isNamedNode(t) ? t.value : null; }
-function bnodeId(t){ return isBlankNode(t) ? t.value : null; }
 
-function termText(t){
-  if (!t) return '';
-  if (isNamedNode(t)) return t.value;
-  if (isBlankNode(t)) return '_:' + t.value;
-  if (isLiteral(t)) {
-    const lang = t.language ? '@' + t.language : '';
-    const dt = t.datatype && t.datatype.value && t.datatype.value !== 'http://www.w3.org/2001/XMLSchema#string'
-      ? '^^' + t.datatype.value
-      : '';
-    return '"' + t.value + '"' + lang + dt;
+function isIri(x) {
+  return typeof x === "string" && (x.startsWith("http://") || x.startsWith("https://"));
+}
+
+function termToString(term) {
+  // term is an N3 term
+  if (!term) return "";
+  if (term.termType === "NamedNode") return term.value;
+  if (term.termType === "BlankNode") return "_:" + term.value;
+  if (term.termType === "Literal") return `"${term.value}"${term.language ? "@" + term.language : ""}${term.datatype && term.datatype.value !== "http://www.w3.org/2001/XMLSchema#string" ? "^^<" + term.datatype.value + ">" : ""}`;
+  if (term.termType === "DefaultGraph") return "";
+  return String(term.value ?? term);
+}
+
+function iriToCurie(iri) {
+  if (!iri) return "";
+  for (const [pfx, ns] of Object.entries(state.prefixes)) {
+    if (iri.startsWith(ns)) return `${pfx}:${iri.slice(ns.length)}`;
   }
-  return String(t.value || '');
+  return `<${iri}>`;
 }
 
-function displayIri(iriStr){
-  const lbl = S.label.get(iriStr);
+function displayName(iri) {
+  const lbl = state.labels.get(iri);
   if (lbl) return lbl;
-  // compact fallback: fragment or last path segment
+  // use CURIE if possible; otherwise last path fragment
+  const curie = iriToCurie(iri);
+  if (curie && !curie.startsWith("<")) return curie;
   try {
-    const u = new URL(iriStr);
-    if (u.hash && u.hash.length > 1) return u.hash.slice(1);
-    const parts = u.pathname.split('/').filter(Boolean);
-    if (parts.length) return parts[parts.length - 1];
-  } catch(_e){}
-  return iriStr;
+    const u = new URL(iri);
+    const frag = u.hash ? u.hash.slice(1) : "";
+    if (frag) return frag;
+    const parts = u.pathname.split("/").filter(Boolean);
+    return parts.length ? parts[parts.length - 1] : iri;
+  } catch {
+    return iri;
+  }
 }
 
-function pushArr(map, key, val){
-  if (!map.has(key)) map.set(key, []);
-  map.get(key).push(val);
-}
-function pushSet(map, key, val){
-  if (!map.has(key)) map.set(key, new Set());
-  map.get(key).add(val);
+function kindRank(kind) {
+  // for sorting: classes first, then properties, then individuals, then other
+  const order = {
+    "Class": 1,
+    "Object property": 2,
+    "Data property": 3,
+    "Annotation property": 4,
+    "Property": 5,
+    "Individual": 6,
+    "Ontology": 7,
+    "Other": 99,
+  };
+  return order[kind] ?? 50;
 }
 
 //////////////////////
-// Fetch + parse
+// Parsing + indexing
 //////////////////////
-async function fetchText(url){
-  const r = await fetch(url, { cache: 'no-store' });
-  if (!r.ok) throw new Error('Fetch failed: ' + url + ' (' + r.status + ')');
+
+async function fetchText(url) {
+  const r = await fetch(url, { cache: "no-store" });
+  if (!r.ok) throw new Error(`Failed to fetch ${url}: ${r.status} ${r.statusText}`);
   return await r.text();
 }
 
-async function loadCatalog(){
-  const select = byId('ontologySelect');
-  if (!select) { setStatus('Missing #ontologySelect', true); return; }
+async function loadCatalog() {
+  const url = "./ontologies/catalog.json";
+  const txt = await fetchText(url);
+  const cat = JSON.parse(txt);
 
-  let cat;
-  try {
-    cat = JSON.parse(await fetchText('ontologies/catalog.json'));
-  } catch (e) {
-    setStatus('Could not load ontologies/catalog.json: ' + (e && e.message ? e.message : e), true);
-    return;
+  const select = $("#ontologySelect");
+  select.innerHTML = "";
+
+  for (const item of cat.ontologies ?? []) {
+    const opt = el("option", { value: item.path }, [document.createTextNode(item.name ?? item.path)]);
+    select.append(opt);
   }
-  const items = Array.isArray(cat) ? cat : (Array.isArray(cat.ontologies) ? cat.ontologies : []);
-  clear(select);
-  for (const it of items) {
-    const opt = ce('option', { value: it.file || '', text: it.title || it.file || '(untitled)' });
-    select.appendChild(opt);
-  }
-  if (!items.length) setStatus('Catalog empty: expected array of {title,file}', true);
-  else setStatus('Catalog loaded. Choose an ontology and click Load.');
-}
 
-async function loadSelectedOntology(){
-  const select = byId('ontologySelect');
-  if (!select) return;
-  const file = select.value;
-  if (!file) { setStatus('No ontology selected.', true); return; }
-  await loadOntologyTtl(file);
-}
-
-function resetState(){
-  S.prefixes = {};
-  S.quads = [];
-  for (const m of [S.out,S.inc,S.bnodes,S.label,S.defn,S.comment,S.parents,S.children,S.pParents,S.pChildren,S.domain,S.range,S.domainOf,S.rangeOf,S.inverseOf,S.types,S.kind]) m.clear();
-  S.entities = [];
-  S.selected = null;
-}
-
-async function loadOntologyTtl(file){
-  resetState();
-  clear(byId('entityList'));
-  clear(byId('details'));
-  setStatus('Loading ' + file + ' …');
-
-  if (typeof N3 === 'undefined' || !N3.Parser) {
-    setStatus('N3 not found. Ensure N3 browser build is loaded.', true);
+  if (!cat.ontologies || cat.ontologies.length === 0) {
+    setStatus(`No ontologies listed in ontologies/catalog.json`, true);
     return;
   }
 
-  let ttl;
-  try { ttl = await fetchText(file); }
-  catch(e){ setStatus('Could not fetch TTL: ' + (e && e.message ? e.message : e), true); return; }
+  select.addEventListener("change", () => loadOntology(select.value));
 
-  const parser = new N3.Parser();
+  // Load default
+  const defaultPath = cat.default ?? cat.ontologies[0].path;
+  select.value = defaultPath;
+  await loadOntology(defaultPath);
+}
+
+function clearStateForNewOntology() {
+  state.store = [];
+  state.prefixes = {};
+  state.labels.clear();
+  state.definitions.clear();
+  state.comments.clear();
+  state.entities = [];
+  state.kinds.clear();
+  state.outgoing.clear();
+  state.incoming.clear();
+  state.blankNodes.clear();
+  state.parents.clear();
+  state.children.clear();
+  state.subPropParents.clear();
+  state.subPropChildren.clear();
+  state.domainOf.clear();
+  state.rangeOf.clear();
+  state.activeEntity = null;
+}
+
+async function loadOntology(path) {
+  clearStateForNewOntology();
+  state.activeOntology = path;
+
+  setStatus(`Loading ${path} …`);
+  $("#details").innerHTML = `<div class="placeholder"><h2>Loading…</h2><p class="mono">${escapeHtml(path)}</p></div>`;
+  $("#entityList").innerHTML = "";
+
+  const ttl = await fetchText(path);
+
+  // Parse TTL with N3.js
+  const parser = new N3.Parser({ format: "text/turtle" });
   const quads = [];
   const prefixes = {};
-  try {
-    await new Promise((resolve, reject) => {
-      parser.parse(ttl, (err, quad, pref) => {
-        if (err) return reject(err);
-        if (pref) Object.assign(prefixes, pref);
-        if (quad) quads.push(quad);
-        else resolve();
-      });
-    });
-  } catch(e) {
-    setStatus('Parse error: ' + (e && e.message ? e.message : e), true);
-    return;
-  }
 
-  S.quads = quads;
-  S.prefixes = prefixes;
+  await new Promise((resolve, reject) => {
+    parser.parse(ttl, (err, quad, pref) => {
+      if (err) return reject(err);
+      if (pref) {
+        Object.assign(prefixes, pref);
+      }
+      if (quad) quads.push(quad);
+      else resolve();
+    });
+  });
+
+  state.store = quads;
+  state.prefixes = prefixes;
+
   buildIndexes();
-  buildEntities();
+  buildEntityIndex();
+  renderSummary();
   renderEntityList();
-  setStatus('Loaded ' + quads.length.toLocaleString() + ' triples from ' + file);
+
+  setStatus(`Loaded ${quads.length.toLocaleString()} triples from ${path}`);
 }
 
-//////////////////////
-// Index building
-//////////////////////
-function buildIndexes(){
-  // main pass
-  for (const q of S.quads) {
-    const sIri = iri(q.subject);
-    const pIri = iri(q.predicate);
-    const oIri = iri(q.object);
+function pushMapArray(map, key, value) {
+  if (!map.has(key)) map.set(key, []);
+  map.get(key).push(value);
+}
 
-    if (isBlankNode(q.subject)) pushArr(S.bnodes, q.subject.value, q);
-    if (sIri) pushArr(S.out, sIri, q);
-    if (oIri) pushArr(S.inc, oIri, q);
+function pushMapSet(map, key, value) {
+  if (!map.has(key)) map.set(key, new Set());
+  map.get(key).add(value);
+}
 
-    // annotations
-    if (sIri && pIri === RDFS_LABEL && isLiteral(q.object) && !S.label.has(sIri)) S.label.set(sIri, q.object.value);
-    if (sIri && (pIri === IAO_DEF || pIri === SKOS_DEF) && isLiteral(q.object) && !S.defn.has(sIri)) S.defn.set(sIri, q.object.value);
-    if (sIri && pIri === RDFS_COMMENT && isLiteral(q.object) && !S.comment.has(sIri)) S.comment.set(sIri, q.object.value);
+function buildIndexes() {
+  // First pass: outgoing/incoming and blank nodes
+  for (const q of state.store) {
+    const s = q.subject.termType === "NamedNode" ? q.subject.value : null;
+    const p = q.predicate.termType === "NamedNode" ? q.predicate.value : null;
 
-    // types
-    if (sIri && pIri === RDF_TYPE && oIri) {
-      if (!S.types.has(sIri)) S.types.set(sIri, new Set());
-      S.types.get(sIri).add(oIri);
+    if (q.subject.termType === "BlankNode") {
+      pushMapArray(state.blankNodes, q.subject.value, q);
     }
 
-    // hierarchies
-    if (sIri && pIri === RDFS_SUBCLASS_OF && oIri) {
-      pushSet(S.parents, sIri, oIri);
-      pushSet(S.children, oIri, sIri);
+    if (s) pushMapArray(state.outgoing, s, q);
+
+    // incoming only for object named nodes
+    if (q.object.termType === "NamedNode") {
+      pushMapArray(state.incoming, q.object.value, q);
     }
-    if (sIri && pIri === RDFS_SUBPROPERTY_OF && oIri) {
-      pushSet(S.pParents, sIri, oIri);
-      pushSet(S.pChildren, oIri, sIri);
+    if (q.object.termType === "BlankNode") {
+      // also index incoming for bnode so we can render a bnode with context if selected (rare)
+      pushMapArray(state.incoming, "_:" + q.object.value, q);
     }
 
-    // domain/range + reverse lookup
-    if (sIri && pIri === RDFS_DOMAIN && oIri) {
-      pushSet(S.domain, sIri, oIri);
-      pushSet(S.domainOf, oIri, sIri);
+    // labels/defs/comments on NamedNodes
+    if (s && p === RDFS_LABEL && q.object.termType === "Literal") {
+      if (!state.labels.has(s)) state.labels.set(s, q.object.value);
     }
-    if (sIri && pIri === RDFS_RANGE && oIri) {
-      pushSet(S.range, sIri, oIri);
-      pushSet(S.rangeOf, oIri, sIri);
+    if (s && (p === IAO_DEFINITION || p === SKOS_DEFINITION) && q.object.termType === "Literal") {
+      if (!state.definitions.has(s)) state.definitions.set(s, q.object.value);
+    }
+    if (s && p === RDFS_COMMENT && q.object.termType === "Literal") {
+      if (!state.comments.has(s)) state.comments.set(s, q.object.value);
     }
 
-    // inverseOf
-    if (sIri && pIri === OWL_INVERSE_OF && oIri) {
-      pushSet(S.inverseOf, sIri, oIri);
-      pushSet(S.inverseOf, oIri, sIri);
+    // class hierarchy
+    if (s && p === RDFS_SUBCLASS_OF && q.object.termType === "NamedNode") {
+      const parent = q.object.value;
+      pushMapSet(state.parents, s, parent);
+      pushMapSet(state.children, parent, s);
     }
-  }
 
-  // add definitions fallback to comment if missing
-  for (const [k,v] of S.comment.entries()) {
-    if (!S.defn.has(k)) S.defn.set(k, v);
-  }
-
-  // heuristic kinds: subjects of subClassOf => Class if not typed; subjects of domain/range => Property if not typed
-  for (const q of S.quads) {
-    const sIri = iri(q.subject);
-    const pIri = iri(q.predicate);
-    if (!sIri || !pIri) continue;
-
-    if (pIri === RDFS_SUBCLASS_OF) {
-      if (!S.types.has(sIri)) S.types.set(sIri, new Set());
-      // mark as class-ish
-      // (no concrete rdfs:Class required; we'll detect via heuristics below)
+    // property hierarchy
+    if (s && p === RDFS_SUBPROPERTY_OF && q.object.termType === "NamedNode") {
+      const parent = q.object.value;
+      pushMapSet(state.subPropParents, s, parent);
+      pushMapSet(state.subPropChildren, parent, s);
     }
-    if (pIri === RDFS_DOMAIN || pIri === RDFS_RANGE) {
-      if (!S.types.has(sIri)) S.types.set(sIri, new Set());
+
+    // domain/range convenience
+    if (s && p === RDFS_DOMAIN && q.object.termType === "NamedNode") {
+      pushMapSet(state.domainOf, q.object.value, s);
+    }
+    if (s && p === RDFS_RANGE && q.object.termType === "NamedNode") {
+      pushMapSet(state.rangeOf, q.object.value, s);
     }
   }
+}
 
-  // compute kind per IRI based on types + heuristics
+function detectKinds(typesSet) {
+  // Given a Set of rdf:type IRIs, return a normalized kind string
+  const has = (t) => typesSet.has(t);
+  if (has(OWL_ONTOLOGY)) return "Ontology";
+  if (has(OWL_CLASS) || has(RDFS_CLASS)) return "Class";
+  if (has(OWL_OBJECT_PROPERTY)) return "Object property";
+  if (has(OWL_DATATYPE_PROPERTY)) return "Data property";
+  if (has(OWL_ANNOTATION_PROPERTY)) return "Annotation property";
+  if (has(RDF_PROPERTY)) return "Property";
+  if (has(OWL_NAMED_INDIVIDUAL)) return "Individual";
+
+  // heuristic: if it appears as subject of subClassOf => class; subPropertyOf => property
+  return "Other";
+}
+
+function buildEntityIndex() {
+  // gather candidate IRIs
   const candidates = new Set();
-  for (const q of S.quads) {
-    const sIri = iri(q.subject); if (sIri) candidates.add(sIri);
-    const oIri = iri(q.object); if (oIri) candidates.add(oIri);
+
+  for (const q of state.store) {
+    if (q.subject.termType === "NamedNode") candidates.add(q.subject.value);
+    if (q.object.termType === "NamedNode") candidates.add(q.object.value);
   }
 
-  for (const c of candidates) {
-    const t = S.types.get(c) || new Set();
-    // heuristics
-    const out = S.out.get(c) || [];
-    const hasSubClass = out.some(x => iri(x.predicate) === RDFS_SUBCLASS_OF);
-    const hasDomRng = out.some(x => {
-      const p = iri(x.predicate);
-      return p === RDFS_DOMAIN || p === RDFS_RANGE || p === RDFS_SUBPROPERTY_OF;
-    });
+  // compute rdf:types per iri
+  const typesByIri = new Map();
+  for (const iri of candidates) typesByIri.set(iri, new Set());
 
-    let kind = null;
-    if (t.has(OWL_CLASS)) kind = 'Class';
-    else if (t.has(OWL_OBJECT_PROPERTY)) kind = 'Object property';
-    else if (t.has(OWL_DATATYPE_PROPERTY)) kind = 'Data property';
-    else if (t.has(OWL_ANNOTATION_PROPERTY)) kind = 'Annotation property';
-    else if (t.has(OWL_NAMED_INDIVIDUAL)) kind = 'Individual';
-    else if (hasSubClass) kind = 'Class';
-    else if (hasDomRng) kind = 'Object property'; // generic "property-ish" => treat as object prop for filtering visibility
-    else kind = null;
-
-    if (kind) S.kind.set(c, kind);
-  }
-}
-
-function buildEntities(){
-  const seen = new Set();
-  for (const q of S.quads) {
-    const sIri = iri(q.subject); if (sIri) seen.add(sIri);
-    const oIri = iri(q.object); if (oIri) seen.add(oIri);
-  }
-  const list = [];
-  for (const i of seen) {
-    const kind = S.kind.get(i) || null;
-    // only show the five target kinds by default; other IRIs can be navigated via "Referenced by" and outgoing links
-    const lbl = displayIri(i);
-    const def = S.defn.get(i) || '';
-    list.push({ iri: i, kind: kind || 'Individual', label: lbl, defKey: def.toLowerCase() });
-    // If kind unknown, keep it navigable but categorize as Individual so it can appear (user filters can hide)
-  }
-  // Normalize unknowns to "Individual" is too strong; instead, keep kind as detected or "Individual" only if typed.
-  for (const e of list) {
-    if (!S.kind.has(e.iri)) {
-      // if it looks like a property or class due to indexes, set earlier; else mark as Individual-ish but don't overwrite actual typed kinds
-      const t = S.types.get(e.iri) || new Set();
-      if (t.has(OWL_NAMED_INDIVIDUAL)) S.kind.set(e.iri, 'Individual');
-      else if ((S.out.get(e.iri)||[]).some(x => iri(x.predicate) === RDFS_SUBCLASS_OF)) S.kind.set(e.iri, 'Class');
-      else if ((S.out.get(e.iri)||[]).some(x => [RDFS_DOMAIN,RDFS_RANGE,RDFS_SUBPROPERTY_OF].includes(iri(x.predicate)))) S.kind.set(e.iri, 'Object property');
-      else S.kind.set(e.iri, 'Individual'); // keep list usable
+  for (const q of state.store) {
+    if (q.subject.termType === "NamedNode" && q.predicate.value === RDF_TYPE && q.object.termType === "NamedNode") {
+      const s = q.subject.value;
+      if (typesByIri.has(s)) typesByIri.get(s).add(q.object.value);
     }
-    e.kind = S.kind.get(e.iri);
   }
 
-  const rank = (k) => ({'Class':1,'Object property':2,'Data property':3,'Annotation property':4,'Individual':5}[k] || 9);
-  list.sort((a,b)=> (rank(a.kind)-rank(b.kind)) || a.label.localeCompare(b.label) || a.iri.localeCompare(b.iri));
-  S.entities = list;
+  // add heuristics
+  for (const iri of candidates) {
+    const tset = typesByIri.get(iri) ?? new Set();
+    const out = state.outgoing.get(iri) ?? [];
+
+    // heuristic: if has rdfs:subClassOf => Class
+    if (out.some(q => q.predicate.value === RDFS_SUBCLASS_OF)) {
+      tset.add(RDFS_CLASS);
+    }
+    // heuristic: if has rdfs:subPropertyOf/domain/range => Property
+    if (out.some(q => [RDFS_SUBPROPERTY_OF, RDFS_DOMAIN, RDFS_RANGE].includes(q.predicate.value))) {
+      tset.add(RDF_PROPERTY);
+    }
+    // heuristic: if appears as subject but no explicit type and has some predicate other than rdf:type
+    if (!tset.size && out.some(q => q.predicate.value !== RDF_TYPE)) {
+      // could still be an individual
+      tset.add(OWL_NAMED_INDIVIDUAL);
+    }
+
+    const kind = detectKinds(tset);
+    state.kinds.set(iri, kind);
+  }
+
+  // Build entities array
+  state.entities = [...candidates].map(iri => {
+    const kind = state.kinds.get(iri) ?? "Other";
+    const lbl = displayName(iri);
+    return {
+      iri,
+      kind,
+      label: lbl,
+      sortKey: `${String(kindRank(kind)).padStart(2, "0")}|${lbl.toLowerCase()}|${iri.toLowerCase()}`
+    };
+  }).sort((a, b) => a.sortKey.localeCompare(b.sortKey));
 }
 
 //////////////////////
-// Rendering: Entity list
+// Rendering: list + details
 //////////////////////
-function activeSearch(){
-  const sb = byId('searchBox');
-  return sb ? (sb.value || '').trim().toLowerCase() : '';
+
+function renderSummary() {
+  const counts = new Map();
+  for (const e of state.entities) counts.set(e.kind, (counts.get(e.kind) ?? 0) + 1);
+  const total = state.entities.length;
+
+  const bits = [
+    `${total.toLocaleString()} entities`,
+    ...["Class", "Object property", "Data property", "Annotation property", "Individual", "Property", "Other"]
+      .filter(k => counts.has(k))
+      .map(k => `${k}: ${counts.get(k).toLocaleString()}`),
+  ];
+  $("#summary").textContent = bits.join(" • ");
 }
 
-function entityMatches(e, q){
-  if (!S.activeKinds.has(e.kind)) return false;
+function setStatus(msg, isError = false) {
+  const st = $("#status");
+  st.textContent = msg ?? "";
+  st.classList.toggle("bad", Boolean(isError));
+}
+
+function entityMatchesFilters(e) {
+  return state.activeFilters.has(e.kind);
+}
+
+function entityMatchesSearch(e, q) {
   if (!q) return true;
-  const iriLow = e.iri.toLowerCase();
-  return e.label.toLowerCase().includes(q) || iriLow.includes(q) || (e.defKey && e.defKey.includes(q));
+  const needle = q.toLowerCase().trim();
+  if (!needle) return true;
+  const curie = iriToCurie(e.iri).toLowerCase();
+  return (
+    e.label.toLowerCase().includes(needle) ||
+    e.iri.toLowerCase().includes(needle) ||
+    curie.includes(needle)
+  );
 }
 
-function renderEntityList(){
-  const listNode = byId('entityList');
-  if (!listNode) return;
-  clear(listNode);
+function renderEntityList() {
+  const list = $("#entityList");
+  list.innerHTML = "";
 
-  const q = activeSearch();
-  const filtered = S.entities.filter(e => entityMatches(e, q));
-  const max = 3000;
-  const shown = filtered.slice(0, max);
+  const q = $("#searchInput").value ?? "";
+  const filtered = state.entities.filter(e => entityMatchesFilters(e) && entityMatchesSearch(e, q));
+
+  // keep list manageable (client-side)
+  const MAX = 2500;
+  const shown = filtered.slice(0, MAX);
 
   for (const e of shown) {
-    const row = ce('button', { type:'button' });
-    row.textContent = e.label + '  [' + e.kind + ']';
-    row.style.display = 'block';
-    row.style.width = '100%';
-    row.style.textAlign = 'left';
-    row.style.margin = '0 0 6px 0';
-    row.style.padding = '8px 10px';
-    row.style.borderRadius = '8px';
-    row.style.border = '1px solid rgba(0,0,0,.15)';
-    row.style.background = (S.selected === e.iri) ? 'rgba(120,160,255,.18)' : '';
-    row.addEventListener('click', () => selectIri(e.iri));
-    listNode.appendChild(row);
+    const item = el("div", {
+      class: "entityItem" + (state.activeEntity === e.iri ? " active" : ""),
+      role: "option",
+      tabindex: "0",
+      "data-iri": e.iri,
+      onclick: () => selectEntity(e.iri),
+      onkeydown: (ev) => {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          selectEntity(e.iri);
+        }
+      }
+    }, [
+      el("div", { class: "entityTop" }, [
+        el("span", { class: "kindBadge" }, [document.createTextNode(e.kind)]),
+        el("span", { class: "entityLabel" }, [document.createTextNode(e.label)])
+      ]),
+      el("div", { class: "entityIri mono" }, [document.createTextNode(iriToCurie(e.iri))])
+    ]);
+    list.append(item);
   }
 
-  const extra = filtered.length > max ? (' Showing first ' + max.toLocaleString() + ' of ' + filtered.length.toLocaleString() + '.') : (' ' + filtered.length.toLocaleString() + ' shown.');
-  setStatus('Entities: ' + S.entities.length.toLocaleString() + '. Matches: ' + filtered.length.toLocaleString() + '.' + extra);
+  const tail = filtered.length > MAX ? `Showing first ${MAX.toLocaleString()} of ${filtered.length.toLocaleString()} matches. Refine search.` : `${filtered.length.toLocaleString()} matches.`;
+  setStatus(tail);
 }
 
-//////////////////////
-// Rendering: Details
-//////////////////////
-function selectIri(iriStr){
-  S.selected = iriStr;
-  renderEntityList(); // refresh selection highlight
-  renderDetails(iriStr);
+function selectEntity(iri) {
+  state.activeEntity = iri;
+  // update list selection styling
+  for (const node of document.querySelectorAll(".entityItem")) {
+    node.classList.toggle("active", node.getAttribute("data-iri") === iri);
+  }
+  renderDetails(iri);
 }
 
-function renderDetails(iriStr){
-  const details = byId('details');
-  if (!details) return;
-  clear(details);
+function renderDetails(iri) {
+  const kind = state.kinds.get(iri) ?? "Other";
+  const lbl = displayName(iri);
+  const defn = state.definitions.get(iri);
+  const comm = state.comments.get(iri);
 
-  const kind = S.kind.get(iriStr) || 'Individual';
-  const h = ce('h2', { text: displayIri(iriStr) });
-  details.appendChild(h);
+  const outgoing = (state.outgoing.get(iri) ?? []).slice();
+  const incoming = (state.incoming.get(iri) ?? []).slice();
 
-  details.appendChild(kv('IRI', iriButton(iriStr, true)));
-  details.appendChild(kv('Kind', ce('span', { text: kind })));
+  // Sort triples by predicate then object string for stable viewing
+  outgoing.sort((a, b) => (a.predicate.value + "|" + termToString(a.object)).localeCompare(b.predicate.value + "|" + termToString(b.object)));
+  incoming.sort((a, b) => (a.predicate.value + "|" + termToString(a.subject)).localeCompare(b.predicate.value + "|" + termToString(b.subject)));
 
-  const def = S.defn.get(iriStr) || '';
-  if (def) details.appendChild(kv('Definition', ce('span', { text: def })));
+  const details = $("#details");
+  details.innerHTML = "";
 
-  // parents/children
-  const ps = S.parents.get(iriStr);
-  const cs = S.children.get(iriStr);
-  if (ps && ps.size) details.appendChild(kv('Parents', buttonList([...ps])));
-  if (cs && cs.size) details.appendChild(kv('Children', buttonList([...cs])));
+  const header = el("div", { class: "hrow" }, [
+    el("div", {}, [
+      el("h2", {}, [document.createTextNode(lbl)]),
+      el("div", { class: "mono", style: "color: var(--muted); margin-top:6px; word-break: break-all" }, [
+        document.createTextNode(iriToCurie(iri) + " "),
+        isIri(iri) ? el("a", { href: iri, target: "_blank", rel: "noopener" }, [document.createTextNode("open")]) : document.createTextNode("")
+      ])
+    ]),
+    el("div", { class: "pills" }, [
+      el("span", { class: "pill" }, [document.createTextNode(kind)]),
+      el("span", { class: "pill" }, [document.createTextNode(`Outgoing: ${outgoing.length.toLocaleString()}`)]),
+      el("span", { class: "pill" }, [document.createTextNode(`Incoming: ${incoming.length.toLocaleString()}`)]),
+    ])
+  ]);
 
-  // property bits
-  if (kind === 'Object property' || kind === 'Data property' || kind === 'Annotation property') {
-    const dom = S.domain.get(iriStr); if (dom && dom.size) details.appendChild(kv('Domain', buttonList([...dom])));
-    const rng = S.range.get(iriStr);  if (rng && rng.size) details.appendChild(kv('Range', buttonList([...rng])));
-    const inv = S.inverseOf.get(iriStr); if (inv && inv.size) details.appendChild(kv('Inverse of', buttonList([...inv])));
-    const spp = S.pParents.get(iriStr); if (spp && spp.size) details.appendChild(kv('Super-properties', buttonList([...spp])));
-    const spc = S.pChildren.get(iriStr); if (spc && spc.size) details.appendChild(kv('Sub-properties', buttonList([...spc])));
+  details.append(header);
+
+  // short description section (label/def/comment + key relationships)
+  const desc = el("div", { class: "section" }, [el("h3", {}, [document.createTextNode("Overview")])]);
+
+  const kvs = [];
+
+  kvs.push(kvRow("IRI", el("span", { class: "mono" }, [document.createTextNode(iri)])));
+
+  if (defn) kvs.push(kvRow("Definition", el("span", {}, [document.createTextNode(defn)])));
+  if (comm) kvs.push(kvRow("Comment", el("span", {}, [document.createTextNode(comm)])));
+
+  // parents/children for class, sub/super properties for properties
+  if (kind === "Class") {
+    kvs.push(kvRow("Parents", renderIriSet(state.parents.get(iri))));
+    kvs.push(kvRow("Children", renderIriSet(state.children.get(iri))));
+    kvs.push(kvRow("Domain of", renderIriSet(state.domainOf.get(iri))));
+    kvs.push(kvRow("Range of", renderIriSet(state.rangeOf.get(iri))));
+  } else if (kind.includes("property") || kind === "Property") {
+    kvs.push(kvRow("Super-properties", renderIriSet(state.subPropParents.get(iri))));
+    kvs.push(kvRow("Sub-properties", renderIriSet(state.subPropChildren.get(iri))));
   }
 
-  // class bits: domainOf/rangeOf
-  if (kind === 'Class') {
-    const dOf = S.domainOf.get(iriStr); if (dOf && dOf.size) details.appendChild(kv('Properties with this as domain', buttonList([...dOf])));
-    const rOf = S.rangeOf.get(iriStr);  if (rOf && rOf.size) details.appendChild(kv('Properties with this as range', buttonList([...rOf])));
-  }
+  for (const row of kvs) if (row) desc.append(row);
+  details.append(desc);
 
-  // restrictions / anonymous superclasses from blank nodes in subClassOf and equivalentClass
-  const anon = collectAnonExpressions(iriStr);
-  if (anon.length) {
-    const sec = sectionTitle('Restrictions / Anonymous expressions');
-    details.appendChild(sec);
-    for (const a of anon) details.appendChild(preBlock(a));
-  }
+  // render outgoing triples
+  details.append(renderTripleSection("Outgoing triples (subject = selected entity)", outgoing, /*flip*/false));
 
-  // outgoing grouped (excluding already shown predicates)
-  const dedicated = new Set([RDF_TYPE,RDFS_LABEL,IAO_DEF,SKOS_DEF,RDFS_COMMENT,RDFS_SUBCLASS_OF,RDFS_SUBPROPERTY_OF,RDFS_DOMAIN,RDFS_RANGE,OWL_INVERSE_OF,OWL_EQUIVALENT_CLASS]);
-  const outgoing = (S.out.get(iriStr) || []).filter(q => !dedicated.has(iri(q.predicate)));
-  if (outgoing.length) {
-    details.appendChild(sectionTitle('Other outgoing triples (grouped by predicate)'));
-    details.appendChild(groupedTriplesOutgoing(outgoing));
-  }
-
-  // incoming grouped: referenced by
-  const incoming = (S.inc.get(iriStr) || []);
-  if (incoming.length) {
-    details.appendChild(sectionTitle('Referenced by (incoming triples grouped by predicate)'));
-    details.appendChild(groupedIncoming(incoming));
-  }
+  // render incoming triples
+  details.append(renderTripleSection("Incoming triples (object = selected entity)", incoming, /*flip*/true));
 }
 
-function kv(k, vNode){
-  const wrap = ce('div');
-  wrap.style.display = 'grid';
-  wrap.style.gridTemplateColumns = '160px 1fr';
-  wrap.style.gap = '10px';
-  wrap.style.padding = '6px 0';
-  const kk = ce('div', { text: k });
-  kk.style.opacity = '0.75';
-  kk.style.fontSize = '13px';
-  const vv = ce('div');
-  vv.appendChild(vNode);
-  wrap.appendChild(kk); wrap.appendChild(vv);
-  return wrap;
+function kvRow(key, valueNode) {
+  if (!valueNode) return null;
+  return el("div", { class: "kv" }, [
+    el("div", { class: "k" }, [document.createTextNode(key)]),
+    el("div", { class: "v" }, [valueNode]),
+  ]);
 }
 
-function sectionTitle(t){
-  const h = ce('h3', { text: t });
-  h.style.marginTop = '14px';
-  return h;
-}
-
-function preBlock(text){
-  const pre = ce('pre', { text: text });
-  pre.style.whiteSpace = 'pre-wrap';
-  pre.style.padding = '10px';
-  pre.style.border = '1px solid rgba(0,0,0,.15)';
-  pre.style.borderRadius = '10px';
-  pre.style.background = 'rgba(0,0,0,.03)';
-  return pre;
-}
-
-function iriButton(iriStr, isMono){
-  const b = ce('button', { type:'button' });
-  b.textContent = iriStr;
-  b.addEventListener('click', () => selectIri(iriStr));
-  b.style.cursor = 'pointer';
-  b.style.maxWidth = '100%';
-  b.style.overflow = 'hidden';
-  b.style.textOverflow = 'ellipsis';
-  b.style.whiteSpace = 'nowrap';
-  b.style.padding = '4px 8px';
-  b.style.borderRadius = '999px';
-  b.style.border = '1px solid rgba(0,0,0,.18)';
-  b.style.background = 'transparent';
-  if (isMono) b.style.fontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
-  b.title = iriStr;
-  return b;
-}
-
-function buttonList(iris){
-  const wrap = ce('div');
-  wrap.style.display = 'flex';
-  wrap.style.flexWrap = 'wrap';
-  wrap.style.gap = '6px';
-  iris.sort((a,b)=>displayIri(a).localeCompare(displayIri(b)));
-  for (const i of iris) {
-    const btn = ce('button', { type:'button' });
-    btn.textContent = displayIri(i);
-    btn.title = i;
-    btn.style.padding = '4px 8px';
-    btn.style.borderRadius = '999px';
-    btn.style.border = '1px solid rgba(0,0,0,.18)';
-    btn.style.background = 'rgba(0,0,0,.02)';
-    btn.addEventListener('click', () => selectIri(i));
-    wrap.appendChild(btn);
+function renderIriSet(set) {
+  if (!set || set.size === 0) return el("span", { class: "mono", style: "color: var(--muted)" }, [document.createTextNode("—")]);
+  const items = [...set].sort((a, b) => displayName(a).localeCompare(displayName(b)));
+  const wrap = el("div", { style: "display:flex; flex-wrap:wrap; gap:8px" });
+  for (const iri of items) {
+    wrap.append(renderEntityLink(iri));
   }
   return wrap;
 }
 
-//////////////////////
-// Grouping outgoing/incoming
-//////////////////////
-function groupedTriplesOutgoing(triples){
-  const box = ce('div');
-  const byPred = new Map();
+function renderEntityLink(iri) {
+  const a = el("a", {
+    href: "#",
+    onclick: (ev) => {
+      ev.preventDefault();
+      selectEntity(iri);
+      // scroll sidebar selection into view if possible
+      const node = document.querySelector(`.entityItem[data-iri="${CSS.escape(iri)}"]`);
+      if (node) node.scrollIntoView({ block: "nearest" });
+    }
+  }, [document.createTextNode(displayName(iri))]);
+
+  const badge = el("span", { class: "pill", style: "padding:4px 8px" }, [
+    document.createTextNode(state.kinds.get(iri) ?? "Other")
+  ]);
+
+  return el("span", { style: "display:inline-flex; gap:6px; align-items:center; border:1px solid rgba(255,255,255,.10); padding:5px 8px; border-radius:999px; background: rgba(0,0,0,.10)" }, [
+    a,
+    badge
+  ]);
+}
+
+function renderTripleSection(title, triples, flip) {
+  const sec = el("div", { class: "section" }, [
+    el("h3", {}, [document.createTextNode(title)])
+  ]);
+
+  if (!triples.length) {
+    sec.append(el("div", { class: "mono", style: "color: var(--muted)" }, [document.createTextNode("—")]));
+    return sec;
+  }
+
+  // Table header depends on flip
+  const table = el("table", { class: "table" });
+  const thead = el("thead", {}, [
+    el("tr", {}, [
+      el("th", {}, [document.createTextNode(flip ? "Subject" : "Predicate")]),
+      el("th", {}, [document.createTextNode(flip ? "Predicate" : "Object")]),
+      el("th", {}, [document.createTextNode("Context / Details")]),
+    ])
+  ]);
+  table.append(thead);
+
+  const tbody = el("tbody");
+
   for (const q of triples) {
-    const p = iri(q.predicate) || termText(q.predicate);
-    if (!byPred.has(p)) byPred.set(p, []);
-    byPred.get(p).push(q);
-  }
-  const preds = [...byPred.keys()].sort((a,b)=>displayIri(a).localeCompare(displayIri(b)));
-  for (const p of preds) {
-    const head = ce('div', { text: displayIri(p) });
-    head.style.marginTop = '10px';
-    head.style.fontWeight = '600';
-    box.appendChild(head);
+    const subj = q.subject;
+    const pred = q.predicate;
+    const obj  = q.object;
 
-    const ul = ce('ul');
-    ul.style.margin = '6px 0 0 18px';
-    for (const q of byPred.get(p)) {
-      const li = ce('li');
-      const obj = q.object;
-      li.appendChild(renderObjectTerm(obj));
-      // If blank node, add a short expression dump
-      if (isBlankNode(obj)) {
-        const txt = renderAnon(obj.value);
-        if (txt) li.appendChild(ce('span', { text: '  ' + txt }));
-      }
-      ul.appendChild(li);
+    const predIri = pred.termType === "NamedNode" ? pred.value : null;
+
+    const cell1 = flip ? renderTermAsNode(subj) : renderTermAsNode(pred);
+    const cell2 = flip ? renderTermAsNode(pred) : renderTermAsNode(obj);
+
+    // Context: small helper for OWL class expressions / bnode objects
+    let ctx = "";
+    if (predIri && [RDFS_SUBCLASS_OF, OWL_EQUIVALENT_CLASS].includes(predIri) && obj.termType === "BlankNode") {
+      ctx = renderClassExpression(obj.value);
+    } else if (obj.termType === "BlankNode") {
+      ctx = renderBlankNodeSummary(obj.value);
+    } else {
+      ctx = "";
     }
-    box.appendChild(ul);
+
+    const ctxNode = ctx
+      ? el("div", { class: "mono", style: "color: var(--muted); white-space: pre-wrap" }, [document.createTextNode(ctx)])
+      : el("span", { class: "mono", style: "color: var(--muted)" }, [document.createTextNode("")]);
+
+    const tr = el("tr", {}, [
+      el("td", {}, [cell1]),
+      el("td", {}, [cell2]),
+      el("td", {}, [ctxNode]),
+    ]);
+    tbody.append(tr);
   }
-  return box;
+
+  table.append(tbody);
+  sec.append(table);
+  return sec;
 }
 
-function groupedIncoming(triples){
-  const box = ce('div');
-  const byPred = new Map();
-  for (const q of triples) {
-    const p = iri(q.predicate) || termText(q.predicate);
-    if (!byPred.has(p)) byPred.set(p, []);
-    byPred.get(p).push(q);
-  }
-  const preds = [...byPred.keys()].sort((a,b)=>displayIri(a).localeCompare(displayIri(b)));
-  for (const p of preds) {
-    const head = ce('div', { text: displayIri(p) });
-    head.style.marginTop = '10px';
-    head.style.fontWeight = '600';
-    box.appendChild(head);
+function renderTermAsNode(term) {
+  if (!term) return el("span", {}, [document.createTextNode("")]);
 
-    const ul = ce('ul');
-    ul.style.margin = '6px 0 0 18px';
-    for (const q of byPred.get(p)) {
-      const li = ce('li');
-      const sIri = iri(q.subject);
-      if (sIri) {
-        const btn = ce('button', { type:'button' });
-        btn.textContent = displayIri(sIri);
-        btn.title = sIri;
-        btn.style.padding = '2px 6px';
-        btn.style.borderRadius = '8px';
-        btn.style.border = '1px solid rgba(0,0,0,.18)';
-        btn.style.background = 'rgba(0,0,0,.02)';
-        btn.addEventListener('click', () => selectIri(sIri));
-        li.appendChild(btn);
-      } else {
-        li.textContent = termText(q.subject);
-      }
-      ul.appendChild(li);
-    }
-    box.appendChild(ul);
+  if (term.termType === "NamedNode") {
+    const iri = term.value;
+    return el("span", {}, [
+      el("a", {
+        href: "#",
+        onclick: (ev) => { ev.preventDefault(); selectEntity(iri); }
+      }, [document.createTextNode(displayName(iri))]),
+      el("span", { class: "mono", style: "color: var(--muted); margin-left:8px" }, [document.createTextNode(iriToCurie(iri))]),
+    ]);
   }
-  return box;
-}
 
-function renderObjectTerm(t){
-  if (isNamedNode(t)) {
-    const btn = ce('button', { type:'button' });
-    btn.textContent = displayIri(t.value);
-    btn.title = t.value;
-    btn.style.padding = '2px 6px';
-    btn.style.borderRadius = '8px';
-    btn.style.border = '1px solid rgba(0,0,0,.18)';
-    btn.style.background = 'rgba(0,0,0,.02)';
-    btn.addEventListener('click', () => selectIri(t.value));
-    return btn;
+  if (term.termType === "BlankNode") {
+    const id = term.value;
+    const s = renderBlankNodeSummary(id);
+    return el("span", { class: "mono" }, [document.createTextNode("_:" + id + (s ? " " + s : ""))]);
   }
-  if (isLiteral(t)) return ce('span', { text: termText(t) });
-  if (isBlankNode(t)) return ce('span', { text: '_:' + t.value });
-  return ce('span', { text: termText(t) });
+
+  if (term.termType === "Literal") {
+    const dt = term.datatype?.value;
+    const lang = term.language;
+    const suffix = lang ? `@${lang}` : (dt && dt !== "http://www.w3.org/2001/XMLSchema#string" ? `^^${iriToCurie(dt)}` : "");
+    return el("span", { class: "mono" }, [document.createTextNode(`"${term.value}"${suffix}`)]);
+  }
+
+  return el("span", { class: "mono" }, [document.createTextNode(termToString(term))]);
 }
 
 //////////////////////
-// Anonymous expressions (OWL restrictions, boolean class expressions, rdf:List)
+// Blank node + OWL expression rendering (best-effort)
 //////////////////////
-function collectAnonExpressions(classIri){
-  const out = [];
-  const quads = S.out.get(classIri) || [];
-  for (const q of quads) {
-    const p = iri(q.predicate);
-    if (p !== RDFS_SUBCLASS_OF && p !== OWL_EQUIVALENT_CLASS) continue;
-    if (isBlankNode(q.object)) {
-      const txt = renderAnon(q.object.value);
-      if (txt) out.push((p === RDFS_SUBCLASS_OF ? 'subClassOf ' : 'equivalentClass ') + txt);
-      else out.push((p === RDFS_SUBCLASS_OF ? 'subClassOf ' : 'equivalentClass ') + '_:' + q.object.value);
-    }
-  }
-  return out;
-}
 
-function renderAnon(bnid){
-  const qs = S.bnodes.get(bnid) || [];
-  if (!qs.length) return '';
+function renderBlankNodeSummary(bnid) {
+  const quads = state.blankNodes.get(bnid) ?? [];
+  if (!quads.length) return "";
 
-  const objOf = (predIri) => {
-    const q = qs.find(x => iri(x.predicate) === predIri);
+  // Try common OWL restriction patterns
+  const getObj = (predIri) => {
+    const q = quads.find(x => x.predicate.termType === "NamedNode" && x.predicate.value === predIri);
     return q ? q.object : null;
   };
-  const hasType = (typeIri) => qs.some(x => iri(x.predicate) === RDF_TYPE && iri(x.object) === typeIri);
 
-  // Restriction
-  if (hasType(OWL_RESTRICTION)) {
-    const onP = objOf(OWL_ON_PROPERTY);
-    const some = objOf(OWL_SOME_VALUES_FROM);
-    const all = objOf(OWL_ALL_VALUES_FROM);
-    const hasV = objOf(OWL_HAS_VALUE);
-    const minC = objOf(OWL_MIN_CARDINALITY);
-    const maxC = objOf(OWL_MAX_CARDINALITY);
-    const card = objOf(OWL_CARDINALITY);
+  const onProp = getObj(OWL_ON_PROPERTY);
+  const some = getObj(OWL_SOME_VALUES_FROM);
+  const all  = getObj(OWL_ALL_VALUES_FROM);
+  const hasV = getObj(OWL_HAS_VALUE);
+  const minC = getObj(OWL_MIN_CARDINALITY);
+  const maxC = getObj(OWL_MAX_CARDINALITY);
+  const card = getObj(OWL_CARDINALITY);
 
-    const pTxt = isNamedNode(onP) ? displayIri(onP.value) : (onP ? termText(onP) : '(no onProperty)');
-    if (some) return 'Restriction(on ' + pTxt + ' some ' + renderTermExpr(some) + ')';
-    if (all)  return 'Restriction(on ' + pTxt + ' only ' + renderTermExpr(all) + ')';
-    if (hasV) return 'Restriction(on ' + pTxt + ' value ' + renderTermExpr(hasV) + ')';
-    if (card) return 'Restriction(on ' + pTxt + ' exactly ' + renderTermExpr(card) + ')';
-    if (minC) return 'Restriction(on ' + pTxt + ' min ' + renderTermExpr(minC) + ')';
-    if (maxC) return 'Restriction(on ' + pTxt + ' max ' + renderTermExpr(maxC) + ')';
-    return 'Restriction(on ' + pTxt + ')';
+  if (onProp && (some || all || hasV || minC || maxC || card)) {
+    const p = onProp.termType === "NamedNode" ? displayName(onProp.value) : termToString(onProp);
+    if (some) return `[Restriction] on ${p} some ${renderTermCompact(some)}`;
+    if (all)  return `[Restriction] on ${p} only ${renderTermCompact(all)}`;
+    if (hasV) return `[Restriction] on ${p} value ${renderTermCompact(hasV)}`;
+    if (card) return `[Restriction] on ${p} exactly ${renderTermCompact(card)}`;
+    if (minC) return `[Restriction] on ${p} min ${renderTermCompact(minC)}`;
+    if (maxC) return `[Restriction] on ${p} max ${renderTermCompact(maxC)}`;
   }
 
-  // Boolean class expressions
-  const inter = objOf(OWL_INTERSECTION_OF);
-  if (isBlankNode(inter)) {
-    const items = readList(inter.value).map(renderTermExpr).filter(Boolean);
-    if (items.length) return 'intersectionOf(' + items.join(' AND ') + ')';
-  }
-  const uni = objOf(OWL_UNION_OF);
-  if (isBlankNode(uni)) {
-    const items = readList(uni.value).map(renderTermExpr).filter(Boolean);
-    if (items.length) return 'unionOf(' + items.join(' OR ') + ')';
-  }
-  const comp = objOf(OWL_COMPLEMENT_OF);
-  if (comp) return 'complementOf(' + renderTermExpr(comp) + ')';
+  // Try collection based expressions
+  const inter = getObj(OWL_INTERSECTION_OF);
+  const uni   = getObj(OWL_UNION_OF);
+  const comp  = getObj(OWL_COMPLEMENT_OF);
 
-  // Fallback: dump predicates succinctly
-  const parts = [];
-  for (const q of qs) {
-    const p = iri(q.predicate);
-    if (!p) continue;
-    if (p === RDF_TYPE) continue;
-    parts.push(shortIri(p) + ' ' + renderTermExpr(q.object));
+  if (comp) return `complementOf ${renderTermCompact(comp)}`;
+  if (inter && inter.termType === "BlankNode") {
+    const items = readRdfList(inter.value).map(renderTermCompact);
+    if (items.length) return `intersectionOf (${items.join(" AND ")})`;
   }
-  if (parts.length) return '_:' + bnid + ' {' + parts.slice(0, 8).join('; ') + (parts.length>8?'; …':'') + '}';
-  return '_:' + bnid;
+  if (uni && uni.termType === "BlankNode") {
+    const items = readRdfList(uni.value).map(renderTermCompact);
+    if (items.length) return `unionOf (${items.join(" OR ")})`;
+  }
+
+  return `[Blank node: ${quads.length} triple(s)]`;
 }
 
-function renderTermExpr(t){
-  if (isNamedNode(t)) return displayIri(t.value);
-  if (isLiteral(t)) return termText(t);
-  if (isBlankNode(t)) return renderAnon(t.value) || ('_:' + t.value);
-  return termText(t);
+function renderClassExpression(bnid) {
+  // More verbose, multi-line view of a bnode restriction/expression
+  const quads = state.blankNodes.get(bnid) ?? [];
+  if (!quads.length) return "";
+
+  // human readable lines
+  const lines = [];
+  for (const q of quads) {
+    const p = q.predicate.termType === "NamedNode" ? iriToCurie(q.predicate.value) : termToString(q.predicate);
+    const o = renderTermCompact(q.object);
+    lines.push(`${p}  ${o}`);
+  }
+  return lines.sort().join("\n");
 }
 
-function readList(headBnodeId){
+function renderTermCompact(term) {
+  if (!term) return "";
+  if (term.termType === "NamedNode") return displayName(term.value);
+  if (term.termType === "BlankNode") {
+    // include summary to help browsing
+    const s = renderBlankNodeSummary(term.value);
+    return "_:" + term.value + (s ? ` (${s})` : "");
+  }
+  if (term.termType === "Literal") {
+    const lang = term.language ? `@${term.language}` : "";
+    return `"${term.value}"${lang}`;
+  }
+  return termToString(term);
+}
+
+function readRdfList(headBnodeId) {
+  // Reads rdf:List starting at _:head
+  // Returns array of N3 terms (objects of rdf:first)
   const out = [];
-  let cur = headBnodeId;
+  let current = headBnodeId;
   const seen = new Set();
-  while (cur && !seen.has(cur)) {
-    seen.add(cur);
-    const qs = S.bnodes.get(cur) || [];
-    const firstQ = qs.find(x => iri(x.predicate) === RDF_FIRST);
-    const restQ = qs.find(x => iri(x.predicate) === RDF_REST);
-    if (firstQ) out.push(firstQ.object);
+
+  while (current && current !== RDF_NIL && !seen.has(current)) {
+    seen.add(current);
+    const quads = state.blankNodes.get(current) ?? [];
+    const firstQ = quads.find(q => q.predicate.termType === "NamedNode" && q.predicate.value === RDF_FIRST);
+    const restQ  = quads.find(q => q.predicate.termType === "NamedNode" && q.predicate.value === RDF_REST);
+
+    if (!firstQ) break;
+    out.push(firstQ.object);
+
     if (!restQ) break;
-    if (isNamedNode(restQ.object) && restQ.object.value === RDF_NIL) break;
-    if (isBlankNode(restQ.object)) cur = restQ.object.value;
+
+    if (restQ.object.termType === "NamedNode" && restQ.object.value === RDF_NIL) break;
+    if (restQ.object.termType === "BlankNode") current = restQ.object.value;
     else break;
   }
   return out;
 }
 
-function shortIri(iriStr){
-  // simple prefix compacting for display in anon dumps
-  for (const pfx of Object.keys(S.prefixes || {})) {
-    const ns = S.prefixes[pfx];
-    if (ns && iriStr.startsWith(ns)) return pfx + ':' + iriStr.slice(ns.length);
+//////////////////////
+// Bootstrapping UI
+//////////////////////
+
+function wireUi() {
+  $("#searchInput").addEventListener("input", () => renderEntityList());
+
+  for (const cb of document.querySelectorAll('input[type="checkbox"][data-kind]').forEach(cb => {
+    cb.addEventListener("change", () => {
+      const kind = cb.getAttribute("data-kind");
+      if (!kind) return;
+      if (cb.checked) state.activeFilters.add(kind);
+      else state.activeFilters.delete(kind);
+      renderEntityList();
+    });
   }
-  return displayIri(iriStr);
 }
 
-//////////////////////
-// wireUi (defensive)
-//////////////////////
-function wireUi(){
-  // Filters
+async function bootstrap() {
   try {
-    const cbs = document.querySelectorAll('.filters input[type="checkbox"][data-kind]');
-    if (cbs && cbs.length) {
-      for (const cb of cbs) {
-        const kind = cb.getAttribute('data-kind');
-        if (!kind) continue;
-        // initialize from checked state
-        if (cb.checked) S.activeKinds.add(kind);
-        else S.activeKinds.delete(kind);
-        cb.addEventListener('change', () => {
-          if (cb.checked) S.activeKinds.add(kind);
-          else S.activeKinds.delete(kind);
-          renderEntityList();
-        });
-      }
+    if (typeof N3 === "undefined") {
+      setStatus("N3.js did not load. Check the script tag in index.html.", true);
+      return;
     }
-  } catch(_e){ /* defensive */ }
-
-  // Search
-  const sb = byId('searchBox');
-  if (sb) sb.addEventListener('input', () => renderEntityList());
-
-  // Load button
-  const btn = byId('loadOntology');
-  if (btn) btn.addEventListener('click', () => loadSelectedOntology());
-
-  // Dropdown change (optional convenience)
-  const sel = byId('ontologySelect');
-  if (sel) sel.addEventListener('change', () => { /* do nothing until load click */ });
-
-  // Initial catalog load
-  loadCatalog();
+    wireUi();
+    await loadCatalog();
+  } catch (err) {
+    console.error(err);
+    setStatus(String(err?.message ?? err), true);
+    $("#details").innerHTML = `<div class="placeholder"><h2 class="bad">Error</h2><pre class="mono">${escapeHtml(String(err?.stack ?? err))}</pre></div>`;
+  }
 }
 
-document.addEventListener('DOMContentLoaded', wireUi);
+document.addEventListener("DOMContentLoaded", bootstrap);
