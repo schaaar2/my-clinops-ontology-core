@@ -833,8 +833,8 @@ function wireUi() {
       if (cb.checked) state.activeFilters.add(kind);
       else state.activeFilters.delete(kind);
       renderEntityList();
-    });
-  
+    })
+  })
 }
 
 async function bootstrap() {
