@@ -5,7 +5,7 @@
   },
   {
     "title": "ClinOps Extensions",
-    "file": "ontologies/clinops-extensions.ttl"
+    "file": "ontologies/USDM.owl"
   },
   {
     "title": "Example Ontology",
