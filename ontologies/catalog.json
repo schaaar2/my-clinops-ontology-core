@@ -1,12 +1,9 @@
-[
-  {
-    "id": "my-ontology",
-    "title": "ClinOps Core",
-    "file": "ontologies/clinops-core.ttl"
-  },
-  {
-    "id": "another-ontology",
-    "title": "DDF USDM Model",
-    "file": "ontologies/USDM.owl"
-  }
-]
+{
+  "default": "./ontologies/clinops-core.ttl",
+  "ontologies": [
+    {
+      "name": "ClinOps ontology (bundled)",
+      "path": "./ontologies/clinops-core.ttl"
+    }
+  ]
+}
