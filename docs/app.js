@@ -834,7 +834,7 @@ function wireUi() {
       else state.activeFilters.delete(kind);
       renderEntityList();
     });
-  }
+  
 }
 
 async function bootstrap() {
