@@ -5,6 +5,6 @@
   },
   {
     "title": "USDM v4",
-    "file": "ontologies/USDM.owl"
+    "file": "ontologies/USDM.ttl"
   }
 ]
