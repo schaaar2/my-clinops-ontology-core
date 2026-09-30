@@ -273,12 +273,17 @@ async function loadOntology(path) {
   state.activeOntology = path;
 
   setStatus(`Loading ${path} …`);
-  $("#details").innerHTML = `<div class="placeholder"><h2>Loading…</h2><p class="mono">${escapeHtml(path)}</p></div>`;
-  $("#entityList").innerHTML = "";
+
+  const detailsEl = $("#details");
+  if (detailsEl) {
+    detailsEl.innerHTML = `<div class="placeholder"><h2>Loading…</h2><p class="mono">${escapeHtml(path)}</p></div>`;
+  }
+
+  const listEl = $("#classList") || $("#entityList");
+  if (listEl) listEl.innerHTML = "";
 
   const ttl = await fetchText(path);
 
-  // Parse TTL with N3.js
   const parser = new N3.Parser({ format: "text/turtle" });
   const quads = [];
   const prefixes = {};
@@ -286,9 +291,7 @@ async function loadOntology(path) {
   await new Promise((resolve, reject) => {
     parser.parse(ttl, (err, quad, pref) => {
       if (err) return reject(err);
-      if (pref) {
-        Object.assign(prefixes, pref);
-      }
+      if (pref) Object.assign(prefixes, pref);
       if (quad) quads.push(quad);
       else resolve();
     });
@@ -447,6 +450,9 @@ function buildEntityIndex() {
 //////////////////////
 
 function renderSummary() {
+  const target = $("#summary");
+  if (!target) return; // #summary is optional in this page
+
   const counts = new Map();
   for (const e of state.entities) counts.set(e.kind, (counts.get(e.kind) ?? 0) + 1);
   const total = state.entities.length;
@@ -457,11 +463,12 @@ function renderSummary() {
       .filter(k => counts.has(k))
       .map(k => `${k}: ${counts.get(k).toLocaleString()}`),
   ];
-  $("#summary").textContent = bits.join(" • ");
+  target.textContent = bits.join(" • ");
 }
 
 function setStatus(msg, isError = false) {
   const st = $("#status");
+  if (!st) return; // #status is optional in this page
   st.textContent = msg ?? "";
   st.classList.toggle("bad", Boolean(isError));
 }
@@ -483,13 +490,15 @@ function entityMatchesSearch(e, q) {
 }
 
 function renderEntityList() {
-  const list = $("#entityList");
+  const list = $("#classList") || $("#entityList");
+  if (!list) return;
   list.innerHTML = "";
 
-  const q = $("#searchInput").value ?? "";
+  const searchEl = $("#searchInput") || $("#searchBox");
+  const q = (searchEl && searchEl.value) ? searchEl.value : "";
+
   const filtered = state.entities.filter(e => entityMatchesFilters(e) && entityMatchesSearch(e, q));
 
-  // keep list manageable (client-side)
   const MAX = 2500;
   const shown = filtered.slice(0, MAX);
 
@@ -516,7 +525,9 @@ function renderEntityList() {
     list.append(item);
   }
 
-  const tail = filtered.length > MAX ? `Showing first ${MAX.toLocaleString()} of ${filtered.length.toLocaleString()} matches. Refine search.` : `${filtered.length.toLocaleString()} matches.`;
+  const tail = filtered.length > MAX
+    ? `Showing first ${MAX.toLocaleString()} of ${filtered.length.toLocaleString()} matches. Refine search.`
+    : `${filtered.length.toLocaleString()} matches.`;
   setStatus(tail);
 }
 
@@ -833,17 +844,17 @@ function readRdfList(headBnodeId) {
 //////////////////////
 
 function wireUi() {
-  // Your index.html uses #searchBox; older code expected #searchInput.
   const search = $("#searchInput") || $("#searchBox");
   if (search) {
     search.addEventListener("input", () => renderEntityList());
+  }
+
   const loadBtn = $("#loadOntology");
   if (loadBtn) {
     loadBtn.addEventListener("click", () => {
       const sel = $("#ontologySelect");
       if (sel && sel.value) loadOntology(sel.value);
     });
-  }
   }
 
   document.querySelectorAll('input[type="checkbox"][data-kind]').forEach((cb) => {
