@@ -1,5 +1,4 @@
-{
-  [
+[
   {
     "title": "ClinOps Core",
     "file": "ontologies/clinops-core.ttl"
@@ -13,4 +12,3 @@
     "file": "ontologies/example.ttl"
   }
 ]
-}
