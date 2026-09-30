@@ -218,23 +218,32 @@ async function loadCatalog() {
   const txt = await fetchText(url);
   const cat = JSON.parse(txt);
 
+  // Support both: a plain array, or an object with an "ontologies" array.
+  const list = Array.isArray(cat) ? cat : (cat.ontologies ?? []);
+
   const select = $("#ontologySelect");
   select.innerHTML = "";
 
-  for (const item of cat.ontologies ?? []) {
-    const opt = el("option", { value: item.path }, [document.createTextNode(item.name ?? item.path)]);
+  for (const item of list) {
+    // Support both key styles: {title,file} and {name,path}.
+    const path = item.file ?? item.path;
+    const name = item.title ?? item.name ?? path;
+    const opt = el("option", { value: path }, [document.createTextNode(name)]);
     select.append(opt);
   }
 
-  if (!cat.ontologies || cat.ontologies.length === 0) {
-    setStatus(`No ontologies listed in ontologies/catalog.json`, true);
+  if (list.length === 0) {
+    setStatus("No ontologies listed in ontologies/catalog.json", true);
     return;
   }
 
   select.addEventListener("change", () => loadOntology(select.value));
 
-  // Load default
-  const defaultPath = cat.default ?? cat.ontologies[0].path;
+  // Load default (object form may specify cat.default; otherwise first entry).
+  const defaultPath = (!Array.isArray(cat) && cat.default)
+    ? cat.default
+    : (list[0].file ?? list[0].path);
+
   select.value = defaultPath;
   await loadOntology(defaultPath);
 }
@@ -824,7 +833,18 @@ function readRdfList(headBnodeId) {
 //////////////////////
 
 function wireUi() {
-  $("#searchInput").addEventListener("input", () => renderEntityList());
+  // Your index.html uses #searchBox; older code expected #searchInput.
+  const search = $("#searchInput") || $("#searchBox");
+  if (search) {
+    search.addEventListener("input", () => renderEntityList());
+  const loadBtn = $("#loadOntology");
+  if (loadBtn) {
+    loadBtn.addEventListener("click", () => {
+      const sel = $("#ontologySelect");
+      if (sel && sel.value) loadOntology(sel.value);
+    });
+  }
+  }
 
   document.querySelectorAll('input[type="checkbox"][data-kind]').forEach((cb) => {
     cb.addEventListener("change", () => {
