@@ -1,0 +1,30 @@
+# Ontology concept -> CSV source mapping
+# ClinicalTrialSite:
+#   table: sites.csv
+#   idColumn: site_id        # primary key used to join
+
+# hasEnrollmentCount:
+#   table: sites.csv
+#   column: enrollment_count # how many patients enrolled at the site
+
+mappings:
+  - source:
+      ontology_class: http://purl.obolibrary.org/obo/NCIT_C15206 # "Clinical Study"   # ontology class name
+      data_property: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_I0091 #"Identifyer"        # property on that class
+    target:
+      table: site_readiness_demo.csv                 # database table name
+      field: "Study"                     # database column name
+
+  - source:
+      ontology_class: http://purl.obolibrary.org/obo/NCIT_C83100 # "Study Site Number"   # ontology class name
+      data_property: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0090 # "Identifyer"        # property on that class
+    target:
+      table: site_readiness_demo.csv                 # database table name
+      field: "SiteID"                     # database column name
+
+  - source:
+      ontology_class: https://w3id.org/cdisc/usdm/v4/StudySite # "Study Site"   # ontology class name
+      data_property: https://w3id.org/cdisc/usdm/v4/StudySite-name # "Study Site Name"        # property on that class
+    target:
+      table: site_readiness_demo.csv                 # database table name
+      field: "Site Name"                     # database column name
