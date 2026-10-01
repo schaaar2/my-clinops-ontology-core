@@ -13,9 +13,9 @@ mappings:
       ontology_class: 
         rdfs:label: "Clinical Study"  
         uri: http://purl.obolibrary.org/obo/NCIT_C15206
-      data_property: 
-        rdfs:label: "Uniqure Identifier"
-        uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0091
+        data_property: 
+          rdfs:label: "Uniqure Identifier"
+          uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0091
     target:
       database: 
         table: site_readiness_demo.csv                 # database table name
@@ -28,9 +28,9 @@ mappings:
       ontology_class: 
         rdfs:label: "Study Site Number"
         uri: http://purl.obolibrary.org/obo/NCIT_C83100
-      data_property:
-        rdfs:label: "Identifier"
-        uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0090
+        data_property:
+          rdfs:label: "Identifier"
+          uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0090
     target:
       database:
         table: site_readiness_demo.csv       
@@ -43,9 +43,9 @@ mappings:
       ontology_class: 
         rdfs:label: "Study Site"
         uri: https://w3id.org/cdisc/usdm/v4/StudySite # "Study Site"   # ontology class name
-      data_property: 
-        rdfs:label: StudySite-name
-        uri: https://w3id.org/cdisc/usdm/v4/StudySite-name # "Study Site Name"        # property on that class
+        data_property: 
+          rdfs:label: StudySite-name
+          uri: https://w3id.org/cdisc/usdm/v4/StudySite-name # "Study Site Name"        # property on that class
     target:
       database:
         table: site_readiness_demo.csv       
@@ -56,17 +56,42 @@ mappings:
     
   - source:
       ontology_class: 
-        rdfs:lable: "Study Site"
-        uri: https://w3id.org/cdisc/usdm/v4/StudySite # "Study Site"   # ontology class name
-      data_property: 
-      rdfs:lable: 
-      uri: https://w3id.org/cdisc/usdm/v4/StudySite-name # "Study Site Name"        # property on that class
-    target:
-      database:
-        table: site_readiness_demo.csv       
-        field: "SiteID"
-      key_fields:
-        field: "Study"
-        field: "SiteID" 
+        rdfs:label: "Milestone"
+        uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_C0028
+        data_property: 
+          rdfs:label: "in XSD date"
+          uri: http://www.w3.org/2006/time#inXSDDate
+      restricted_by:
+        - ontology_class: 
+            rdfs:label: "Clinical Study"  
+            uri: http://purl.obolibrary.org/obo/NCIT_C15206
+            data_property: 
+              rdfs:label: "Uniqure Identifier"
+              uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0091
+        - ontology_class: 
+            rdfs:label: "Study Site Number"
+            uri: http://purl.obolibrary.org/obo/NCIT_C83100
+            data_property:
+              rdfs:label: "Identifier"
+              uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0090
+        - ontology_class: 
+            rdfs:label: "Milestone Name"
+            uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_C0040
+            individual:
+              rdfs:label: SIV
+              uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_C0044
+        - ontology_class: 
+            rdfs:label: "Milestone Planning Activity"
+            uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_C0065
+            individual:
+              rdfs:label: "NCV latest planned milestone entry"
+              uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/Test_I007     
+      target:
+        database:
+          table: site_readiness_demo.csv       
+          field: "SIV planned date"
+        key_fields:
+          field: "Study"
+          field: "SiteID" 
 
       
