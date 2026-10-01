@@ -9,6 +9,6 @@
   },
     {
     "title": "ClinOps Core",
-    "file": "ontologies/clinops-core.ttl"
+    "file": "ontologies/vendor_site_readiness_ontology_v1.0.0.ttl"
   }
 ]
