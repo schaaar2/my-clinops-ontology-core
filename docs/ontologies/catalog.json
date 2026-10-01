@@ -6,5 +6,9 @@
   {
     "title": "USDM v4",
     "file": "ontologies/USDM.ttl"
+  },
+    {
+    "title": "ClinOps Core",
+    "file": "ontologies/clinops-core.ttl"
   }
 ]
