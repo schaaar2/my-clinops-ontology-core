@@ -1,0 +1,3134 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vsr: <https://data.novartis.com/ontology/vendor-site-readiness/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.novartis.com/ontology/vendor-site-readiness> a owl:Ontology ;
+    dcterms:created "2026-09-30"^^xsd:date ;
+    dcterms:description "Protocol-driven ontology for vendor-service readiness at clinical study sites, covering assignments, requirements, personnel, access, training, plans, activities, logistics, equipment, evidence, assessments, risks, decisions, recommendations, provenance and auditability."@en ;
+    dcterms:title "Vendor Site Readiness Ontology"@en ;
+    rdfs:comment "Production-oriented semantic baseline. Closed-world validation, arithmetic, temporal comparison and completeness rules are delegated to SHACL or application logic."@en ;
+    owl:versionIRI vsr:1.0.0 ;
+    owl:versionInfo "1.0.0" ;
+    vsr:businessRule "Absence of an evidence triple is not proof of missing evidence; use SHACL against a declared closed data scope."@en,
+        "Calculated readiness and human-approved readiness are distinct."@en,
+        "Delivered is not shipment-ready until required items are reconciled and receipt is acknowledged."@en,
+        "Evidence must be accepted, current, unexpired and linked to the correct assignment and requirement."@en,
+        "Protocol amendments trigger reassessment of applicability, plans, evidence, assessments and decisions."@en,
+        "Ready requires all applicable mandatory requirements satisfied or validly waived, all blocking findings closed, and an authorized approved decision."@en ;
+    vsr:competencyQuestion "What blocks SIV or Ready-to-Screen?"@en,
+        "What evidence and source records support the readiness decision?"@en,
+        "What next action is recommended, for whom and why?"@en,
+        "Which equipment requires installation, qualification or certification?"@en,
+        "Which mandatory requirements are unsatisfied or lack acceptable evidence?"@en,
+        "Which personnel require training or vendor-system access?"@en,
+        "Which protocol-derived requirements apply to each assignment?"@en,
+        "Which shipments are delayed, delivered or awaiting acknowledgement?"@en,
+        "Which vendor services are assigned to a study site?"@en,
+        "Who approved the decision and what rationale was recorded?"@en .
+
+vsr:AccessGrantedMilestone a owl:Class ;
+    rdfs:label "Access granted milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:AccessProvision a owl:Class ;
+    rdfs:label "Access provision"@en ;
+    rdfs:subClassOf vsr:SystemAccess .
+
+vsr:AccessProvisioningActivity a owl:Class ;
+    rdfs:label "Access provisioning activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:AccessRequest a owl:Class ;
+    rdfs:label "Access request"@en ;
+    rdfs:subClassOf vsr:SystemAccess .
+
+vsr:AccessRevocation a owl:Class ;
+    rdfs:label "Access revocation"@en ;
+    rdfs:subClassOf vsr:SystemAccess .
+
+vsr:AccessRisk a owl:Class ;
+    rdfs:label "Access risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:AcknowledgedShipment a owl:Class ;
+    rdfs:label "Acknowledged shipment"@en ;
+    rdfs:subClassOf vsr:Shipment ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:Shipment [ a owl:Restriction ;
+                        owl:hasValue vsr:ShipmentAcknowledged ;
+                        owl:onProperty vsr:hasShipmentStatus ] ) ] .
+
+vsr:ActivityAssignment a owl:Class ;
+    rdfs:label "Activity assignment"@en ;
+    rdfs:subClassOf vsr:Assignment .
+
+vsr:ActivityDependency a owl:Class ;
+    rdfs:label "Activity dependency"@en ;
+    rdfs:subClassOf vsr:Dependency .
+
+vsr:ApplicabilityRule a owl:Class ;
+    rdfs:label "Applicability rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:ApprovalActivity a owl:Class ;
+    rdfs:label "Approval activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:ApprovalDecision a owl:Class ;
+    rdfs:label "Approval decision"@en ;
+    rdfs:subClassOf vsr:Decision .
+
+vsr:ApprovalDocument a owl:Class ;
+    rdfs:label "Approval document"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:ApprovedReadyAssignment a owl:Class ;
+    rdfs:label "Approved ready assignment"@en ;
+    rdfs:subClassOf vsr:SiteVendorServiceAssignment ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:SiteVendorServiceAssignment [ a owl:Restriction ;
+                        owl:hasValue vsr:Ready ;
+                        owl:onProperty vsr:hasCurrentReadinessStatus ] ) ] .
+
+vsr:ApproverRole a owl:Class ;
+    rdfs:label "Approver role"@en ;
+    rdfs:subClassOf vsr:Role .
+
+vsr:AtRiskAssignment a owl:Class ;
+    rdfs:label "At-risk assignment"@en ;
+    rdfs:subClassOf vsr:SiteVendorServiceAssignment ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:SiteVendorServiceAssignment [ a owl:Restriction ;
+                        owl:hasValue vsr:ReadinessAtRisk ;
+                        owl:onProperty vsr:hasCurrentReadinessStatus ] ) ] .
+
+vsr:BiomarkerService a owl:Class ;
+    rdfs:label "Biomarker service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:BlockingDependency a owl:Class ;
+    rdfs:label "Blocking dependency"@en ;
+    rdfs:subClassOf vsr:Dependency .
+
+vsr:BusinessEvent a owl:Class ;
+    rdfs:label "Business event"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:CentralLaboratoryService a owl:Class ;
+    rdfs:label "Central laboratory service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:CertificationActivity a owl:Class ;
+    rdfs:label "Certification activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:CertificationRequirement a owl:Class ;
+    rdfs:label "Certification requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:ClinicalEquipment a owl:Class ;
+    rdfs:label "Clinical equipment"@en ;
+    rdfs:subClassOf vsr:Equipment .
+
+vsr:CommunicationRecord a owl:Class ;
+    rdfs:label "Communication record"@en ;
+    rdfs:subClassOf vsr:Artifact .
+
+vsr:CompletedReadinessAssessment a owl:Class ;
+    rdfs:label "Completed readiness assessment"@en ;
+    rdfs:subClassOf vsr:ReadinessAssessment ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:ReadinessAssessment [ a owl:Restriction ;
+                        owl:hasValue vsr:AssessmentCompleted ;
+                        owl:onProperty vsr:hasAssessmentStatus ] ) ] .
+
+vsr:CompletionRule a owl:Class ;
+    rdfs:label "Completion rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:Consumable a owl:Class ;
+    rdfs:label "Consumable"@en ;
+    rdfs:subClassOf vsr:SupplyItem .
+
+vsr:CountryRequirement a owl:Class ;
+    rdfs:label "Country requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:CourierOrganization a owl:Class ;
+    rdfs:label "Courier organization"@en ;
+    rdfs:subClassOf vsr:Organization .
+
+vsr:DataDependency a owl:Class ;
+    rdfs:label "Data dependency"@en ;
+    rdfs:subClassOf vsr:Dependency .
+
+vsr:DataQualityFinding a owl:Class ;
+    rdfs:label "Data quality finding"@en ;
+    rdfs:subClassOf vsr:Finding .
+
+vsr:DataQualityRisk a owl:Class ;
+    rdfs:label "Data quality risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:DependencyRule a owl:Class ;
+    rdfs:label "Dependency rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:Device a owl:Class ;
+    rdfs:label "Device"@en ;
+    rdfs:subClassOf vsr:Equipment .
+
+vsr:DocumentCollectionActivity a owl:Class ;
+    rdfs:label "Document collection activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:DocumentationRequirement a owl:Class ;
+    rdfs:label "Documentation requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:ECGService a owl:Class ;
+    rdfs:label "ECG service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:ECOAService a owl:Class ;
+    rdfs:label "eCOA service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:EquipmentInstallationActivity a owl:Class ;
+    rdfs:label "Equipment installation activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:EquipmentQualificationActivity a owl:Class ;
+    rdfs:label "Equipment qualification activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:EquipmentQualificationRequirement a owl:Class ;
+    rdfs:label "Equipment qualification requirement"@en ;
+    rdfs:subClassOf vsr:EquipmentRequirement .
+
+vsr:EquipmentQualifiedMilestone a owl:Class ;
+    rdfs:label "Equipment qualified milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:EquipmentReadiness a owl:Class ;
+    rdfs:label "Equipment readiness"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:EquipmentReadinessAssessment a owl:Class ;
+    rdfs:label "Equipment readiness assessment"@en ;
+    rdfs:subClassOf vsr:ReadinessAssessment .
+
+vsr:EquipmentRisk a owl:Class ;
+    rdfs:label "Equipment risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:EquipmentService a owl:Class ;
+    rdfs:label "Equipment service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:EquipmentSetupActivity a owl:Class ;
+    rdfs:label "Equipment setup activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:EscalationActivity a owl:Class ;
+    rdfs:label "Escalation activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:EscalationRecommendation a owl:Class ;
+    rdfs:label "Escalation recommendation"@en ;
+    rdfs:subClassOf vsr:Recommendation .
+
+vsr:EscalationRule a owl:Class ;
+    rdfs:label "Escalation rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:EvidenceCompletenessAssessment a owl:Class ;
+    rdfs:label "Evidence completeness assessment"@en ;
+    rdfs:subClassOf vsr:ReadinessAssessment .
+
+vsr:EvidenceExpirationEvent a owl:Class ;
+    rdfs:label "Evidence expiration event"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:EvidenceRequirement a owl:Class ;
+    rdfs:label "Evidence requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:EvidenceReviewActivity a owl:Class ;
+    rdfs:label "Evidence review activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:EvidenceSubmissionEvent a owl:Class ;
+    rdfs:label "Evidence submission event"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:EvidenceSupportedEvaluation a owl:Class ;
+    rdfs:label "Evidence-supported evaluation"@en ;
+    rdfs:subClassOf vsr:RequirementEvaluation ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:RequirementEvaluation [ a owl:Restriction ;
+                        owl:onProperty vsr:supportedByEvidence ;
+                        owl:someValuesFrom vsr:ReadinessEvidence ] ) ] .
+
+vsr:Exception a owl:Class ;
+    rdfs:label "Exception"@en ;
+    rdfs:subClassOf vsr:Finding .
+
+vsr:ExceptionEvidence a owl:Class ;
+    rdfs:label "Exception evidence"@en ;
+    rdfs:subClassOf vsr:ReadinessEvidence .
+
+vsr:ExpirationRule a owl:Class ;
+    rdfs:label "Expiration rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:ExternalDependency a owl:Class ;
+    rdfs:label "External dependency"@en ;
+    rdfs:subClassOf vsr:Dependency .
+
+vsr:FailedRequirementFinding a owl:Class ;
+    rdfs:label "Failed requirement finding"@en ;
+    rdfs:subClassOf vsr:ReadinessGap .
+
+vsr:FirstPatientVisitMilestone a owl:Class ;
+    rdfs:label "First patient visit milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:HomeNursingService a owl:Class ;
+    rdfs:label "Home nursing service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:IRTService a owl:Class ;
+    rdfs:label "IRT service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:ImagingEquipment a owl:Class ;
+    rdfs:label "Imaging equipment"@en ;
+    rdfs:subClassOf vsr:Equipment .
+
+vsr:ImagingService a owl:Class ;
+    rdfs:label "Imaging service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:LaboratoryEquipment a owl:Class ;
+    rdfs:label "Laboratory equipment"@en ;
+    rdfs:subClassOf vsr:Equipment .
+
+vsr:LaboratoryKit a owl:Class ;
+    rdfs:label "Laboratory kit"@en ;
+    rdfs:subClassOf vsr:SupplyItem .
+
+vsr:LicenseRequirement a owl:Class ;
+    rdfs:label "License requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:LocalLaboratoryService a owl:Class ;
+    rdfs:label "Local laboratory service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:MilestoneDependency a owl:Class ;
+    rdfs:label "Milestone dependency"@en ;
+    rdfs:subClassOf vsr:Dependency .
+
+vsr:MissingEvidenceFinding a owl:Class ;
+    rdfs:label "Missing evidence finding"@en ;
+    rdfs:subClassOf vsr:ReadinessGap .
+
+vsr:NextBestActionRecommendation a owl:Class ;
+    rdfs:label "Next-best-action recommendation"@en ;
+    rdfs:subClassOf vsr:Recommendation .
+
+vsr:OtherClinicalVendorService a owl:Class ;
+    rdfs:label "Other clinical vendor service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:OverdueActivityFinding a owl:Class ;
+    rdfs:label "Overdue activity finding"@en ;
+    rdfs:subClassOf vsr:ReadinessGap .
+
+vsr:PersonnelReadinessAssessment a owl:Class ;
+    rdfs:label "Personnel readiness assessment"@en ;
+    rdfs:subClassOf vsr:ReadinessAssessment .
+
+vsr:PersonnelRequirement a owl:Class ;
+    rdfs:label "Personnel requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:PersonnelSetupActivity a owl:Class ;
+    rdfs:label "Personnel setup activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:ProtocolComplianceRisk a owl:Class ;
+    rdfs:label "Protocol compliance risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:ProtocolDocument a owl:Class ;
+    rdfs:label "Protocol document"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:ProtocolRequirement a owl:Class ;
+    rdfs:label "Protocol requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:QualificationCertificate a owl:Class ;
+    rdfs:label "Qualification certificate"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:QualificationRisk a owl:Class ;
+    rdfs:label "Qualification risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:QualifiedEquipment a owl:Class ;
+    rdfs:label "Qualified equipment"@en ;
+    rdfs:subClassOf vsr:Equipment ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:Equipment [ a owl:Restriction ;
+                        owl:onProperty vsr:hasQualification ;
+                        owl:someValuesFrom vsr:EquipmentQualification ] ) ] .
+
+vsr:ReadinessCheckActivity a owl:Class ;
+    rdfs:label "Readiness check activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:ReadinessOutcome a owl:Class ;
+    rdfs:label "Readiness outcome"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:ReadinessOwnerRole a owl:Class ;
+    rdfs:label "Readiness owner role"@en ;
+    rdfs:subClassOf vsr:Role .
+
+vsr:ReadinessPackage a owl:Class ;
+    rdfs:label "Readiness package"@en ;
+    rdfs:subClassOf vsr:Artifact .
+
+vsr:ReadinessRecommendation a owl:Class ;
+    rdfs:label "Readiness recommendation"@en ;
+    rdfs:subClassOf vsr:Recommendation .
+
+vsr:ReadinessRisk a owl:Class ;
+    rdfs:label "Readiness risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:ReadinessRule a owl:Class ;
+    rdfs:label "Readiness rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:ReadyToScreenDecision a owl:Class ;
+    rdfs:label "Ready-to-screen decision"@en ;
+    rdfs:subClassOf vsr:ReadinessDecision .
+
+vsr:ReadyToScreenMilestone a owl:Class ;
+    rdfs:label "Ready-to-screen milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:ReconciliationFinding a owl:Class ;
+    rdfs:label "Reconciliation finding"@en ;
+    rdfs:subClassOf vsr:Finding .
+
+vsr:RegulatoryDocument a owl:Class ;
+    rdfs:label "Regulatory document"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:RegulatoryOrganization a owl:Class ;
+    rdfs:label "Regulatory organization"@en ;
+    rdfs:subClassOf vsr:Organization .
+
+vsr:RegulatoryRequirement a owl:Class ;
+    rdfs:label "Regulatory requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:RemediationRecommendation a owl:Class ;
+    rdfs:label "Remediation recommendation"@en ;
+    rdfs:subClassOf vsr:Recommendation .
+
+vsr:RequirementChangeEvent a owl:Class ;
+    rdfs:label "Requirement change event"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:RequirementDependency a owl:Class ;
+    rdfs:label "Requirement dependency"@en ;
+    rdfs:subClassOf vsr:Dependency .
+
+vsr:ReviewerRole a owl:Class ;
+    rdfs:label "Reviewer role"@en ;
+    rdfs:subClassOf vsr:Role .
+
+vsr:RiskAcceptanceDecision a owl:Class ;
+    rdfs:label "Risk acceptance decision"@en ;
+    rdfs:subClassOf vsr:Decision .
+
+vsr:RiskAssessment a owl:Class ;
+    rdfs:label "Risk assessment"@en ;
+    rdfs:subClassOf vsr:Assessment .
+
+vsr:RoleAssignment a owl:Class ;
+    rdfs:label "Role assignment"@en ;
+    rdfs:subClassOf vsr:Assignment .
+
+vsr:SIVMilestone a owl:Class ;
+    rdfs:label "Site initiation visit milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:SIVPlan a owl:Class ;
+    rdfs:label "SIV plan"@en ;
+    rdfs:subClassOf vsr:Plan .
+
+vsr:SIVPlanner a owl:Class ;
+    rdfs:label "SIV planner"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:SIVReadyMilestone a owl:Class ;
+    rdfs:label "SIV ready milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:SampleCollectionKit a owl:Class ;
+    rdfs:label "Sample collection kit"@en ;
+    rdfs:subClassOf vsr:SupplyItem .
+
+vsr:SampleLogisticsService a owl:Class ;
+    rdfs:label "Sample logistics service"@en ;
+    rdfs:subClassOf vsr:VendorService .
+
+vsr:ScheduleRecommendation a owl:Class ;
+    rdfs:label "Schedule recommendation"@en ;
+    rdfs:subClassOf vsr:Recommendation .
+
+vsr:ScheduleRisk a owl:Class ;
+    rdfs:label "Schedule risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:ScoringRule a owl:Class ;
+    rdfs:label "Scoring rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:ServiceCapability a owl:Class ;
+    rdfs:label "Service capability"@en ;
+    rdfs:subClassOf vsr:Capability .
+
+vsr:ShipmentAcknowledgementActivity a owl:Class ;
+    rdfs:label "Shipment acknowledgement activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:ShipmentActivity a owl:Class ;
+    rdfs:label "Shipment activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:ShipmentDeliveredMilestone a owl:Class ;
+    rdfs:label "Shipment delivered milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:ShipmentDocument a owl:Class ;
+    rdfs:label "Shipment document"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:ShipmentEvent a owl:Class ;
+    rdfs:label "Shipment event"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:ShipmentPlan a owl:Class ;
+    rdfs:label "Shipment plan"@en ;
+    rdfs:subClassOf vsr:Plan .
+
+vsr:ShipmentReadinessAssessment a owl:Class ;
+    rdfs:label "Shipment readiness assessment"@en ;
+    rdfs:subClassOf vsr:ReadinessAssessment .
+
+vsr:ShipmentRecipientRole a owl:Class ;
+    rdfs:label "Shipment recipient role"@en ;
+    rdfs:subClassOf vsr:Role .
+
+vsr:ShipmentRequirement a owl:Class ;
+    rdfs:label "Shipment requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:ShipmentRisk a owl:Class ;
+    rdfs:label "Shipment risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:SiteActivatedMilestone a owl:Class ;
+    rdfs:label "Site activated milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:SitePersonnel a owl:Class ;
+    rdfs:label "Site personnel"@en ;
+    rdfs:subClassOf vsr:Person .
+
+vsr:SitePersonnelReadiness a owl:Class ;
+    rdfs:label "Site personnel readiness"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:SitePersonnelRole a owl:Class ;
+    rdfs:label "Site personnel role"@en ;
+    rdfs:subClassOf vsr:Role .
+
+vsr:SiteReadinessSheet a owl:Class ;
+    rdfs:label "Site readiness sheet"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:SiteRequirement a owl:Class ;
+    rdfs:label "Site requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:SiteSelectedMilestone a owl:Class ;
+    rdfs:label "Site selected milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:SponsorOrganization a owl:Class ;
+    rdfs:label "Sponsor organization"@en ;
+    rdfs:subClassOf vsr:Organization .
+
+vsr:SponsorPersonnel a owl:Class ;
+    rdfs:label "Sponsor personnel"@en ;
+    rdfs:subClassOf vsr:Person .
+
+vsr:SponsorRole a owl:Class ;
+    rdfs:label "Sponsor role"@en ;
+    rdfs:subClassOf vsr:Role .
+
+vsr:StatusChangeEvent a owl:Class ;
+    rdfs:label "Status change event"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:StudyRequirement a owl:Class ;
+    rdfs:label "Study requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:StudySiteAssignment a owl:Class ;
+    rdfs:label "Study site assignment"@en ;
+    rdfs:subClassOf vsr:Assignment .
+
+vsr:StudyVendorAssignment a owl:Class ;
+    rdfs:label "Study vendor assignment"@en ;
+    rdfs:subClassOf vsr:Assignment .
+
+vsr:SystemAccessReadinessAssessment a owl:Class ;
+    rdfs:label "System access readiness assessment"@en ;
+    rdfs:subClassOf vsr:ReadinessAssessment .
+
+vsr:SystemAccessRequirement a owl:Class ;
+    rdfs:label "System access requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:SystemRecord a owl:Class ;
+    rdfs:label "System record"@en ;
+    rdfs:subClassOf vsr:DataRecord .
+
+vsr:SystemRegistrationActivity a owl:Class ;
+    rdfs:label "System registration activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:TemporalRule a owl:Class ;
+    rdfs:label "Temporal rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:ThresholdRule a owl:Class ;
+    rdfs:label "Threshold rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:TrackingIdentifier a owl:Class ;
+    rdfs:label "Tracking identifier"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:TrainingActivity a owl:Class ;
+    rdfs:label "Training activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:TrainingCertificate a owl:Class ;
+    rdfs:label "Training certificate"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:TrainingCompletedMilestone a owl:Class ;
+    rdfs:label "Training completed milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:TrainingCurriculum a owl:Class ;
+    rdfs:label "Training curriculum"@en ;
+    rdfs:subClassOf vsr:Training .
+
+vsr:TrainingPlan a owl:Class ;
+    rdfs:label "Training plan"@en ;
+    rdfs:subClassOf vsr:Plan .
+
+vsr:TrainingReadinessAssessment a owl:Class ;
+    rdfs:label "Training readiness assessment"@en ;
+    rdfs:subClassOf vsr:ReadinessAssessment .
+
+vsr:TrainingRequirement a owl:Class ;
+    rdfs:label "Training requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:TrainingRisk a owl:Class ;
+    rdfs:label "Training risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:TrainingRole a owl:Class ;
+    rdfs:label "Training role"@en ;
+    rdfs:subClassOf vsr:Role .
+
+vsr:VendorAssignedMilestone a owl:Class ;
+    rdfs:label "Vendor assigned milestone"@en ;
+    rdfs:subClassOf vsr:Milestone .
+
+vsr:VendorAssignmentActivity a owl:Class ;
+    rdfs:label "Vendor assignment activity"@en ;
+    rdfs:subClassOf vsr:Activity .
+
+vsr:VendorContact a owl:Class ;
+    rdfs:label "Vendor contact"@en ;
+    rdfs:subClassOf vsr:Person .
+
+vsr:VendorManual a owl:Class ;
+    rdfs:label "Vendor manual"@en ;
+    rdfs:subClassOf vsr:Document .
+
+vsr:VendorRequirement a owl:Class ;
+    rdfs:label "Vendor requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:VendorRisk a owl:Class ;
+    rdfs:label "Vendor risk"@en ;
+    rdfs:subClassOf vsr:Risk .
+
+vsr:VendorRole a owl:Class ;
+    rdfs:label "Vendor role"@en ;
+    rdfs:subClassOf vsr:Role .
+
+vsr:VendorServiceReadinessPlan a owl:Class ;
+    rdfs:label "Vendor service readiness plan"@en ;
+    rdfs:subClassOf vsr:Plan .
+
+vsr:WaiverDecision a owl:Class ;
+    rdfs:label "Waiver decision"@en ;
+    rdfs:subClassOf vsr:Decision .
+
+vsr:WaiverRule a owl:Class ;
+    rdfs:label "Waiver rule"@en ;
+    rdfs:subClassOf vsr:Rule .
+
+vsr:accessVerifiedDate a owl:DatatypeProperty ;
+    rdfs:label "accessVerifiedDate"@en ;
+    rdfs:domain vsr:SystemAccessAssignment ;
+    rdfs:range xsd:dateTime .
+
+vsr:accountActivationDate a owl:DatatypeProperty ;
+    rdfs:label "accountActivationDate"@en ;
+    rdfs:domain vsr:UserAccount ;
+    rdfs:range xsd:dateTime .
+
+vsr:accountCreationDate a owl:DatatypeProperty ;
+    rdfs:label "accountCreationDate"@en ;
+    rdfs:domain vsr:UserAccount ;
+    rdfs:range xsd:dateTime .
+
+vsr:accountRevocationDate a owl:DatatypeProperty ;
+    rdfs:label "accountRevocationDate"@en ;
+    rdfs:domain vsr:UserAccount ;
+    rdfs:range xsd:dateTime .
+
+vsr:achievesMilestone a owl:ObjectProperty ;
+    rdfs:label "achievesMilestone"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:Milestone .
+
+vsr:acknowledgedBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "acknowledgedBy"@en ;
+    rdfs:domain vsr:ReceiptAcknowledgement ;
+    rdfs:range vsr:Person .
+
+vsr:activityComment a owl:DatatypeProperty ;
+    rdfs:label "activityComment"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range xsd:string .
+
+vsr:activityForAssignment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "activityForAssignment"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:SiteVendorServiceAssignment .
+
+vsr:activityId a owl:DatatypeProperty ;
+    rdfs:label "activityId"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range xsd:string .
+
+vsr:activityName a owl:DatatypeProperty ;
+    rdfs:label "activityName"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range xsd:string .
+
+vsr:actualCompletionDate a owl:DatatypeProperty ;
+    rdfs:label "actualCompletionDate"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:date .
+
+vsr:actualDeliveryDate a owl:DatatypeProperty ;
+    rdfs:label "actualDeliveryDate"@en ;
+    rdfs:domain vsr:Delivery ;
+    rdfs:range xsd:dateTime .
+
+vsr:actualSIVDate a owl:DatatypeProperty ;
+    rdfs:label "actualSIVDate"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range xsd:date .
+
+vsr:actualStartDate a owl:DatatypeProperty ;
+    rdfs:label "actualStartDate"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:date .
+
+vsr:affectedByAmendment a owl:ObjectProperty ;
+    rdfs:label "affectedByAmendment"@en ;
+    rdfs:domain vsr:Plan ;
+    rdfs:range vsr:ProtocolAmendment .
+
+vsr:amendmentEffectiveDate a owl:DatatypeProperty ;
+    rdfs:label "amendmentEffectiveDate"@en ;
+    rdfs:domain vsr:ProtocolAmendment ;
+    rdfs:range xsd:date .
+
+vsr:amendmentNumber a owl:DatatypeProperty ;
+    rdfs:label "amendmentNumber"@en ;
+    rdfs:domain vsr:ProtocolAmendment ;
+    rdfs:range xsd:string .
+
+vsr:applicabilityExpression a owl:DatatypeProperty ;
+    rdfs:label "applicabilityExpression"@en ;
+    rdfs:domain vsr:Rule ;
+    rdfs:range xsd:string .
+
+vsr:appliesToCountry a owl:ObjectProperty ;
+    rdfs:label "appliesToCountry"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range vsr:Country .
+
+vsr:appliesToRole a owl:ObjectProperty ;
+    rdfs:label "appliesToRole"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range vsr:Role .
+
+vsr:appliesToService a owl:ObjectProperty ;
+    rdfs:label "appliesToService"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range vsr:VendorService .
+
+vsr:appliesToSite a owl:ObjectProperty ;
+    rdfs:label "appliesToSite"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range vsr:StudySite .
+
+vsr:approvedBy a owl:ObjectProperty ;
+    rdfs:label "approvedBy"@en ;
+    rdfs:domain vsr:ProvenanceEntity ;
+    rdfs:range vsr:Party .
+
+vsr:approvedDate a owl:DatatypeProperty ;
+    rdfs:label "approvedDate"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range xsd:dateTime .
+
+vsr:assessmentDate a owl:DatatypeProperty ;
+    rdfs:label "assessmentDate"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range xsd:dateTime .
+
+vsr:assessmentId a owl:DatatypeProperty ;
+    rdfs:label "assessmentId"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range xsd:string .
+
+vsr:assessmentRationale a owl:DatatypeProperty ;
+    rdfs:label "assessmentRationale"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range xsd:string .
+
+vsr:assessmentScore a owl:DatatypeProperty ;
+    rdfs:label "assessmentScore"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range xsd:decimal .
+
+vsr:assignedPerson a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "assignedPerson"@en ;
+    rdfs:domain vsr:PersonnelAssignment ;
+    rdfs:range vsr:Person .
+
+vsr:assignedRole a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "assignedRole"@en ;
+    rdfs:domain vsr:PersonnelAssignment ;
+    rdfs:range vsr:Role .
+
+vsr:assignmentActive a owl:DatatypeProperty ;
+    rdfs:label "assignmentActive"@en ;
+    rdfs:domain vsr:Assignment ;
+    rdfs:range xsd:boolean .
+
+vsr:assignmentAtFacility a owl:ObjectProperty ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:ClinicalFacility ;
+    owl:propertyChainAxiom ( vsr:forStudySite vsr:locatedAtFacility ) .
+
+vsr:assignmentConfirmedDate a owl:DatatypeProperty ;
+    rdfs:label "assignmentConfirmedDate"@en ;
+    rdfs:domain vsr:Assignment ;
+    rdfs:range xsd:date .
+
+vsr:assignmentEndDate a owl:DatatypeProperty ;
+    rdfs:label "assignmentEndDate"@en ;
+    rdfs:domain vsr:Assignment ;
+    rdfs:range xsd:date .
+
+vsr:assignmentId a owl:DatatypeProperty ;
+    rdfs:label "assignmentId"@en ;
+    rdfs:domain vsr:Assignment ;
+    rdfs:range xsd:string .
+
+vsr:blocksActivity a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "blocksActivity"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:Activity .
+
+vsr:businessDayFlag a owl:DatatypeProperty ;
+    rdfs:label "businessDayFlag"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:boolean .
+
+vsr:businessRule a owl:AnnotationProperty ;
+    rdfs:label "business rule"@en .
+
+vsr:certificationDate a owl:DatatypeProperty ;
+    rdfs:label "certificationDate"@en ;
+    rdfs:domain vsr:EquipmentCertification ;
+    rdfs:range xsd:date .
+
+vsr:changedByEvent a owl:ObjectProperty ;
+    rdfs:label "changedByEvent"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range vsr:DataChangeEvent .
+
+vsr:checksum a owl:DatatypeProperty ;
+    rdfs:label "checksum"@en ;
+    rdfs:domain vsr:Artifact ;
+    rdfs:range xsd:string .
+
+vsr:competencyQuestion a owl:AnnotationProperty ;
+    rdfs:label "competency question"@en .
+
+vsr:completedBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "completedBy"@en ;
+    rdfs:domain vsr:TrainingCompletion ;
+    rdfs:range vsr:Person .
+
+vsr:completesTrainingAssignment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "completesTrainingAssignment"@en ;
+    rdfs:domain vsr:TrainingCompletion ;
+    rdfs:range vsr:TrainingAssignment .
+
+vsr:completionPercentage a owl:DatatypeProperty ;
+    rdfs:label "completionPercentage"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range xsd:decimal .
+
+vsr:confidenceScore a owl:DatatypeProperty ;
+    rdfs:label "confidenceScore"@en ;
+    rdfs:domain vsr:Recommendation ;
+    rdfs:range xsd:decimal .
+
+vsr:contributesToMilestone a owl:ObjectProperty ;
+    rdfs:label "contributesToMilestone"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:Milestone .
+
+vsr:countryCode a owl:DatatypeProperty ;
+    rdfs:label "countryCode"@en ;
+    rdfs:domain vsr:Country ;
+    rdfs:range xsd:string .
+
+vsr:courierName a owl:DatatypeProperty ;
+    rdfs:label "courierName"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range xsd:string .
+
+vsr:createdAt a owl:DatatypeProperty ;
+    rdfs:label "createdAt"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:dateTime .
+
+vsr:createdBy a owl:ObjectProperty ;
+    rdfs:label "createdBy"@en ;
+    rdfs:domain vsr:ProvenanceEntity ;
+    rdfs:range vsr:Party .
+
+vsr:decisionDate a owl:DatatypeProperty ;
+    rdfs:label "decisionDate"@en ;
+    rdfs:domain vsr:Decision ;
+    rdfs:range xsd:dateTime .
+
+vsr:decisionId a owl:DatatypeProperty ;
+    rdfs:label "decisionId"@en ;
+    rdfs:domain vsr:Decision ;
+    rdfs:range xsd:string .
+
+vsr:decisionRationale a owl:DatatypeProperty ;
+    rdfs:label "decisionRationale"@en ;
+    rdfs:domain vsr:Decision ;
+    rdfs:range xsd:string .
+
+vsr:definedByProtocolVersion a owl:ObjectProperty ;
+    rdfs:label "definedByProtocolVersion"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range vsr:ProtocolVersion .
+
+vsr:definition a owl:AnnotationProperty ;
+    rdfs:label "definition"@en .
+
+vsr:delayDays a owl:DatatypeProperty ;
+    rdfs:label "delayDays"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range xsd:integer .
+
+vsr:deliveredToFacility a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "deliveredToFacility"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:ClinicalFacility .
+
+vsr:dependencyOn a owl:ObjectProperty ;
+    rdfs:label "dependencyOn"@en ;
+    rdfs:domain vsr:Dependency ;
+    rdfs:range vsr:BusinessEntity .
+
+vsr:dependsOnActivity a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "dependsOnActivity"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:Activity .
+
+vsr:derivedFromSourceRecord a owl:ObjectProperty ;
+    rdfs:label "derivedFromSourceRecord"@en ;
+    rdfs:domain vsr:Artifact ;
+    rdfs:range vsr:SourceRecord .
+
+vsr:dueDate a owl:DatatypeProperty ;
+    rdfs:label "dueDate"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:date .
+
+vsr:effectiveFrom a owl:DatatypeProperty ;
+    rdfs:label "effectiveFrom"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:dateTime .
+
+vsr:effectiveTo a owl:DatatypeProperty ;
+    rdfs:label "effectiveTo"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:dateTime .
+
+vsr:emailAddress a owl:DatatypeProperty ;
+    rdfs:label "emailAddress"@en ;
+    rdfs:domain vsr:Person ;
+    rdfs:range xsd:string .
+
+vsr:equipmentId a owl:DatatypeProperty ;
+    rdfs:label "equipmentId"@en ;
+    rdfs:domain vsr:Equipment ;
+    rdfs:range xsd:string .
+
+vsr:equipmentSerialNumber a owl:DatatypeProperty ;
+    rdfs:label "equipmentSerialNumber"@en ;
+    rdfs:domain vsr:Equipment ;
+    rdfs:range xsd:string .
+
+vsr:evidenceDate a owl:DatatypeProperty ;
+    rdfs:label "evidenceDate"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range xsd:dateTime .
+
+vsr:evidenceId a owl:DatatypeProperty ;
+    rdfs:label "evidenceId"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range xsd:string .
+
+vsr:evidenceName a owl:DatatypeProperty ;
+    rdfs:label "evidenceName"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range xsd:string .
+
+vsr:evidenceRequired a owl:DatatypeProperty ;
+    rdfs:label "evidenceRequired"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range xsd:boolean .
+
+vsr:evidenceTypeCode a owl:DatatypeProperty ;
+    rdfs:label "evidenceTypeCode"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range xsd:string .
+
+vsr:evidencedByAccessRecord a owl:ObjectProperty ;
+    rdfs:label "evidencedByAccessRecord"@en ;
+    rdfs:domain vsr:SystemAccessAssignment ;
+    rdfs:range vsr:SystemAccessEvidence .
+
+vsr:evidencedByTrainingCompletion a owl:ObjectProperty ;
+    rdfs:label "evidencedByTrainingCompletion"@en ;
+    rdfs:domain vsr:TrainingAssignment ;
+    rdfs:range vsr:TrainingEvidence .
+
+vsr:expectedDeliveryDate a owl:DatatypeProperty ;
+    rdfs:label "expectedDeliveryDate"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range xsd:dateTime .
+
+vsr:expirationDate a owl:DatatypeProperty ;
+    rdfs:label "expirationDate"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range xsd:dateTime .
+
+vsr:externalIdentifier a owl:DatatypeProperty ;
+    rdfs:label "externalIdentifier"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:string .
+
+vsr:facilityId a owl:DatatypeProperty ;
+    rdfs:label "facilityId"@en ;
+    rdfs:domain vsr:ClinicalFacility ;
+    rdfs:range xsd:string .
+
+vsr:gapDescription a owl:DatatypeProperty ;
+    rdfs:label "gapDescription"@en ;
+    rdfs:domain vsr:ReadinessGap ;
+    rdfs:range xsd:string .
+
+vsr:gapId a owl:DatatypeProperty ;
+    rdfs:label "gapId"@en ;
+    rdfs:domain vsr:ReadinessGap ;
+    rdfs:range xsd:string .
+
+vsr:generatesRecommendation a owl:ObjectProperty ;
+    rdfs:label "generatesRecommendation"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range vsr:Recommendation .
+
+vsr:hasActionItem a owl:ObjectProperty ;
+    rdfs:label "hasActionItem"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:ActionItem .
+
+vsr:hasActivityOwner a owl:ObjectProperty ;
+    rdfs:label "hasActivityOwner"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:Party .
+
+vsr:hasActivityStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasActivityStatus"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:ActivityStatus .
+
+vsr:hasAuditRecord a owl:ObjectProperty ;
+    rdfs:label "hasAuditRecord"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range vsr:AuditRecord .
+
+vsr:hasCertification a owl:ObjectProperty ;
+    rdfs:label "hasCertification"@en ;
+    rdfs:domain vsr:Equipment ;
+    rdfs:range vsr:EquipmentCertification .
+
+vsr:hasCurrentAssessment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasCurrentAssessment"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:AssignmentReadinessAssessment .
+
+vsr:hasDataQualityAssessment a owl:ObjectProperty ;
+    rdfs:label "hasDataQualityAssessment"@en ;
+    rdfs:domain vsr:SourceRecord ;
+    rdfs:range vsr:DataQualityAssessment .
+
+vsr:hasDecisionStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasDecisionStatus"@en ;
+    rdfs:domain vsr:Decision ;
+    rdfs:range vsr:DecisionStatus .
+
+vsr:hasDelivery a owl:ObjectProperty ;
+    rdfs:label "hasDelivery"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:Delivery .
+
+vsr:hasDependency a owl:ObjectProperty ;
+    rdfs:label "hasDependency"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:Dependency .
+
+vsr:hasInstallation a owl:ObjectProperty ;
+    rdfs:label "hasInstallation"@en ;
+    rdfs:domain vsr:Equipment ;
+    rdfs:range vsr:EquipmentInstallation .
+
+vsr:hasMilestone a owl:ObjectProperty ;
+    rdfs:label "hasMilestone"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:Milestone .
+
+vsr:hasOpenBlockingFinding a owl:ObjectProperty ;
+    rdfs:label "hasOpenBlockingFinding"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:BlockingFinding .
+
+vsr:hasPersonnelAssignment a owl:ObjectProperty ;
+    rdfs:label "hasPersonnelAssignment"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range vsr:PersonnelAssignment .
+
+vsr:hasPlannedActivity a owl:ObjectProperty ;
+    rdfs:label "hasPlannedActivity"@en ;
+    rdfs:domain vsr:Plan ;
+    rdfs:range vsr:Activity .
+
+vsr:hasReadinessPlan a owl:ObjectProperty ;
+    rdfs:label "hasReadinessPlan"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:SiteReadinessPlan .
+
+vsr:hasReadinessRisk a owl:ObjectProperty ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:Risk ;
+    owl:propertyChainAxiom ( vsr:hasReadinessAssessment vsr:identifiesRisk ) .
+
+vsr:hasReadinessSnapshot a owl:ObjectProperty ;
+    rdfs:label "hasReadinessSnapshot"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:ReadinessSnapshot .
+
+vsr:hasReceiptAcknowledgement a owl:ObjectProperty ;
+    rdfs:label "hasReceiptAcknowledgement"@en ;
+    rdfs:domain vsr:Delivery ;
+    rdfs:range vsr:ReceiptAcknowledgement .
+
+vsr:hasRequirementEvaluation a owl:ObjectProperty ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:RequirementEvaluation ;
+    owl:propertyChainAxiom ( vsr:hasRequirementAssignment vsr:evaluatedBy ) .
+
+vsr:hasRiskLevel a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasRiskLevel"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range vsr:RiskLevel .
+
+vsr:hasRiskStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasRiskStatus"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range vsr:RiskStatus .
+
+vsr:hasSuggestedOwner a owl:ObjectProperty ;
+    rdfs:label "hasSuggestedOwner"@en ;
+    rdfs:domain vsr:Recommendation ;
+    rdfs:range vsr:Party .
+
+vsr:hasSystemAccessAssignment a owl:ObjectProperty ;
+    rdfs:label "hasSystemAccessAssignment"@en ;
+    rdfs:domain vsr:PersonnelAssignment ;
+    rdfs:range vsr:SystemAccessAssignment .
+
+vsr:hasTrainingAssignment a owl:ObjectProperty ;
+    rdfs:label "hasTrainingAssignment"@en ;
+    rdfs:domain vsr:PersonnelAssignment ;
+    rdfs:range vsr:TrainingAssignment .
+
+vsr:holdsRole a owl:ObjectProperty ;
+    rdfs:label "holdsRole"@en ;
+    rdfs:domain vsr:Person ;
+    rdfs:range vsr:Role .
+
+vsr:identifier a owl:DatatypeProperty ;
+    rdfs:label "identifier"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:string .
+
+vsr:identifiesGap a owl:ObjectProperty ;
+    rdfs:label "identifiesGap"@en ;
+    rdfs:domain vsr:ReadinessAssessment ;
+    rdfs:range vsr:ReadinessGap .
+
+vsr:impactScore a owl:DatatypeProperty ;
+    rdfs:label "impactScore"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range xsd:decimal .
+
+vsr:impactsAssignment a owl:ObjectProperty ;
+    rdfs:label "impactsAssignment"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range vsr:SiteVendorServiceAssignment .
+
+vsr:implementationNote a owl:AnnotationProperty ;
+    rdfs:label "implementation note"@en .
+
+vsr:installationDate a owl:DatatypeProperty ;
+    rdfs:label "installationDate"@en ;
+    rdfs:domain vsr:EquipmentInstallation ;
+    rdfs:range xsd:date .
+
+vsr:invalidatesEvidence a owl:ObjectProperty ;
+    rdfs:label "invalidatesEvidence"@en ;
+    rdfs:domain vsr:Event ;
+    rdfs:range vsr:ReadinessEvidence .
+
+vsr:isCurrent a owl:DatatypeProperty ;
+    rdfs:label "isCurrent"@en ;
+    rdfs:domain vsr:ProvenanceEntity ;
+    rdfs:range xsd:boolean .
+
+vsr:justifiedByEvidence a owl:ObjectProperty ;
+    rdfs:label "justifiedByEvidence"@en ;
+    rdfs:domain vsr:Decision ;
+    rdfs:range vsr:ReadinessEvidence .
+
+vsr:mandatoryFlag a owl:DatatypeProperty ;
+    rdfs:label "mandatoryFlag"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range xsd:boolean .
+
+vsr:minimumEvidenceCount a owl:DatatypeProperty ;
+    rdfs:label "minimumEvidenceCount"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range xsd:nonNegativeInteger .
+
+vsr:mitigatedBy a owl:ObjectProperty ;
+    rdfs:label "mitigatedBy"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range vsr:MitigationPlan .
+
+vsr:orderNumber a owl:DatatypeProperty ;
+    rdfs:label "orderNumber"@en ;
+    rdfs:domain vsr:Order ;
+    rdfs:range xsd:string .
+
+vsr:overrideReason a owl:DatatypeProperty ;
+    rdfs:label "overrideReason"@en ;
+    rdfs:domain vsr:OverrideDecision ;
+    rdfs:range xsd:string .
+
+vsr:ownedBy a owl:ObjectProperty ;
+    rdfs:label "ownedBy"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range vsr:Party .
+
+vsr:partOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "partOf"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range vsr:BusinessEntity .
+
+vsr:personId a owl:DatatypeProperty ;
+    rdfs:label "personId"@en ;
+    rdfs:domain vsr:Person ;
+    rdfs:range xsd:string .
+
+vsr:personName a owl:DatatypeProperty ;
+    rdfs:label "personName"@en ;
+    rdfs:domain vsr:Person ;
+    rdfs:range xsd:string .
+
+vsr:phoneNumber a owl:DatatypeProperty ;
+    rdfs:label "phoneNumber"@en ;
+    rdfs:domain vsr:Person ;
+    rdfs:range xsd:string .
+
+vsr:plannedCompletionDate a owl:DatatypeProperty ;
+    rdfs:label "plannedCompletionDate"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:date .
+
+vsr:plannedSIVDate a owl:DatatypeProperty ;
+    rdfs:label "plannedSIVDate"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range xsd:date .
+
+vsr:plannedStartDate a owl:DatatypeProperty ;
+    rdfs:label "plannedStartDate"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:date .
+
+vsr:precedesActivity a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "precedesActivity"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range vsr:Activity .
+
+vsr:primaryContactFlag a owl:DatatypeProperty ;
+    rdfs:label "primaryContactFlag"@en ;
+    rdfs:domain vsr:PersonnelAssignment ;
+    rdfs:range xsd:boolean .
+
+vsr:priorityRank a owl:DatatypeProperty ;
+    rdfs:label "priorityRank"@en ;
+    rdfs:domain vsr:Recommendation ;
+    rdfs:range xsd:positiveInteger .
+
+vsr:probabilityScore a owl:DatatypeProperty ;
+    rdfs:label "probabilityScore"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range xsd:decimal .
+
+vsr:producesFinding a owl:ObjectProperty ;
+    rdfs:label "producesFinding"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range vsr:Finding .
+
+vsr:protocolId a owl:DatatypeProperty ;
+    rdfs:label "protocolId"@en ;
+    rdfs:domain vsr:Protocol ;
+    rdfs:range xsd:string .
+
+vsr:protocolVersionNumber a owl:DatatypeProperty ;
+    rdfs:label "protocolVersionNumber"@en ;
+    rdfs:domain vsr:ProtocolVersion ;
+    rdfs:range xsd:string .
+
+vsr:qualificationDate a owl:DatatypeProperty ;
+    rdfs:label "qualificationDate"@en ;
+    rdfs:domain vsr:EquipmentQualification ;
+    rdfs:range xsd:date .
+
+vsr:qualificationExpirationDate a owl:DatatypeProperty ;
+    rdfs:label "qualificationExpirationDate"@en ;
+    rdfs:domain vsr:EquipmentQualification ;
+    rdfs:range xsd:date .
+
+vsr:quantity a owl:DatatypeProperty ;
+    rdfs:label "quantity"@en ;
+    rdfs:domain vsr:ShipmentItem ;
+    rdfs:range xsd:decimal .
+
+vsr:readyToScreenDate a owl:DatatypeProperty ;
+    rdfs:label "readyToScreenDate"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range xsd:date .
+
+vsr:receiptAcknowledgementDate a owl:DatatypeProperty ;
+    rdfs:label "receiptAcknowledgementDate"@en ;
+    rdfs:domain vsr:ReceiptAcknowledgement ;
+    rdfs:range xsd:dateTime .
+
+vsr:receivedDate a owl:DatatypeProperty ;
+    rdfs:label "receivedDate"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range xsd:dateTime .
+
+vsr:recommendationId a owl:DatatypeProperty ;
+    rdfs:label "recommendationId"@en ;
+    rdfs:domain vsr:Recommendation ;
+    rdfs:range xsd:string .
+
+vsr:recommendationRationale a owl:DatatypeProperty ;
+    rdfs:label "recommendationRationale"@en ;
+    rdfs:domain vsr:Recommendation ;
+    rdfs:range xsd:string .
+
+vsr:recommendsAction a owl:ObjectProperty ;
+    rdfs:label "recommendsAction"@en ;
+    rdfs:domain vsr:Recommendation ;
+    rdfs:range vsr:ActionItem .
+
+vsr:reconciledAgainst a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "reconciledAgainst"@en ;
+    rdfs:domain vsr:SourceRecord ;
+    rdfs:range vsr:SourceRecord .
+
+vsr:recordedIn a owl:ObjectProperty ;
+    rdfs:label "recordedIn"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range vsr:SourceSystem .
+
+vsr:replansActivity a owl:ObjectProperty ;
+    rdfs:label "replansActivity"@en ;
+    rdfs:domain vsr:ProtocolAmendmentEvent ;
+    rdfs:range vsr:Activity .
+
+vsr:representsEntity a owl:ObjectProperty ;
+    rdfs:label "representsEntity"@en ;
+    rdfs:domain vsr:SourceRecord ;
+    rdfs:range vsr:BusinessEntity .
+
+vsr:representsSupplyItem a owl:ObjectProperty ;
+    rdfs:label "representsSupplyItem"@en ;
+    rdfs:domain vsr:ShipmentItem ;
+    rdfs:range vsr:SupplyItem .
+
+vsr:requirementDescription a owl:DatatypeProperty ;
+    rdfs:label "requirementDescription"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range xsd:string .
+
+vsr:requirementExpression a owl:DatatypeProperty ;
+    rdfs:label "requirementExpression"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range xsd:string .
+
+vsr:requirementId a owl:DatatypeProperty ;
+    rdfs:label "requirementId"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range xsd:string .
+
+vsr:requirementName a owl:DatatypeProperty ;
+    rdfs:label "requirementName"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range xsd:string .
+
+vsr:requiresImportLicense a owl:ObjectProperty ;
+    rdfs:label "requiresImportLicense"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:ImportLicense .
+
+vsr:requiresTraining a owl:ObjectProperty ;
+    rdfs:label "requiresTraining"@en ;
+    rdfs:domain vsr:Role ;
+    rdfs:range vsr:TrainingCourse .
+
+vsr:reviewedBy a owl:ObjectProperty ;
+    rdfs:label "reviewedBy"@en ;
+    rdfs:domain vsr:ProvenanceEntity ;
+    rdfs:range vsr:Party .
+
+vsr:reviewedDate a owl:DatatypeProperty ;
+    rdfs:label "reviewedDate"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range xsd:dateTime .
+
+vsr:riskDescription a owl:DatatypeProperty ;
+    rdfs:label "riskDescription"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range xsd:string .
+
+vsr:riskId a owl:DatatypeProperty ;
+    rdfs:label "riskId"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range xsd:string .
+
+vsr:riskScore a owl:DatatypeProperty ;
+    rdfs:label "riskScore"@en ;
+    rdfs:domain vsr:Risk ;
+    rdfs:range xsd:decimal .
+
+vsr:ruleExpression a owl:DatatypeProperty ;
+    rdfs:label "ruleExpression"@en ;
+    rdfs:domain vsr:Rule ;
+    rdfs:range xsd:string .
+
+vsr:ruleId a owl:DatatypeProperty ;
+    rdfs:label "ruleId"@en ;
+    rdfs:domain vsr:Rule ;
+    rdfs:range xsd:string .
+
+vsr:sequenceNumber a owl:DatatypeProperty ;
+    rdfs:label "sequenceNumber"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range xsd:positiveInteger .
+
+vsr:shipmentContactFlag a owl:DatatypeProperty ;
+    rdfs:label "shipmentContactFlag"@en ;
+    rdfs:domain vsr:PersonnelAssignment ;
+    rdfs:range xsd:boolean .
+
+vsr:shipmentForStudySite a owl:ObjectProperty ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:StudySite ;
+    owl:propertyChainAxiom ( vsr:shipmentForAssignment vsr:forStudySite ) .
+
+vsr:shipmentId a owl:DatatypeProperty ;
+    rdfs:label "shipmentId"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range xsd:string .
+
+vsr:shipmentInitiationDate a owl:DatatypeProperty ;
+    rdfs:label "shipmentInitiationDate"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range xsd:dateTime .
+
+vsr:shipsEquipment a owl:ObjectProperty ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:Equipment ;
+    owl:propertyChainAxiom ( vsr:containsShipmentItem vsr:representsEquipment ) .
+
+vsr:siteName a owl:DatatypeProperty ;
+    rdfs:label "siteName"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range xsd:string .
+
+vsr:siteNumber a owl:DatatypeProperty ;
+    rdfs:label "siteNumber"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range xsd:string .
+
+vsr:siteSelectedDate a owl:DatatypeProperty ;
+    rdfs:label "siteSelectedDate"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range xsd:date .
+
+vsr:sourceLocation a owl:DatatypeProperty ;
+    rdfs:label "sourceLocation"@en ;
+    rdfs:domain vsr:Artifact ;
+    rdfs:range xsd:anyURI .
+
+vsr:sourceReference a owl:DatatypeProperty ;
+    rdfs:label "sourceReference"@en ;
+    rdfs:domain vsr:Artifact ;
+    rdfs:range xsd:string .
+
+vsr:sourceSystemName a owl:AnnotationProperty ;
+    rdfs:label "source system name"@en .
+
+vsr:sourcedFromSystem a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "sourcedFromSystem"@en ;
+    rdfs:domain vsr:SourceRecord ;
+    rdfs:range vsr:SourceSystem .
+
+vsr:stewardedBy a owl:ObjectProperty ;
+    rdfs:label "stewardedBy"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range vsr:Party .
+
+vsr:studyId a owl:DatatypeProperty ;
+    rdfs:label "studyId"@en ;
+    rdfs:domain vsr:ClinicalStudy ;
+    rdfs:range xsd:string .
+
+vsr:studyName a owl:DatatypeProperty ;
+    rdfs:label "studyName"@en ;
+    rdfs:domain vsr:ClinicalStudy ;
+    rdfs:range xsd:string .
+
+vsr:studyPhase a owl:DatatypeProperty ;
+    rdfs:label "studyPhase"@en ;
+    rdfs:domain vsr:ClinicalStudy ;
+    rdfs:range xsd:string .
+
+vsr:studySiteId a owl:DatatypeProperty ;
+    rdfs:label "studySiteId"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range xsd:string .
+
+vsr:subjectToRequirement a owl:ObjectProperty ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:Requirement ;
+    owl:propertyChainAxiom ( vsr:hasRequirementAssignment vsr:instantiatesRequirement ) .
+
+vsr:supersedes a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "supersedes"@en ;
+    rdfs:domain vsr:ProvenanceEntity ;
+    rdfs:range vsr:ProvenanceEntity .
+
+vsr:supersedesEvidence a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "supersedesEvidence"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range vsr:ReadinessEvidence .
+
+vsr:thresholdValue a owl:DatatypeProperty ;
+    rdfs:label "thresholdValue"@en ;
+    rdfs:domain vsr:Rule ;
+    rdfs:range xsd:decimal .
+
+vsr:trackingNumber a owl:DatatypeProperty ;
+    rdfs:label "trackingNumber"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range xsd:string .
+
+vsr:trainingAssignmentDate a owl:DatatypeProperty ;
+    rdfs:label "trainingAssignmentDate"@en ;
+    rdfs:domain vsr:TrainingAssignment ;
+    rdfs:range xsd:date .
+
+vsr:trainingCompletionDate a owl:DatatypeProperty ;
+    rdfs:label "trainingCompletionDate"@en ;
+    rdfs:domain vsr:TrainingCompletion ;
+    rdfs:range xsd:date .
+
+vsr:trainingDueDate a owl:DatatypeProperty ;
+    rdfs:label "trainingDueDate"@en ;
+    rdfs:domain vsr:TrainingAssignment ;
+    rdfs:range xsd:date .
+
+vsr:trainingExpirationDate a owl:DatatypeProperty ;
+    rdfs:label "trainingExpirationDate"@en ;
+    rdfs:domain vsr:TrainingCompletion ;
+    rdfs:range xsd:date .
+
+vsr:turnaroundTimeUnit a owl:DatatypeProperty ;
+    rdfs:label "turnaroundTimeUnit"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range xsd:string .
+
+vsr:turnaroundTimeValue a owl:DatatypeProperty ;
+    rdfs:label "turnaroundTimeValue"@en ;
+    rdfs:domain vsr:Activity ;
+    rdfs:range xsd:decimal .
+
+vsr:updatedAt a owl:DatatypeProperty ;
+    rdfs:label "updatedAt"@en ;
+    rdfs:domain vsr:BusinessEntity ;
+    rdfs:range xsd:dateTime .
+
+vsr:vendorId a owl:DatatypeProperty ;
+    rdfs:label "vendorId"@en ;
+    rdfs:domain vsr:VendorOrganization ;
+    rdfs:range xsd:string .
+
+vsr:vendorName a owl:DatatypeProperty ;
+    rdfs:label "vendorName"@en ;
+    rdfs:domain vsr:VendorOrganization ;
+    rdfs:range xsd:string .
+
+vsr:vendorServiceId a owl:DatatypeProperty ;
+    rdfs:label "vendorServiceId"@en ;
+    rdfs:domain vsr:VendorService ;
+    rdfs:range xsd:string .
+
+vsr:vendorServiceName a owl:DatatypeProperty ;
+    rdfs:label "vendorServiceName"@en ;
+    rdfs:domain vsr:VendorService ;
+    rdfs:range xsd:string .
+
+vsr:waiverAllowed a owl:DatatypeProperty ;
+    rdfs:label "waiverAllowed"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range xsd:boolean .
+
+vsr:ApprovalEvidence a owl:Class ;
+    rdfs:label "Approval evidence"@en ;
+    rdfs:subClassOf vsr:ReadinessEvidence .
+
+vsr:AuditRecord a owl:Class ;
+    rdfs:label "Audit record"@en ;
+    rdfs:subClassOf vsr:ProvenanceEntity .
+
+vsr:BlockingFinding a owl:Class ;
+    rdfs:label "Blocking finding"@en ;
+    rdfs:subClassOf vsr:Finding .
+
+vsr:ConditionalRequirement a owl:Class ;
+    rdfs:label "Conditional requirement"@en ;
+    rdfs:subClassOf vsr:Requirement ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:Requirement [ a owl:Restriction ;
+                        owl:hasValue vsr:Conditional ;
+                        owl:onProperty vsr:hasCriticality ] ) ] .
+
+vsr:DataChangeEvent a owl:Class ;
+    rdfs:label "Data change event"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:DataQualityAssessment a owl:Class ;
+    rdfs:label "Data quality assessment"@en ;
+    rdfs:subClassOf vsr:Assessment .
+
+vsr:DataRecord a owl:Class ;
+    rdfs:label "Data record"@en ;
+    rdfs:subClassOf vsr:Artifact .
+
+vsr:EquipmentRequirement a owl:Class ;
+    rdfs:label "Equipment requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:ImportLicense a owl:Class ;
+    rdfs:label "Import license"@en ;
+    rdfs:subClassOf vsr:Artifact .
+
+vsr:MandatoryRequirement a owl:Class ;
+    rdfs:label "Mandatory requirement"@en ;
+    rdfs:subClassOf vsr:Requirement ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:Requirement [ a owl:Restriction ;
+                        owl:hasValue vsr:Mandatory ;
+                        owl:onProperty vsr:hasCriticality ] ) ] .
+
+vsr:MitigationPlan a owl:Class ;
+    rdfs:label "Mitigation plan"@en ;
+    rdfs:subClassOf vsr:Plan .
+
+vsr:OptionalRequirement a owl:Class ;
+    rdfs:label "Optional requirement"@en ;
+    rdfs:subClassOf vsr:Requirement ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( vsr:Requirement [ a owl:Restriction ;
+                        owl:hasValue vsr:Optional ;
+                        owl:onProperty vsr:hasCriticality ] ) ] .
+
+vsr:Order a owl:Class ;
+    rdfs:label "Order"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:OverrideDecision a owl:Class ;
+    rdfs:label "Override decision"@en ;
+    rdfs:subClassOf vsr:Decision .
+
+vsr:ProtocolAmendmentEvent a owl:Class ;
+    rdfs:label "Protocol amendment event"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:QualificationEvidence a owl:Class ;
+    rdfs:label "Qualification evidence"@en ;
+    rdfs:subClassOf vsr:ReadinessEvidence .
+
+vsr:ReadinessSnapshot a owl:Class ;
+    rdfs:label "Readiness snapshot"@en ;
+    rdfs:subClassOf vsr:ProvenanceEntity ;
+    vsr:definition "Immutable time-stamped rendition of calculated or approved readiness state."@en .
+
+vsr:ShipmentEvidence a owl:Class ;
+    rdfs:label "Shipment evidence"@en ;
+    rdfs:subClassOf vsr:ReadinessEvidence .
+
+vsr:SiteOrganization a owl:Class ;
+    rdfs:label "Site organization"@en ;
+    rdfs:subClassOf vsr:Organization .
+
+vsr:SiteReadinessPlan a owl:Class ;
+    rdfs:label "Site readiness plan"@en ;
+    rdfs:subClassOf vsr:Plan .
+
+vsr:StudyCountry a owl:Class ;
+    rdfs:label "Study country"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:StudyDesignElement a owl:Class ;
+    rdfs:label "Study design element"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:VendorPortal a owl:Class ;
+    rdfs:label "Vendor portal"@en ;
+    rdfs:subClassOf vsr:VendorSystem .
+
+vsr:VendorServiceRequirement a owl:Class ;
+    rdfs:label "Vendor service requirement"@en ;
+    rdfs:subClassOf vsr:Requirement .
+
+vsr:accessForAssignment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "accessForAssignment"@en ;
+    rdfs:domain vsr:SystemAccessAssignment ;
+    rdfs:range vsr:SiteVendorServiceAssignment .
+
+vsr:aggregatesEvaluation a owl:ObjectProperty ;
+    rdfs:label "aggregatesEvaluation"@en ;
+    rdfs:domain vsr:ReadinessAssessment ;
+    rdfs:range vsr:RequirementEvaluation .
+
+vsr:amendsProtocolVersion a owl:ObjectProperty ;
+    rdfs:label "amendsProtocolVersion"@en ;
+    rdfs:domain vsr:ProtocolAmendment ;
+    rdfs:range vsr:ProtocolVersion ;
+    owl:inverseOf vsr:isAmendedBy .
+
+vsr:assessmentForAssignment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "assessmentForAssignment"@en ;
+    rdfs:domain vsr:ReadinessAssessment ;
+    rdfs:range vsr:SiteVendorServiceAssignment .
+
+vsr:assignedTraining a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "assignedTraining"@en ;
+    rdfs:domain vsr:TrainingAssignment ;
+    rdfs:range vsr:TrainingCourse .
+
+vsr:assignmentFor a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "assignmentFor"@en ;
+    rdfs:domain vsr:RequirementAssignment ;
+    rdfs:range vsr:SiteVendorServiceAssignment .
+
+vsr:assignmentStartDate a owl:DatatypeProperty ;
+    rdfs:label "assignmentStartDate"@en ;
+    rdfs:domain vsr:Assignment ;
+    rdfs:range xsd:date .
+
+vsr:basedOnAssessment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "basedOnAssessment"@en ;
+    rdfs:domain vsr:ReadinessDecision ;
+    rdfs:range vsr:ReadinessAssessment .
+
+vsr:containsFacility a owl:ObjectProperty ;
+    rdfs:label "containsFacility"@en ;
+    owl:inverseOf vsr:locatedInCountry .
+
+vsr:decidedBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "decidedBy"@en ;
+    rdfs:domain vsr:Decision ;
+    rdfs:range vsr:Party .
+
+vsr:decisionForAssignment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "decisionForAssignment"@en ;
+    rdfs:domain vsr:ReadinessDecision ;
+    rdfs:range vsr:SiteVendorServiceAssignment .
+
+vsr:derivedFromArtifact a owl:ObjectProperty ;
+    rdfs:label "derivedFromArtifact"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range vsr:Artifact .
+
+vsr:derivedFromDesignElement a owl:ObjectProperty ;
+    rdfs:label "derivedFromDesignElement"@en ;
+    rdfs:domain vsr:VendorServiceRequirement ;
+    rdfs:range vsr:StudyDesignElement ;
+    owl:inverseOf vsr:generatesServiceRequirement .
+
+vsr:evaluatesRequirementAssignment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "evaluatesRequirementAssignment"@en ;
+    rdfs:domain vsr:RequirementEvaluation ;
+    rdfs:range vsr:RequirementAssignment .
+
+vsr:generatesServiceRequirement a owl:ObjectProperty ;
+    rdfs:label "generatesServiceRequirement"@en ;
+    owl:inverseOf vsr:derivedFromDesignElement .
+
+vsr:governedByRule a owl:ObjectProperty ;
+    rdfs:label "governedByRule"@en ;
+    rdfs:domain vsr:RequirementAssignment ;
+    rdfs:range vsr:Rule .
+
+vsr:grantsAccessTo a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "grantsAccessTo"@en ;
+    rdfs:domain vsr:SystemAccessAssignment ;
+    rdfs:range vsr:VendorSystem .
+
+vsr:hasAccessStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasAccessStatus"@en ;
+    rdfs:domain vsr:SystemAccessAssignment ;
+    rdfs:range vsr:AccessStatus .
+
+vsr:hasAssignmentStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasAssignmentStatus"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:AssignmentStatus .
+
+vsr:hasEvaluationStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasEvaluationStatus"@en ;
+    rdfs:domain vsr:RequirementEvaluation ;
+    rdfs:range vsr:RequirementEvaluationStatus .
+
+vsr:hasEvidenceStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasEvidenceStatus"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range vsr:EvidenceStatus .
+
+vsr:hasProtocol a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasProtocol"@en ;
+    rdfs:domain vsr:ClinicalStudy ;
+    rdfs:range vsr:Protocol ;
+    owl:inverseOf vsr:isProtocolOf .
+
+vsr:hasProtocolVersion a owl:ObjectProperty ;
+    rdfs:label "hasProtocolVersion"@en ;
+    rdfs:domain vsr:Protocol ;
+    rdfs:range vsr:ProtocolVersion ;
+    owl:inverseOf vsr:isVersionOfProtocol .
+
+vsr:hasQualification a owl:ObjectProperty ;
+    rdfs:label "hasQualification"@en ;
+    rdfs:domain vsr:Equipment ;
+    rdfs:range vsr:EquipmentQualification .
+
+vsr:hasQualificationStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasQualificationStatus"@en ;
+    rdfs:domain vsr:EquipmentQualification ;
+    rdfs:range vsr:QualificationStatus .
+
+vsr:hasReadinessDecision a owl:ObjectProperty ;
+    rdfs:label "hasReadinessDecision"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:ReadinessDecision .
+
+vsr:hasStudyCountry a owl:ObjectProperty ;
+    rdfs:label "hasStudyCountry"@en ;
+    rdfs:domain vsr:ClinicalStudy ;
+    rdfs:range vsr:StudyCountry ;
+    owl:inverseOf vsr:isStudyCountryOf .
+
+vsr:hasStudySite a owl:ObjectProperty ;
+    rdfs:label "hasStudySite"@en ;
+    rdfs:domain vsr:ClinicalStudy ;
+    rdfs:range vsr:StudySite ;
+    owl:inverseOf vsr:isStudySiteOf .
+
+vsr:hasTrainingStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasTrainingStatus"@en ;
+    rdfs:domain vsr:TrainingAssignment ;
+    rdfs:range vsr:TrainingStatus .
+
+vsr:hasVendorPortal a owl:ObjectProperty ;
+    rdfs:label "hasVendorPortal"@en ;
+    rdfs:domain vsr:VendorSystem ;
+    rdfs:range vsr:VendorPortal ;
+    owl:inverseOf vsr:isPortalOf .
+
+vsr:hostsStudySite a owl:ObjectProperty ;
+    rdfs:label "hostsStudySite"@en ;
+    owl:inverseOf vsr:locatedAtFacility .
+
+vsr:identifiesRisk a owl:ObjectProperty ;
+    rdfs:label "identifiesRisk"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range vsr:Risk .
+
+vsr:initiatedByVendor a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "initiatedByVendor"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:VendorOrganization .
+
+vsr:isAmendedBy a owl:ObjectProperty ;
+    rdfs:label "isAmendedBy"@en ;
+    owl:inverseOf vsr:amendsProtocolVersion .
+
+vsr:isPortalOf a owl:ObjectProperty ;
+    rdfs:label "isPortalOf"@en ;
+    owl:inverseOf vsr:hasVendorPortal .
+
+vsr:isProtocolOf a owl:ObjectProperty ;
+    rdfs:label "isProtocolOf"@en ;
+    owl:inverseOf vsr:hasProtocol .
+
+vsr:isStudyCountryOf a owl:ObjectProperty ;
+    rdfs:label "isStudyCountryOf"@en ;
+    owl:inverseOf vsr:hasStudyCountry .
+
+vsr:isStudySiteOf a owl:ObjectProperty ;
+    rdfs:label "isStudySiteOf"@en ;
+    owl:inverseOf vsr:hasStudySite .
+
+vsr:isVersionOfProtocol a owl:ObjectProperty ;
+    rdfs:label "isVersionOfProtocol"@en ;
+    owl:inverseOf vsr:hasProtocolVersion .
+
+vsr:locatedInCountry a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "locatedInCountry"@en ;
+    rdfs:domain vsr:ClinicalFacility ;
+    rdfs:range vsr:Country ;
+    owl:inverseOf vsr:containsFacility .
+
+vsr:operatedBy a owl:ObjectProperty ;
+    rdfs:label "operatedBy"@en ;
+    rdfs:domain vsr:ClinicalFacility ;
+    rdfs:range vsr:SiteOrganization ;
+    owl:inverseOf vsr:operatesFacility .
+
+vsr:operatesFacility a owl:ObjectProperty ;
+    rdfs:label "operatesFacility"@en ;
+    owl:inverseOf vsr:operatedBy .
+
+vsr:providedByVendor a owl:ObjectProperty ;
+    rdfs:label "providedByVendor"@en ;
+    owl:inverseOf vsr:providesService .
+
+vsr:providedForRequirement a owl:ObjectProperty ;
+    rdfs:label "providedForRequirement"@en ;
+    rdfs:domain vsr:ReadinessEvidence ;
+    rdfs:range vsr:RequirementAssignment .
+
+vsr:providesService a owl:ObjectProperty ;
+    rdfs:label "providesService"@en ;
+    rdfs:domain vsr:VendorOrganization ;
+    rdfs:range vsr:VendorService ;
+    owl:inverseOf vsr:providedByVendor .
+
+vsr:qualificationForEquipment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "qualificationForEquipment"@en ;
+    rdfs:domain vsr:EquipmentQualification ;
+    rdfs:range vsr:Equipment .
+
+vsr:qualificationSupportedBy a owl:ObjectProperty ;
+    rdfs:label "qualificationSupportedBy"@en ;
+    rdfs:domain vsr:EquipmentQualification ;
+    rdfs:range vsr:EquipmentEvidence .
+
+vsr:representsEquipment a owl:ObjectProperty ;
+    rdfs:label "representsEquipment"@en ;
+    rdfs:domain vsr:ShipmentItem ;
+    rdfs:range vsr:Equipment .
+
+vsr:requiredForStudy a owl:ObjectProperty ;
+    rdfs:label "requiredForStudy"@en ;
+    owl:inverseOf vsr:requiresService .
+
+vsr:requiresService a owl:ObjectProperty ;
+    rdfs:label "requiresService"@en ;
+    rdfs:domain vsr:ClinicalStudy ;
+    rdfs:range vsr:VendorService ;
+    owl:inverseOf vsr:requiredForStudy .
+
+vsr:resultsInReadinessStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "resultsInReadinessStatus"@en ;
+    rdfs:domain vsr:ReadinessDecision ;
+    rdfs:range vsr:ReadinessStatus .
+
+vsr:supportsVendorService a owl:ObjectProperty ;
+    rdfs:label "supportsVendorService"@en ;
+    owl:inverseOf vsr:usesVendorSystem .
+
+vsr:trainingForAssignment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "trainingForAssignment"@en ;
+    rdfs:domain vsr:TrainingAssignment ;
+    rdfs:range vsr:SiteVendorServiceAssignment .
+
+vsr:usesVendorSystem a owl:ObjectProperty ;
+    rdfs:label "usesVendorSystem"@en ;
+    rdfs:domain vsr:VendorService ;
+    rdfs:range vsr:VendorSystem ;
+    owl:inverseOf vsr:supportsVendorService .
+
+vsr:AccessFailed a owl:NamedIndividual,
+        vsr:AccessStatus ;
+    rdfs:label "AccessFailed"@en .
+
+vsr:AccessNotApplicable a owl:NamedIndividual,
+        vsr:AccessStatus ;
+    rdfs:label "AccessNotApplicable"@en .
+
+vsr:AccessNotRequested a owl:NamedIndividual,
+        vsr:AccessStatus ;
+    rdfs:label "AccessNotRequested"@en .
+
+vsr:AccessPending a owl:NamedIndividual,
+        vsr:AccessStatus ;
+    rdfs:label "AccessPending"@en .
+
+vsr:AccessProvisioned a owl:NamedIndividual,
+        vsr:AccessStatus ;
+    rdfs:label "AccessProvisioned"@en .
+
+vsr:AccessRequested a owl:NamedIndividual,
+        vsr:AccessStatus ;
+    rdfs:label "AccessRequested"@en .
+
+vsr:AccessRevoked a owl:NamedIndividual,
+        vsr:AccessStatus ;
+    rdfs:label "AccessRevoked"@en .
+
+vsr:AccessVerified a owl:NamedIndividual,
+        vsr:AccessStatus ;
+    rdfs:label "AccessVerified"@en .
+
+vsr:ActionItem a owl:Class ;
+    rdfs:label "Action item"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:AssessmentDraft a owl:NamedIndividual,
+        vsr:AssessmentStatus ;
+    rdfs:label "AssessmentDraft"@en .
+
+vsr:AssessmentInProgress a owl:NamedIndividual,
+        vsr:AssessmentStatus ;
+    rdfs:label "AssessmentInProgress"@en .
+
+vsr:AssessmentSuperseded a owl:NamedIndividual,
+        vsr:AssessmentStatus ;
+    rdfs:label "AssessmentSuperseded"@en .
+
+vsr:AssignmentActive a owl:NamedIndividual,
+        vsr:AssignmentStatus ;
+    rdfs:label "AssignmentActive"@en .
+
+vsr:AssignmentCompleted a owl:NamedIndividual,
+        vsr:AssignmentStatus ;
+    rdfs:label "AssignmentCompleted"@en .
+
+vsr:AssignmentConfirmed a owl:NamedIndividual,
+        vsr:AssignmentStatus ;
+    rdfs:label "AssignmentConfirmed"@en .
+
+vsr:AssignmentPending a owl:NamedIndividual,
+        vsr:AssignmentStatus ;
+    rdfs:label "AssignmentPending"@en .
+
+vsr:AssignmentProposed a owl:NamedIndividual,
+        vsr:AssignmentStatus ;
+    rdfs:label "AssignmentProposed"@en .
+
+vsr:AssignmentSuspended a owl:NamedIndividual,
+        vsr:AssignmentStatus ;
+    rdfs:label "AssignmentSuspended"@en .
+
+vsr:AssignmentTerminated a owl:NamedIndividual,
+        vsr:AssignmentStatus ;
+    rdfs:label "AssignmentTerminated"@en .
+
+vsr:Blocked a owl:NamedIndividual,
+        vsr:ActivityStatus ;
+    rdfs:label "Blocked"@en .
+
+vsr:Cancelled a owl:NamedIndividual,
+        vsr:ActivityStatus ;
+    rdfs:label "Cancelled"@en .
+
+vsr:Completed a owl:NamedIndividual,
+        vsr:ActivityStatus ;
+    rdfs:label "Completed"@en .
+
+vsr:CriticalRisk a owl:NamedIndividual,
+        vsr:RiskLevel ;
+    rdfs:label "CriticalRisk"@en .
+
+vsr:DecisionApproved a owl:NamedIndividual,
+        vsr:DecisionStatus ;
+    rdfs:label "DecisionApproved"@en .
+
+vsr:DecisionDraft a owl:NamedIndividual,
+        vsr:DecisionStatus ;
+    rdfs:label "DecisionDraft"@en .
+
+vsr:DecisionOverridden a owl:NamedIndividual,
+        vsr:DecisionStatus ;
+    rdfs:label "DecisionOverridden"@en .
+
+vsr:DecisionPendingReview a owl:NamedIndividual,
+        vsr:DecisionStatus ;
+    rdfs:label "DecisionPendingReview"@en .
+
+vsr:DecisionRejected a owl:NamedIndividual,
+        vsr:DecisionStatus ;
+    rdfs:label "DecisionRejected"@en .
+
+vsr:DecisionWithdrawn a owl:NamedIndividual,
+        vsr:DecisionStatus ;
+    rdfs:label "DecisionWithdrawn"@en .
+
+vsr:EquipmentCertification a owl:Class ;
+    rdfs:label "Equipment certification"@en ;
+    rdfs:subClassOf vsr:ProvenanceEntity .
+
+vsr:EquipmentCertificationExpired a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentCertificationExpired"@en .
+
+vsr:EquipmentDelivered a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentDelivered"@en .
+
+vsr:EquipmentInstallation a owl:Class ;
+    rdfs:label "Equipment installation"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:EquipmentInstalled a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentInstalled"@en .
+
+vsr:EquipmentNotRequired a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentNotRequired"@en .
+
+vsr:EquipmentOrdered a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentOrdered"@en .
+
+vsr:EquipmentQualificationFailed a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentQualificationFailed"@en .
+
+vsr:EquipmentQualificationPending a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentQualificationPending"@en .
+
+vsr:EquipmentQualified a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentQualified"@en .
+
+vsr:EquipmentRequired a owl:NamedIndividual,
+        vsr:EquipmentStatus ;
+    rdfs:label "EquipmentRequired"@en .
+
+vsr:EvidenceAccepted a owl:NamedIndividual,
+        vsr:EvidenceStatus ;
+    rdfs:label "EvidenceAccepted"@en .
+
+vsr:EvidenceExpired a owl:NamedIndividual,
+        vsr:EvidenceStatus ;
+    rdfs:label "EvidenceExpired"@en .
+
+vsr:EvidenceMissing a owl:NamedIndividual,
+        vsr:EvidenceStatus ;
+    rdfs:label "EvidenceMissing"@en .
+
+vsr:EvidenceRejected a owl:NamedIndividual,
+        vsr:EvidenceStatus ;
+    rdfs:label "EvidenceRejected"@en .
+
+vsr:EvidenceSubmitted a owl:NamedIndividual,
+        vsr:EvidenceStatus ;
+    rdfs:label "EvidenceSubmitted"@en .
+
+vsr:EvidenceSuperseded a owl:NamedIndividual,
+        vsr:EvidenceStatus ;
+    rdfs:label "EvidenceSuperseded"@en .
+
+vsr:EvidenceUnderReview a owl:NamedIndividual,
+        vsr:EvidenceStatus ;
+    rdfs:label "EvidenceUnderReview"@en .
+
+vsr:HighRisk a owl:NamedIndividual,
+        vsr:RiskLevel ;
+    rdfs:label "HighRisk"@en .
+
+vsr:InProgress a owl:NamedIndividual,
+        vsr:ActivityStatus ;
+    rdfs:label "InProgress"@en .
+
+vsr:LowRisk a owl:NamedIndividual,
+        vsr:RiskLevel ;
+    rdfs:label "LowRisk"@en .
+
+vsr:MediumRisk a owl:NamedIndividual,
+        vsr:RiskLevel ;
+    rdfs:label "MediumRisk"@en .
+
+vsr:NotApplicable a owl:NamedIndividual,
+        vsr:ActivityStatus ;
+    rdfs:label "NotApplicable"@en .
+
+vsr:NotEvaluated a owl:NamedIndividual,
+        vsr:RequirementEvaluationStatus ;
+    rdfs:label "NotEvaluated"@en .
+
+vsr:NotStarted a owl:NamedIndividual,
+        vsr:ActivityStatus ;
+    rdfs:label "NotStarted"@en .
+
+vsr:Planned a owl:NamedIndividual,
+        vsr:ActivityStatus ;
+    rdfs:label "Planned"@en .
+
+vsr:QualificationApproved a owl:NamedIndividual,
+        vsr:QualificationStatus ;
+    rdfs:label "QualificationApproved"@en .
+
+vsr:QualificationExpired a owl:NamedIndividual,
+        vsr:QualificationStatus ;
+    rdfs:label "QualificationExpired"@en .
+
+vsr:QualificationNotStarted a owl:NamedIndividual,
+        vsr:QualificationStatus ;
+    rdfs:label "QualificationNotStarted"@en .
+
+vsr:QualificationPending a owl:NamedIndividual,
+        vsr:QualificationStatus ;
+    rdfs:label "QualificationPending"@en .
+
+vsr:QualificationRejected a owl:NamedIndividual,
+        vsr:QualificationStatus ;
+    rdfs:label "QualificationRejected"@en .
+
+vsr:ReadinessBlocked a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "ReadinessBlocked"@en .
+
+vsr:ReadinessExpired a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "ReadinessExpired"@en .
+
+vsr:ReadinessInProgress a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "ReadinessInProgress"@en .
+
+vsr:ReadinessNotApplicable a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "ReadinessNotApplicable"@en .
+
+vsr:ReadinessNotStarted a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "ReadinessNotStarted"@en .
+
+vsr:ReadinessSuspended a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "ReadinessSuspended"@en .
+
+vsr:ReadyWithConditions a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "ReadyWithConditions"@en .
+
+vsr:RequirementConditionallySatisfied a owl:NamedIndividual,
+        vsr:RequirementEvaluationStatus ;
+    rdfs:label "RequirementConditionallySatisfied"@en .
+
+vsr:RequirementNotApplicable a owl:NamedIndividual,
+        vsr:RequirementEvaluationStatus ;
+    rdfs:label "RequirementNotApplicable"@en .
+
+vsr:RequirementNotSatisfied a owl:NamedIndividual,
+        vsr:RequirementEvaluationStatus ;
+    rdfs:label "RequirementNotSatisfied"@en .
+
+vsr:RequirementPending a owl:NamedIndividual,
+        vsr:RequirementEvaluationStatus ;
+    rdfs:label "RequirementPending"@en .
+
+vsr:RequirementSatisfied a owl:NamedIndividual,
+        vsr:RequirementEvaluationStatus ;
+    rdfs:label "RequirementSatisfied"@en .
+
+vsr:RequirementWaived a owl:NamedIndividual,
+        vsr:RequirementEvaluationStatus ;
+    rdfs:label "RequirementWaived"@en .
+
+vsr:RiskAccepted a owl:NamedIndividual,
+        vsr:RiskStatus ;
+    rdfs:label "RiskAccepted"@en .
+
+vsr:RiskClosed a owl:NamedIndividual,
+        vsr:RiskStatus ;
+    rdfs:label "RiskClosed"@en .
+
+vsr:RiskMitigating a owl:NamedIndividual,
+        vsr:RiskStatus ;
+    rdfs:label "RiskMitigating"@en .
+
+vsr:RiskOpen a owl:NamedIndividual,
+        vsr:RiskStatus ;
+    rdfs:label "RiskOpen"@en .
+
+vsr:ShipmentCancelled a owl:NamedIndividual,
+        vsr:ShipmentStatus ;
+    rdfs:label "ShipmentCancelled"@en .
+
+vsr:ShipmentDelayed a owl:NamedIndividual,
+        vsr:ShipmentStatus ;
+    rdfs:label "ShipmentDelayed"@en .
+
+vsr:ShipmentDelivered a owl:NamedIndividual,
+        vsr:ShipmentStatus ;
+    rdfs:label "ShipmentDelivered"@en .
+
+vsr:ShipmentDispatched a owl:NamedIndividual,
+        vsr:ShipmentStatus ;
+    rdfs:label "ShipmentDispatched"@en .
+
+vsr:ShipmentInTransit a owl:NamedIndividual,
+        vsr:ShipmentStatus ;
+    rdfs:label "ShipmentInTransit"@en .
+
+vsr:ShipmentNotInitiated a owl:NamedIndividual,
+        vsr:ShipmentStatus ;
+    rdfs:label "ShipmentNotInitiated"@en .
+
+vsr:ShipmentPlanned a owl:NamedIndividual,
+        vsr:ShipmentStatus ;
+    rdfs:label "ShipmentPlanned"@en .
+
+vsr:SourceSystem a owl:Class ;
+    rdfs:label "Source system"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:SystemAccessEvidence a owl:Class ;
+    rdfs:label "System access evidence"@en ;
+    rdfs:subClassOf vsr:ReadinessEvidence .
+
+vsr:Training a owl:Class ;
+    rdfs:label "Training"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:TrainingAssigned a owl:NamedIndividual,
+        vsr:TrainingStatus ;
+    rdfs:label "TrainingAssigned"@en .
+
+vsr:TrainingCompleted a owl:NamedIndividual,
+        vsr:TrainingStatus ;
+    rdfs:label "TrainingCompleted"@en .
+
+vsr:TrainingEvidence a owl:Class ;
+    rdfs:label "Training evidence"@en ;
+    rdfs:subClassOf vsr:ReadinessEvidence .
+
+vsr:TrainingExpired a owl:NamedIndividual,
+        vsr:TrainingStatus ;
+    rdfs:label "TrainingExpired"@en .
+
+vsr:TrainingFailed a owl:NamedIndividual,
+        vsr:TrainingStatus ;
+    rdfs:label "TrainingFailed"@en .
+
+vsr:TrainingInProgress a owl:NamedIndividual,
+        vsr:TrainingStatus ;
+    rdfs:label "TrainingInProgress"@en .
+
+vsr:TrainingNotApplicable a owl:NamedIndividual,
+        vsr:TrainingStatus ;
+    rdfs:label "TrainingNotApplicable"@en .
+
+vsr:TrainingNotAssigned a owl:NamedIndividual,
+        vsr:TrainingStatus ;
+    rdfs:label "TrainingNotAssigned"@en .
+
+vsr:TrainingWaived a owl:NamedIndividual,
+        vsr:TrainingStatus ;
+    rdfs:label "TrainingWaived"@en .
+
+vsr:Waiting a owl:NamedIndividual,
+        vsr:ActivityStatus ;
+    rdfs:label "Waiting"@en .
+
+vsr:assignedToPerson a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "assignedToPerson"@en ;
+    rdfs:domain vsr:Assignment ;
+    rdfs:range vsr:Person .
+
+vsr:assignsVendor a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "assignsVendor"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:VendorOrganization .
+
+vsr:assignsVendorService a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "assignsVendorService"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:VendorService .
+
+vsr:containsShipmentItem a owl:ObjectProperty ;
+    rdfs:label "containsShipmentItem"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:ShipmentItem .
+
+vsr:evaluatedBy a owl:ObjectProperty ;
+    rdfs:label "evaluatedBy"@en ;
+    rdfs:domain vsr:RequirementAssignment ;
+    rdfs:range vsr:RequirementEvaluation .
+
+vsr:forStudy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "forStudy"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:ClinicalStudy .
+
+vsr:hasAssessmentStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasAssessmentStatus"@en ;
+    rdfs:domain vsr:Assessment ;
+    rdfs:range vsr:AssessmentStatus .
+
+vsr:hasCurrentReadinessStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasCurrentReadinessStatus"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:ReadinessStatus .
+
+vsr:hasReadinessAssessment a owl:ObjectProperty ;
+    rdfs:label "hasReadinessAssessment"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:AssignmentReadinessAssessment .
+
+vsr:hasShipmentStatus a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasShipmentStatus"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:ShipmentStatus .
+
+vsr:instantiatesRequirement a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "instantiatesRequirement"@en ;
+    rdfs:domain vsr:RequirementAssignment ;
+    rdfs:range vsr:Requirement .
+
+vsr:locatedAtFacility a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "locatedAtFacility"@en ;
+    rdfs:domain vsr:StudySite ;
+    rdfs:range vsr:ClinicalFacility ;
+    owl:inverseOf vsr:hostsStudySite .
+
+vsr:shipmentForAssignment a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "shipmentForAssignment"@en ;
+    rdfs:domain vsr:Shipment ;
+    rdfs:range vsr:SiteVendorServiceAssignment .
+
+vsr:supportedByEvidence a owl:ObjectProperty ;
+    rdfs:label "supportedByEvidence"@en ;
+    rdfs:domain vsr:RequirementEvaluation ;
+    rdfs:range vsr:ReadinessEvidence .
+
+vsr:AssessmentCompleted a owl:NamedIndividual,
+        vsr:AssessmentStatus ;
+    rdfs:label "AssessmentCompleted"@en .
+
+vsr:AssignmentReadinessAssessment a owl:Class ;
+    rdfs:label "Assignment readiness assessment"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:SiteVendorServiceAssignment ;
+            owl:onProperty vsr:assessmentForAssignment ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass vsr:RequirementEvaluation ;
+            owl:onProperty vsr:aggregatesEvaluation ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:AssessmentStatus ;
+            owl:onProperty vsr:hasAssessmentStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        vsr:ReadinessAssessment .
+
+vsr:Capability a owl:Class ;
+    rdfs:label "Capability"@en .
+
+vsr:Conditional a owl:NamedIndividual,
+        vsr:RequirementCriticality ;
+    rdfs:label "Conditional"@en .
+
+vsr:Country a owl:Class ;
+    rdfs:label "Country"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:Delivery a owl:Class ;
+    rdfs:label "Delivery"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:EquipmentEvidence a owl:Class ;
+    rdfs:label "Equipment evidence"@en ;
+    rdfs:subClassOf vsr:ReadinessEvidence .
+
+vsr:Mandatory a owl:NamedIndividual,
+        vsr:RequirementCriticality ;
+    rdfs:label "Mandatory"@en .
+
+vsr:Optional a owl:NamedIndividual,
+        vsr:RequirementCriticality ;
+    rdfs:label "Optional"@en .
+
+vsr:Protocol a owl:Class ;
+    rdfs:label "Protocol"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:ReadinessAtRisk a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "ReadinessAtRisk"@en .
+
+vsr:Ready a owl:NamedIndividual,
+        vsr:ReadinessStatus ;
+    rdfs:label "Ready"@en .
+
+vsr:ReceiptAcknowledgement a owl:Class ;
+    rdfs:label "Receipt acknowledgement"@en ;
+    rdfs:subClassOf vsr:ProvenanceEntity .
+
+vsr:ShipmentAcknowledged a owl:NamedIndividual,
+        vsr:ShipmentStatus ;
+    rdfs:label "ShipmentAcknowledged"@en .
+
+vsr:TrainingCourse a owl:Class ;
+    rdfs:label "Training course"@en ;
+    rdfs:subClassOf vsr:Training .
+
+vsr:UserAccount a owl:Class ;
+    rdfs:label "User account"@en ;
+    rdfs:subClassOf vsr:SystemAccess .
+
+vsr:hasCriticality a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasCriticality"@en ;
+    rdfs:domain vsr:Requirement ;
+    rdfs:range vsr:RequirementCriticality .
+
+vsr:hasRequirementAssignment a owl:ObjectProperty ;
+    rdfs:label "hasRequirementAssignment"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:RequirementAssignment .
+
+vsr:ProtocolAmendment a owl:Class ;
+    rdfs:label "Protocol amendment"@en ;
+    rdfs:subClassOf vsr:ProvenanceEntity .
+
+vsr:ProtocolVersion a owl:Class ;
+    rdfs:label "Protocol version"@en ;
+    rdfs:subClassOf vsr:ProvenanceEntity .
+
+vsr:RequirementCriticality a owl:Class ;
+    rdfs:label "Requirement criticality"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:Mandatory vsr:Conditional vsr:Optional ) .
+
+vsr:SupplyItem a owl:Class ;
+    rdfs:label "Supply item"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:SystemAccess a owl:Class ;
+    rdfs:label "System access"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:TrainingCompletion a owl:Class ;
+    rdfs:label "Training completion"@en ;
+    rdfs:subClassOf vsr:ProvenanceEntity .
+
+vsr:forStudySite a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "forStudySite"@en ;
+    rdfs:domain vsr:SiteVendorServiceAssignment ;
+    rdfs:range vsr:StudySite .
+
+vsr:RiskLevel a owl:Class ;
+    rdfs:label "Risk level"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:LowRisk vsr:MediumRisk vsr:HighRisk vsr:CriticalRisk ) .
+
+vsr:RiskStatus a owl:Class ;
+    rdfs:label "Risk status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:RiskOpen vsr:RiskMitigating vsr:RiskAccepted vsr:RiskClosed ) .
+
+vsr:ShipmentItem a owl:Class ;
+    rdfs:label "Shipment item"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:VendorSystem a owl:Class ;
+    rdfs:label "Vendor system"@en ;
+    rdfs:subClassOf vsr:Capability .
+
+vsr:AssessmentStatus a owl:Class ;
+    rdfs:label "Assessment status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:AssessmentDraft vsr:AssessmentInProgress vsr:AssessmentCompleted vsr:AssessmentSuperseded ) .
+
+vsr:ClinicalFacility a owl:Class ;
+    rdfs:label "Clinical facility"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:Finding a owl:Class ;
+    rdfs:label "Finding"@en .
+
+vsr:Organization a owl:Class ;
+    rdfs:label "Organization"@en ;
+    rdfs:subClassOf vsr:Party .
+
+vsr:ReadinessDecision a owl:Class ;
+    rdfs:label "Readiness decision"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:Party ;
+            owl:onProperty vsr:decidedBy ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:ReadinessAssessment ;
+            owl:onProperty vsr:basedOnAssessment ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:SiteVendorServiceAssignment ;
+            owl:onProperty vsr:decisionForAssignment ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:ReadinessStatus ;
+            owl:onProperty vsr:resultsInReadinessStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        vsr:Decision ;
+    vsr:definition "Final readiness is represented by an accountable decision; absence of gaps alone is not approval."@en .
+
+vsr:ReadinessGap a owl:Class ;
+    rdfs:label "Readiness gap"@en ;
+    rdfs:subClassOf vsr:Finding .
+
+vsr:SourceRecord a owl:Class ;
+    rdfs:label "Source record"@en ;
+    rdfs:subClassOf vsr:ProvenanceEntity ;
+    vsr:definition "Authoritative-source record representation for semantic mapping, reconciliation and lineage."@en .
+
+vsr:SystemAccessAssignment a owl:Class ;
+    rdfs:label "System access assignment"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:VendorSystem ;
+            owl:onProperty vsr:grantsAccessTo ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:AccessStatus ;
+            owl:onProperty vsr:hasAccessStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:SiteVendorServiceAssignment ;
+            owl:onProperty vsr:accessForAssignment ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:Person ;
+            owl:onProperty vsr:assignedToPerson ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        vsr:Assignment .
+
+vsr:DecisionStatus a owl:Class ;
+    rdfs:label "Decision status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:DecisionDraft vsr:DecisionPendingReview vsr:DecisionApproved vsr:DecisionRejected vsr:DecisionOverridden vsr:DecisionWithdrawn ) .
+
+vsr:EquipmentQualification a owl:Class ;
+    rdfs:label "Equipment qualification"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:QualificationStatus ;
+            owl:onProperty vsr:hasQualificationStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:Equipment ;
+            owl:onProperty vsr:qualificationForEquipment ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass vsr:EquipmentEvidence ;
+            owl:onProperty vsr:qualificationSupportedBy ],
+        vsr:Assessment .
+
+vsr:PersonnelAssignment a owl:Class ;
+    rdfs:label "Personnel assignment"@en ;
+    rdfs:subClassOf vsr:Assignment .
+
+vsr:QualificationStatus a owl:Class ;
+    rdfs:label "Qualification status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:QualificationNotStarted vsr:QualificationPending vsr:QualificationApproved vsr:QualificationRejected vsr:QualificationExpired ) .
+
+vsr:Dependency a owl:Class ;
+    rdfs:label "Dependency"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:Plan a owl:Class ;
+    rdfs:label "Plan"@en .
+
+vsr:TrainingAssignment a owl:Class ;
+    rdfs:label "Training assignment"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:SiteVendorServiceAssignment ;
+            owl:onProperty vsr:trainingForAssignment ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:TrainingStatus ;
+            owl:onProperty vsr:hasTrainingStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:Person ;
+            owl:onProperty vsr:assignedToPerson ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:TrainingCourse ;
+            owl:onProperty vsr:assignedTraining ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        vsr:Assignment .
+
+vsr:VendorOrganization a owl:Class ;
+    rdfs:label "Vendor organization"@en ;
+    rdfs:subClassOf vsr:Organization .
+
+vsr:ActivityStatus a owl:Class ;
+    rdfs:label "Activity status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:NotStarted vsr:Planned vsr:InProgress vsr:Waiting vsr:Blocked vsr:Completed vsr:Cancelled vsr:NotApplicable ) .
+
+vsr:AssignmentStatus a owl:Class ;
+    rdfs:label "Assignment status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:AssignmentProposed vsr:AssignmentPending vsr:AssignmentConfirmed vsr:AssignmentActive vsr:AssignmentSuspended vsr:AssignmentTerminated vsr:AssignmentCompleted ) .
+
+vsr:Document a owl:Class ;
+    rdfs:label "Document"@en ;
+    rdfs:subClassOf vsr:Artifact .
+
+vsr:EquipmentStatus a owl:Class ;
+    rdfs:label "Equipment status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:EquipmentNotRequired vsr:EquipmentRequired vsr:EquipmentOrdered vsr:EquipmentDelivered vsr:EquipmentInstalled vsr:EquipmentQualificationPending vsr:EquipmentQualified vsr:EquipmentQualificationFailed vsr:EquipmentCertificationExpired ) .
+
+vsr:EvidenceStatus a owl:Class ;
+    rdfs:label "Evidence status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:EvidenceMissing vsr:EvidenceSubmitted vsr:EvidenceUnderReview vsr:EvidenceAccepted vsr:EvidenceRejected vsr:EvidenceExpired vsr:EvidenceSuperseded ) .
+
+vsr:RequirementEvaluationStatus a owl:Class ;
+    rdfs:label "Requirement evaluation status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:NotEvaluated vsr:RequirementPending vsr:RequirementSatisfied vsr:RequirementNotSatisfied vsr:RequirementConditionallySatisfied vsr:RequirementWaived vsr:RequirementNotApplicable ) .
+
+vsr:AccessStatus a owl:Class ;
+    rdfs:label "Access status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:AccessNotRequested vsr:AccessRequested vsr:AccessPending vsr:AccessProvisioned vsr:AccessVerified vsr:AccessFailed vsr:AccessRevoked vsr:AccessNotApplicable ) .
+
+vsr:ClinicalStudy a owl:Class ;
+    rdfs:label "Clinical study"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:RequirementAssignment a owl:Class ;
+    rdfs:label "Requirement assignment"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom vsr:Rule ;
+            owl:onProperty vsr:governedByRule ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:SiteVendorServiceAssignment ;
+            owl:onProperty vsr:assignmentFor ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:Requirement ;
+            owl:onProperty vsr:instantiatesRequirement ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom vsr:RequirementEvaluation ;
+            owl:onProperty vsr:evaluatedBy ],
+        vsr:Assignment .
+
+vsr:RequirementEvaluation a owl:Class ;
+    rdfs:label "Requirement evaluation"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:RequirementEvaluationStatus ;
+            owl:onProperty vsr:hasEvaluationStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:RequirementAssignment ;
+            owl:onProperty vsr:evaluatesRequirementAssignment ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom vsr:ReadinessEvidence ;
+            owl:onProperty vsr:supportedByEvidence ],
+        vsr:Assessment .
+
+vsr:ShipmentStatus a owl:Class ;
+    rdfs:label "Shipment status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:ShipmentNotInitiated vsr:ShipmentPlanned vsr:ShipmentDispatched vsr:ShipmentInTransit vsr:ShipmentDelayed vsr:ShipmentDelivered vsr:ShipmentAcknowledged vsr:ShipmentCancelled ) .
+
+vsr:TrainingStatus a owl:Class ;
+    rdfs:label "Training status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:TrainingNotAssigned vsr:TrainingAssigned vsr:TrainingInProgress vsr:TrainingCompleted vsr:TrainingFailed vsr:TrainingExpired vsr:TrainingWaived vsr:TrainingNotApplicable ) .
+
+vsr:Party a owl:Class ;
+    rdfs:label "Party"@en .
+
+vsr:Artifact a owl:Class ;
+    rdfs:label "Artifact"@en .
+
+vsr:Decision a owl:Class ;
+    rdfs:label "Decision"@en .
+
+vsr:Event a owl:Class ;
+    rdfs:label "Event"@en .
+
+vsr:ReadinessStatus a owl:Class ;
+    rdfs:label "Readiness status"@en ;
+    rdfs:subClassOf vsr:Status ;
+    owl:oneOf ( vsr:ReadinessNotStarted vsr:ReadinessInProgress vsr:ReadinessAtRisk vsr:ReadinessBlocked vsr:ReadyWithConditions vsr:Ready vsr:ReadinessExpired vsr:ReadinessSuspended vsr:ReadinessNotApplicable ) .
+
+vsr:Recommendation a owl:Class ;
+    rdfs:label "Recommendation"@en .
+
+vsr:Role a owl:Class ;
+    rdfs:label "Role"@en .
+
+vsr:Milestone a owl:Class ;
+    rdfs:label "Milestone"@en ;
+    rdfs:subClassOf vsr:Event .
+
+vsr:ProvenanceEntity a owl:Class ;
+    rdfs:label "Provenance entity"@en .
+
+vsr:ReadinessAssessment a owl:Class ;
+    rdfs:label "Readiness assessment"@en ;
+    rdfs:subClassOf vsr:Assessment .
+
+vsr:Assessment a owl:Class ;
+    rdfs:label "Assessment"@en .
+
+vsr:Assignment a owl:Class ;
+    rdfs:label "Assignment"@en .
+
+vsr:Equipment a owl:Class ;
+    rdfs:label "Equipment"@en ;
+    rdfs:subClassOf vsr:BusinessEntity .
+
+vsr:Person a owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:subClassOf vsr:Party .
+
+vsr:StudySite a owl:Class ;
+    rdfs:label "Study site"@en ;
+    rdfs:subClassOf vsr:BusinessEntity ;
+    vsr:definition "Study-specific participation of a reusable clinical facility."@en .
+
+vsr:Rule a owl:Class ;
+    rdfs:label "Rule"@en .
+
+vsr:Shipment a owl:Class ;
+    rdfs:label "Shipment"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:SiteVendorServiceAssignment ;
+            owl:onProperty vsr:shipmentForAssignment ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass vsr:ShipmentItem ;
+            owl:onProperty vsr:containsShipmentItem ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:ShipmentStatus ;
+            owl:onProperty vsr:hasShipmentStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:VendorOrganization ;
+            owl:onProperty vsr:initiatedByVendor ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        vsr:BusinessEntity .
+
+vsr:Status a owl:Class ;
+    rdfs:label "Status"@en .
+
+vsr:VendorService a owl:Class ;
+    rdfs:label "Vendor service"@en ;
+    rdfs:subClassOf vsr:Capability ;
+    vsr:definition "Readiness is evaluated for an assigned vendor service, not for a vendor globally."@en .
+
+vsr:Risk a owl:Class ;
+    rdfs:label "Risk"@en .
+
+vsr:ReadinessEvidence a owl:Class ;
+    rdfs:label "Readiness evidence"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:EvidenceStatus ;
+            owl:onProperty vsr:hasEvidenceStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass vsr:Artifact ;
+            owl:onProperty vsr:derivedFromArtifact ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass vsr:RequirementAssignment ;
+            owl:onProperty vsr:providedForRequirement ],
+        vsr:Artifact ;
+    vsr:definition "Evidence supports a requirement evaluation and retains source lineage."@en .
+
+vsr:SiteVendorServiceAssignment a owl:Class ;
+    rdfs:label "Site vendor service assignment"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass vsr:ClinicalStudy ;
+            owl:onProperty vsr:forStudy ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:AssignmentStatus ;
+            owl:onProperty vsr:hasAssignmentStatus ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom vsr:ReadinessDecision ;
+            owl:onProperty vsr:hasReadinessDecision ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom vsr:RequirementAssignment ;
+            owl:onProperty vsr:hasRequirementAssignment ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom vsr:AssignmentReadinessAssessment ;
+            owl:onProperty vsr:hasReadinessAssessment ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:VendorOrganization ;
+            owl:onProperty vsr:assignsVendor ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:VendorService ;
+            owl:onProperty vsr:assignsVendorService ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass vsr:StudySite ;
+            owl:onProperty vsr:forStudySite ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        vsr:Assignment ;
+    owl:hasKey ( vsr:forStudy vsr:forStudySite vsr:assignsVendor vsr:assignsVendorService vsr:assignmentStartDate ) ;
+    vsr:definition "Canonical readiness anchor at study + study site + vendor + vendor service + effective period."@en ;
+    vsr:implementationNote "Enterprise namespace registration, source-to-semantic mapping, SHACL validation and representative-data testing are required before controlled production deployment."@en .
+
+vsr:Activity a owl:Class ;
+    rdfs:label "Activity"@en .
+
+vsr:Requirement a owl:Class ;
+    rdfs:label "Requirement"@en ;
+    vsr:definition "Applicability can depend on protocol version, service, country, site, role and effective period."@en .
+
+vsr:BusinessEntity a owl:Class ;
+    rdfs:label "Business entity"@en .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:AssignmentProposed vsr:AssignmentPending vsr:AssignmentConfirmed vsr:AssignmentActive vsr:AssignmentSuspended vsr:AssignmentTerminated vsr:AssignmentCompleted ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:Mandatory vsr:Conditional vsr:Optional ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:NotStarted vsr:Planned vsr:InProgress vsr:Waiting vsr:Blocked vsr:Completed vsr:Cancelled vsr:NotApplicable ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( vsr:TrainingEvidence vsr:SystemAccessEvidence vsr:ShipmentEvidence vsr:EquipmentEvidence vsr:QualificationEvidence vsr:ApprovalEvidence ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:AccessNotRequested vsr:AccessRequested vsr:AccessPending vsr:AccessProvisioned vsr:AccessVerified vsr:AccessFailed vsr:AccessRevoked vsr:AccessNotApplicable ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:EquipmentNotRequired vsr:EquipmentRequired vsr:EquipmentOrdered vsr:EquipmentDelivered vsr:EquipmentInstalled vsr:EquipmentQualificationPending vsr:EquipmentQualified vsr:EquipmentQualificationFailed vsr:EquipmentCertificationExpired ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:TrainingNotAssigned vsr:TrainingAssigned vsr:TrainingInProgress vsr:TrainingCompleted vsr:TrainingFailed vsr:TrainingExpired vsr:TrainingWaived vsr:TrainingNotApplicable ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:NotEvaluated vsr:RequirementPending vsr:RequirementSatisfied vsr:RequirementNotSatisfied vsr:RequirementConditionallySatisfied vsr:RequirementWaived vsr:RequirementNotApplicable ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:RiskOpen vsr:RiskMitigating vsr:RiskAccepted vsr:RiskClosed ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( vsr:ClinicalStudy vsr:StudySite vsr:VendorOrganization vsr:VendorService vsr:Requirement vsr:ReadinessEvidence vsr:Activity vsr:Assessment vsr:Decision vsr:Status ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:QualificationNotStarted vsr:QualificationPending vsr:QualificationApproved vsr:QualificationRejected vsr:QualificationExpired ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:DecisionDraft vsr:DecisionPendingReview vsr:DecisionApproved vsr:DecisionRejected vsr:DecisionOverridden vsr:DecisionWithdrawn ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( vsr:Person vsr:Organization ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:EvidenceMissing vsr:EvidenceSubmitted vsr:EvidenceUnderReview vsr:EvidenceAccepted vsr:EvidenceRejected vsr:EvidenceExpired vsr:EvidenceSuperseded ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:AssessmentDraft vsr:AssessmentInProgress vsr:AssessmentCompleted vsr:AssessmentSuperseded ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( vsr:MandatoryRequirement vsr:ConditionalRequirement vsr:OptionalRequirement ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:ShipmentNotInitiated vsr:ShipmentPlanned vsr:ShipmentDispatched vsr:ShipmentInTransit vsr:ShipmentDelayed vsr:ShipmentDelivered vsr:ShipmentAcknowledged vsr:ShipmentCancelled ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:ReadinessNotStarted vsr:ReadinessInProgress vsr:ReadinessAtRisk vsr:ReadinessBlocked vsr:ReadyWithConditions vsr:Ready vsr:ReadinessExpired vsr:ReadinessSuspended vsr:ReadinessNotApplicable ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( vsr:LowRisk vsr:MediumRisk vsr:HighRisk vsr:CriticalRisk ) .
+
