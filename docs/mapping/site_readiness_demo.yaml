@@ -6,25 +6,67 @@
 # hasEnrollmentCount:
 #   table: sites.csv
 #   column: enrollment_count # how many patients enrolled at the site
+schema_version: "0.1"
 
 mappings:
   - source:
-      ontology_class: http://purl.obolibrary.org/obo/NCIT_C15206 # "Clinical Study"   # ontology class name
-      data_property: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_I0091 #"Identifyer"        # property on that class
+      ontology_class: 
+        rdfs:label: "Clinical Study"  
+        uri: http://purl.obolibrary.org/obo/NCIT_C15206
+      data_property: 
+        rdfs:label: "Uniqure Identifier"
+        uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0091
     target:
-      table: site_readiness_demo.csv                 # database table name
-      field: "Study"                     # database column name
+      database: 
+        table: site_readiness_demo.csv                 # database table name
+        field: "Study"
+      key_fields:
+        field: "Study"
+        field: "SiteID"
 
   - source:
-      ontology_class: http://purl.obolibrary.org/obo/NCIT_C83100 # "Study Site Number"   # ontology class name
-      data_property: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0090 # "Identifyer"        # property on that class
+      ontology_class: 
+        rdfs:label: "Study Site Number"
+        uri: http://purl.obolibrary.org/obo/NCIT_C83100
+      data_property:
+        rdfs:label: "Identifier"
+        uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0090
     target:
-      table: site_readiness_demo.csv                 # database table name
-      field: "SiteID"                     # database column name
+      database:
+        table: site_readiness_demo.csv       
+        field: "SiteID"
+      key_fields:
+        field: "Study"
+        field: "SiteID"    
 
   - source:
-      ontology_class: https://w3id.org/cdisc/usdm/v4/StudySite # "Study Site"   # ontology class name
-      data_property: https://w3id.org/cdisc/usdm/v4/StudySite-name # "Study Site Name"        # property on that class
+      ontology_class: 
+        rdfs:label: "Study Site"
+        uri: https://w3id.org/cdisc/usdm/v4/StudySite # "Study Site"   # ontology class name
+      data_property: 
+        rdfs:label: StudySite-name
+        uri: https://w3id.org/cdisc/usdm/v4/StudySite-name # "Study Site Name"        # property on that class
     target:
-      table: site_readiness_demo.csv                 # database table name
-      field: "Site Name"                     # database column name
+      database:
+        table: site_readiness_demo.csv       
+        field: "SiteID"
+      key_fields:
+        field: "Study"
+        field: "SiteID" 
+    
+  - source:
+      ontology_class: 
+        rdfs:lable: "Study Site"
+        uri: https://w3id.org/cdisc/usdm/v4/StudySite # "Study Site"   # ontology class name
+      data_property: 
+      rdfs:lable: 
+      uri: https://w3id.org/cdisc/usdm/v4/StudySite-name # "Study Site Name"        # property on that class
+    target:
+      database:
+        table: site_readiness_demo.csv       
+        field: "SiteID"
+      key_fields:
+        field: "Study"
+        field: "SiteID" 
+
+      
