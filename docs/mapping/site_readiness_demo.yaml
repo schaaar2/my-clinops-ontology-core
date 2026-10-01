@@ -85,7 +85,7 @@ mappings:
             uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_C0065
             individual:
               rdfs:label: "NCV latest planned milestone entry"
-              uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/Test_I007     
+              uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/Test_I0071     
       target:
         database:
           table: site_readiness_demo.csv       
