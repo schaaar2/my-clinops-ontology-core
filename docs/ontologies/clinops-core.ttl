@@ -1774,6 +1774,18 @@ skos:scopeNote rdf:type owl:AnnotationProperty .
 <http://www.w3.org/ns/prov#unqualifiedForm> rdf:type owl:AnnotationProperty .
 
 
+###  https://w3id.org/cdisc/usdm/v4/modelName
+<https://w3id.org/cdisc/usdm/v4/modelName> rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/cdisc/usdm/v4/modelRepresentation
+<https://w3id.org/cdisc/usdm/v4/modelRepresentation> rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/cdisc/usdm/v4/relationshipType
+<https://w3id.org/cdisc/usdm/v4/relationshipType> rdf:type owl:AnnotationProperty .
+
+
 ###  https://www.omg.org/spec/Commons/AnnotationVocabulary/adaptedFrom
 <https://www.omg.org/spec/Commons/AnnotationVocabulary/adaptedFrom> rdf:type owl:AnnotationProperty .
 
@@ -2327,6 +2339,11 @@ obo:RO_0017009 rdf:type owl:ObjectProperty ;
           rdfs:label "belongs to"@en .
 
 
+###  http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_P0208
+:NV_P0208 rdf:type owl:ObjectProperty ;
+          rdfs:label "identifies"@en .
+
+
 ###  http://www.w3.org/2004/02/skos/core#broadMatch
 skos:broadMatch rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf skos:broader ,
@@ -2372,11 +2389,7 @@ skos:closeMatch rdf:type owl:ObjectProperty ;
 skos:exactMatch rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf skos:closeMatch ;
                 rdf:type owl:SymmetricProperty ,
-                         owl:TransitiveProperty ;
-                rdfs:comment "skos:exactMatch is disjoint with each of the properties skos:broadMatch and skos:relatedMatch."@en ;
-                rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core> ;
-                rdfs:label "has exact match"@en ;
-                skos:definition "skos:exactMatch is used to link two concepts, indicating a high degree of confidence that the concepts can be used interchangeably across a wide range of information retrieval applications. skos:exactMatch is a transitive property, and is a sub-property of skos:closeMatch."@en .
+                         owl:TransitiveProperty .
 
 
 ###  http://www.w3.org/2004/02/skos/core#hasTopConcept
@@ -3501,6 +3514,19 @@ obo:NCIT_C42614 rdf:type owl:DatatypeProperty ;
           rdfs:label "Planned Milestone Date"@en .
 
 
+###  http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0090
+:NV_D0090 rdf:type owl:DatatypeProperty ;
+          rdfs:label "Identifier"@en .
+
+
+###  http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0091
+:NV_D0091 rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :NV_D0090 ;
+          rdf:type owl:FunctionalProperty ;
+          rdfs:comment "Unique Identifier in the development domain" ;
+          rdfs:label "Unique Identifier"@en .
+
+
 ###  http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0123
 :NV_D0123 rdf:type owl:DatatypeProperty ;
           rdfs:domain obo:NCIT_C25688 ;
@@ -3537,19 +3563,6 @@ obo:NCIT_C42614 rdf:type owl:DatatypeProperty ;
                                     )
                       ] ;
           rdfs:label "Actual Milestone Date"@en .
-
-
-###  http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_I0090
-:NV_I0090 rdf:type owl:DatatypeProperty ;
-          rdfs:label "Identifyer"@en .
-
-
-###  http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_I0091
-:NV_I0091 rdf:type owl:DatatypeProperty ;
-          rdfs:subPropertyOf :NV_I0090 ;
-          rdf:type owl:FunctionalProperty ;
-          rdfs:comment "Unique Identifyer in the development domain" ;
-          rdfs:label "Unique Identifyer"@en .
 
 
 ###  http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_P0039
@@ -3661,6 +3674,20 @@ skos:notation rdf:type owl:DatatypeProperty ;
                                   <http://www.w3.org/ns/prov#dm> "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-attribute-value"^^xsd:anyURI ;
                                   <http://www.w3.org/ns/prov#editorialNote> "This property serves the same purpose as rdf:value, but has been reintroduced to avoid some of the definitional ambiguity in the RDF specification (specifically, 'may be used in describing structured values')."@en ,
                                                                             "The editor's definition comes from http://www.w3.org/TR/rdf-primer/#rdfvalue" .
+
+
+###  https://w3id.org/cdisc/usdm/v4/StudySite-name
+<https://w3id.org/cdisc/usdm/v4/StudySite-name> rdf:type owl:DatatypeProperty ;
+                                                rdfs:domain <https://w3id.org/cdisc/usdm/v4/StudySite> ;
+                                                rdfs:range xsd:string ;
+                                                rdfs:label "StudySite-name" ;
+                                                skos:definition "The literal identifier (i.e., distinctive designation) of the study site." ;
+                                                skos:exactMatch <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C207566> ,
+                                                                obo:NCIT_C207566 ;
+                                                skos:prefLabel "Study Site Name" ;
+                                                <https://w3id.org/cdisc/usdm/v4/modelName> "name" ;
+                                                <https://w3id.org/cdisc/usdm/v4/modelRepresentation> "Attribute" ;
+                                                <https://w3id.org/cdisc/usdm/v4/relationshipType> "Value" .
 
 
 #################################################################
@@ -10664,7 +10691,8 @@ obo:NCIT_C151989 rdf:type owl:Class ;
 
 ###  http://purl.obolibrary.org/obo/NCIT_C15206
 obo:NCIT_C15206 rdf:type owl:Class ;
-                rdfs:subClassOf obo:NCIT_C63536 ;
+                rdfs:subClassOf obo:NCIT_C63536 ,
+                                _:genid852 ;
                 obo:IAO_0000115 "Research conducted with human subjects or on material of human origin in which an investigator directly interacts with human subjects; includes development of new technologies, study of mechanisms of human diseases, therapy, clinical trials, epidemiologic, behavior, and health services research." ;
                 obo:NCIT_NHC0 "C15206" ;
                 obo:NCIT_P106 "Research Activity" ;
@@ -10698,6 +10726,17 @@ obo:NCIT_C15206 rdf:type owl:Class ;
                                   obo:NCIT_C61410 ,
                                   obo:NCIT_C67497 ;
                 rdfs:label "Clinical Study" .
+
+_:genid852 rdf:type owl:Restriction ;
+            owl:onProperty :NV_D0091 ;
+            owl:someValuesFrom xsd:string .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource obo:NCIT_C15206 ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget _:genid852 ;
+   rdfs:label "Study Code Alias"@en
+ ] .
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource obo:NCIT_C15206 ;
@@ -12271,6 +12310,22 @@ obo:NCIT_C15429 rdf:type owl:Class ;
 [ rdf:type owl:Axiom ;
    owl:annotatedSource obo:NCIT_C15429 ;
    owl:annotatedProperty oboInOwl:hasExactSynonym ;
+   owl:annotatedTarget "Research" ;
+   obo:NCIT_P383 "SY" ;
+   obo:NCIT_P384 "NCI"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource obo:NCIT_C15429 ;
+   owl:annotatedProperty oboInOwl:hasExactSynonym ;
+   owl:annotatedTarget "Research Activity" ;
+   obo:NCIT_P383 "PT" ;
+   obo:NCIT_P384 "NCI"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource obo:NCIT_C15429 ;
+   owl:annotatedProperty oboInOwl:hasExactSynonym ;
    owl:annotatedTarget "research study" ;
    obo:NCIT_P383 "PT" ;
    obo:NCIT_P384 "NCI-GLOSS" ;
@@ -12289,22 +12344,6 @@ obo:NCIT_C15429 rdf:type owl:Class ;
    owl:annotatedProperty obo:NCIT_P325 ;
    owl:annotatedTarget "A scientific study of nature that sometimes includes processes involved in health and disease. For example, clinical trials are research studies that involve people.  These studies may be related to new ways to screen, prevent, diagnose, and treat disease.  They may also study certain outcomes and certain groups of people by looking at data collected in the past or future." ;
    obo:NCIT_P378 "NCI-GLOSS"
- ] .
-
-[ rdf:type owl:Axiom ;
-   owl:annotatedSource obo:NCIT_C15429 ;
-   owl:annotatedProperty oboInOwl:hasExactSynonym ;
-   owl:annotatedTarget "Research" ;
-   obo:NCIT_P383 "SY" ;
-   obo:NCIT_P384 "NCI"
- ] .
-
-[ rdf:type owl:Axiom ;
-   owl:annotatedSource obo:NCIT_C15429 ;
-   owl:annotatedProperty oboInOwl:hasExactSynonym ;
-   owl:annotatedTarget "Research Activity" ;
-   obo:NCIT_P383 "PT" ;
-   obo:NCIT_P384 "NCI"
  ] .
 
 
@@ -54127,7 +54166,8 @@ obo:NCIT_C80244 rdf:type owl:Class ;
 
 ###  http://purl.obolibrary.org/obo/NCIT_C80403
 obo:NCIT_C80403 rdf:type owl:Class ;
-                rdfs:subClassOf [ rdf:type owl:Restriction ;
+                rdfs:subClassOf <https://w3id.org/cdisc/usdm/v4/StudySite> ,
+                                [ rdf:type owl:Restriction ;
                                   owl:onProperty obo:RO_0000056 ;
                                   owl:someValuesFrom obo:NCIT_C15206
                                 ] ,
@@ -54138,6 +54178,10 @@ obo:NCIT_C80403 rdf:type owl:Class ;
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty :NV_P0159 ;
                                   owl:someValuesFrom :NV_P0155
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :NV_D0021 ;
+                                  owl:someValuesFrom xsd:string
                                 ] ;
                 obo:IAO_0000115 "A facility in which study/protocol activities are conducted." ;
                 obo:NCIT_NHC0 "C80403" ;
@@ -55113,7 +55157,15 @@ obo:NCIT_C83093 rdf:type owl:Class ;
 
 ###  http://purl.obolibrary.org/obo/NCIT_C83100
 obo:NCIT_C83100 rdf:type owl:Class ;
-                rdfs:subClassOf obo:NCIT_C25337 ;
+                rdfs:subClassOf obo:NCIT_C25337 ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :NV_P0208 ;
+                                  owl:someValuesFrom obo:NCIT_C80403
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :NV_D0090 ;
+                                  owl:someValuesFrom xsd:string
+                                ] ;
                 obo:IAO_0000115 "The numerical characters used to identify, name, or characterize the study site." ;
                 obo:NCIT_NHC0 "C83100" ;
                 obo:NCIT_P106 "Quantitative Concept" ;
@@ -58943,6 +58995,10 @@ obo:NCIT_C99158 rdf:type owl:Class ;
                             owl:onProperty :NV_P0158 ;
                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                             owl:onClass obo:NCIT_C15206
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.w3.org/2006/time#inXSDDate> ;
+                            owl:someValuesFrom xsd:date
                           ] ;
           rdfs:isDefinedBy :NV_C0040 ;
           rdfs:label "Milestone"@en .
@@ -60144,6 +60200,14 @@ Region = state, canton, prefecture, autonomous community..."""@en ;
 <https://spec.edmcouncil.org/fibo/ontology/FND/Places/Addresses/ConventionalStreetAddress> rdf:type owl:Class .
 
 
+###  https://w3id.org/cdisc/usdm/v4/StudySite
+<https://w3id.org/cdisc/usdm/v4/StudySite> rdf:type owl:Class ;
+                                           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <https://w3id.org/cdisc/usdm/v4/StudySite-name> ;
+                                                             owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                           ] .
+
+
 ###  https://www.omg.org/spec/Commons/DatesAndTimes/Date
 <https://www.omg.org/spec/Commons/DatesAndTimes/Date> rdf:type owl:Class .
 
@@ -60683,12 +60747,12 @@ Region = state, canton, prefecture, autonomous community..."""@en ;
 ###  http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_I0206
 :NV_I0206 rdf:type owl:NamedIndividual ,
                    obo:NCIT_C80403 ;
-          :NV_I0090 "SITE-104" ;
+          :NV_D0090 "SITE-104" ;
           rdfs:label "CCY_104"@en .
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :NV_I0206 ;
-   owl:annotatedProperty :NV_I0090 ;
+   owl:annotatedProperty :NV_D0090 ;
    owl:annotatedTarget "SITE-104" ;
    rdfs:label "Site Number" ,
               "Site#"
@@ -60706,12 +60770,12 @@ Region = state, canton, prefecture, autonomous community..."""@en ;
                      obo:NCIT_C15206 ;
             :NV_P0051 :Test_I0067 ,
                       :Test_I0068 ;
-            :NV_I0091 "CCYX082A12101" ;
+            :NV_D0091 "CCYX082A12101" ;
             rdfs:label "CCYX082A12101"@en .
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :Test_I0066 ;
-   owl:annotatedProperty :NV_I0091 ;
+   owl:annotatedProperty :NV_D0091 ;
    owl:annotatedTarget "CCYX082A12101" ;
    rdfs:label "Study Code Alias"
  ] .
@@ -60728,8 +60792,8 @@ Region = state, canton, prefecture, autonomous community..."""@en ;
                      obo:NCIT_C80403 ;
             obo:RO_0001025 :NV_I0080 ;
             :NV_D0021 "Heidelberg University Hospital | 310423"@en ;
-            :NV_I0090 "1107" ;
-            :NV_I0091 "" ;
+            :NV_D0090 "1107" ;
+            :NV_D0091 "" ;
             rdfs:label "CCY_1107"@en .
 
 [ rdf:type owl:Axiom ;
@@ -60741,7 +60805,7 @@ Region = state, canton, prefecture, autonomous community..."""@en ;
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :Test_I0068 ;
-   owl:annotatedProperty :NV_I0090 ;
+   owl:annotatedProperty :NV_D0090 ;
    owl:annotatedTarget "1107" ;
    rdfs:label "Site #"
  ] .
@@ -60840,6 +60904,12 @@ obo:NCIT_C42614 obo:IAO_0000115 "The words or language units by which a thing is
    obo:NCIT_P383 "PT" ;
    obo:NCIT_P384 "BRIDG 5.3"
  ] .
+
+
+skos:exactMatch rdfs:comment "skos:exactMatch is disjoint with each of the properties skos:broadMatch and skos:relatedMatch."@en ;
+                rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core> ;
+                rdfs:label "has exact match"@en ;
+                skos:definition "skos:exactMatch is used to link two concepts, indicating a high degree of confidence that the concepts can be used interchangeably across a wide range of information retrieval applications. skos:exactMatch is a transitive property, and is a sub-property of skos:closeMatch."@en .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
