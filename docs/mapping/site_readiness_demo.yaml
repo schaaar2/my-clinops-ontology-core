@@ -14,7 +14,7 @@ mappings:
         rdfs:label: "Clinical Study"  
         uri: http://purl.obolibrary.org/obo/NCIT_C15206
         data_property: 
-          rdfs:label: "Uniqure Identifier"
+          rdfs:label: "Unique Identifier"
           uri: http://www.semanticweb.org/schaaar2/ontologies/2026/7/ClinOps-Core/NV_D0091
     target:
       database: 
@@ -52,7 +52,7 @@ mappings:
         field: "SiteID"
       key_fields:
         field: "Study"
-        field: "SiteID" 
+        field: "Site Name" 
     
   - source:
       ontology_class: 
