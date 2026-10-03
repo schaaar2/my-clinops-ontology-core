@@ -512,6 +512,7 @@ function renderEntityList() {
   class: "entityItem" + (state.activeEntity === e.iri ? " active" : ""),
   role: "option",
   tabindex: "0",
+  title: e.iri,
   "data-iri": e.iri,
   onclick: () => selectEntity(e.iri),
   onkeydown: (ev) => {
@@ -522,11 +523,10 @@ function renderEntityList() {
   }
 }, [
   el("div", { class: "entityTop" }, [
-    el("span", { class: "kindBadge" }, [document.createTextNode(e.kind)]),
     el("span", { class: "entityLabel" }, [document.createTextNode(e.label)])
-  ]),
-  el("div", { class: "entityIri mono" }, [document.createTextNode(iriToCurie(e.iri))])
+  ])
 ]);
+    
     list.append(item);
   }
 
