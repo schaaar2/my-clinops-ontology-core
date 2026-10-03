@@ -1,13 +1,17 @@
 [
   {
+    "title": "Site Readiness Demo",
+    "file": "ontologies/site_readiness_demo.ttl"
+  },
+  {
     "title": "ClinOps Core",
     "file": "ontologies/clinops-core.ttl"
   },
   {
     "title": "USDM v4",
-    "file": "ontologies/USDM.ttl"
+    "file": "ontologies/USDM-ontology.ttl"
   },
-    {
+  {
     "title": "Vendor Site Readiness (AI created)",
     "file": "ontologies/vendor_site_readiness_ontology_v1.0.0.ttl"
   }
