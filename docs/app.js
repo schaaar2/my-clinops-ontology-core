@@ -171,21 +171,26 @@ function iriToCurie(iri) {
   return `<${iri}>`;
 }
 
-function displayName(iri) {
-  const lbl = state.labels.get(iri);
-  if (lbl) return lbl;
-  // use CURIE if possible; otherwise last path fragment
+function shortIri(iri) {
   const curie = iriToCurie(iri);
   if (curie && !curie.startsWith("<")) return curie;
+
   try {
     const u = new URL(iri);
+
     const frag = u.hash ? u.hash.slice(1) : "";
     if (frag) return frag;
+
     const parts = u.pathname.split("/").filter(Boolean);
     return parts.length ? parts[parts.length - 1] : iri;
   } catch {
     return iri;
   }
+}
+
+function displayName(iri) {
+  const lbl = state.labels.get(iri);
+  return lbl || shortIri(iri);
 }
 
 function kindRank(kind) {
@@ -504,24 +509,23 @@ function renderEntityList() {
 
   for (const e of shown) {
     const item = el("div", {
-      class: "entityItem" + (state.activeEntity === e.iri ? " active" : ""),
-      role: "option",
-      tabindex: "0",
-      "data-iri": e.iri,
-      onclick: () => selectEntity(e.iri),
-      onkeydown: (ev) => {
-        if (ev.key === "Enter" || ev.key === " ") {
-          ev.preventDefault();
-          selectEntity(e.iri);
-        }
-      }
-    }, [
-      el("div", { class: "entityTop" }, [
-        el("span", { class: "kindBadge" }, [document.createTextNode(e.kind)]),
-        el("span", { class: "entityLabel" }, [document.createTextNode(e.label)])
-      ]),
-      el("div", { class: "entityIri mono" }, [document.createTextNode(iriToCurie(e.iri))])
-    ]);
+  class: "entityItem" + (state.activeEntity === e.iri ? " active" : ""),
+  role: "option",
+  tabindex: "0",
+  "data-iri": e.iri,
+  onclick: () => selectEntity(e.iri),
+  onkeydown: (ev) => {
+    if (ev.key === "Enter" || ev.key === " ") {
+      ev.preventDefault();
+      selectEntity(e.iri);
+    }
+  }
+}, [
+  el("div", { class: "entityTop" }, [
+    el("span", { class: "kindBadge" }, [document.createTextNode(e.kind)]),
+    el("span", { class: "entityLabel" }, [document.createTextNode(e.label)])
+  ])
+]);
     list.append(item);
   }
 
