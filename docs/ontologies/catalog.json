@@ -22,7 +22,9 @@
     {
     "title": "Pistoia ClinOps Individuals",
     "file": "ontologies/Pistoia_ClinicalTrialOperationsReferenceIndividuals.ttl"
-  },
+  };,
+
+  /*
     {
     "title": "Pistoia BFO Core",
     "file": "ontologies/Pistoia_bfo-core.rdf"
@@ -39,4 +41,7 @@
     "title": "Pistoia Annotation Vocabulary",
     "file": "ontologies/Pistoia_AnnotationVocabulary.rdf"
   }
+
+  */
+  
 ]
