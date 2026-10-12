@@ -1,1480 +1,1074 @@
-<?xml version="1.0"?>
-<!DOCTYPE rdf:RDF [
-    <!ENTITY dc "http://purl.org/dc/elements/1.1/">
-    <!ENTITY dct "http://purl.org/dc/terms/">
-    <!ENTITY bfo "http://purl.obolibrary.org/obo/">
-    <!ENTITY owl "http://www.w3.org/2002/07/owl#">
-    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <!ENTITY xml "http://www.w3.org/XML/1998/namespace">
-    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
-    <!ENTITY foaf "http://xmlns.com/foaf/0.1/">
-    <!ENTITY gdmt "https://w3id.org/gdmt/">
-    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
-    <!ENTITY skos "http://www.w3.org/2004/02/skos/core#">
-    <!ENTITY iof-av "https://spec.industrialontologies.org/ontology/core/meta/AnnotationVocabulary/">
-    <!ENTITY clinops "https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/">
-    <!ENTITY cmns-av "https://www.omg.org/spec/Commons/AnnotationVocabulary/">
-    <!ENTITY iof-core "https://spec.industrialontologies.org/iof/ontology/core/Core/">
-    <!ENTITY idmp-mprd "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/">   
-]>
-<rdf:RDF xmlns="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/"
-     xml:base="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:dct="http://purl.org/dc/terms/"
-     xmlns:bfo="http://purl.obolibrary.org/obo/"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:foaf="http://xmlns.com/foaf/0.1/"
-     xmlns:gdmt="https://w3id.org/gdmt/"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-     xmlns:iof-av="https://spec.industrialontologies.org/ontology/core/meta/AnnotationVocabulary/"
-     xmlns:clinops="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/"
-     xmlns:cmns-av="https://www.omg.org/spec/Commons/AnnotationVocabulary/"
-     xmlns:iof-core="https://spec.industrialontologies.org/iof/ontology/core/Core/"
-     xmlns:idmp-mprd="https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/">
-    <owl:Ontology rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/">
-        <owl:versionIRI rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/20240510/ClinicalTrialOperations/"/>
-        <owl:imports rdf:resource="http://purl.obolibrary.org/obo/bfo.owl"/>
-        <owl:imports rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/"/>
-        <owl:imports rdf:resource="https://www.omg.org/spec/Commons/AnnotationVocabulary/"/>
-        <dc:created>2024-05-17</dc:created>
-        <dct:abstract>The Clinical Trial Operations ontology is based on the CDISC USDM 2.0 DDF, SNOMED and other standards to develop the details of a semantic data model for clinical operation protocol execution. The use of this ontology will enable data usability at a wide scale and advance collaboration across organizational boundaries. Target use-cases are related to identification and linking of protocol information across different departments in the pharma industry, Clinical Research Organization (CRO), vendors and regulatory health authorities.</dct:abstract>
-        <dct:contributor>Boehringer Ingelheim</dct:contributor>
-        <dct:contributor>Crown Point Technologies, LLC</dct:contributor>
-        <dct:contributor>Merck KGaA</dct:contributor>
-        <dct:contributor>Novartis</dct:contributor>
-        <dct:contributor>Pistoia Alliance, Inc.</dct:contributor>
-        <dct:contributor>Roche</dct:contributor>
-        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-05-17</dct:issued>
-        <dct:license rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://opensource.org/licenses/MIT</dct:license>
-        <dct:title>Clinical Trial Operations</dct:title>
-        <rdfs:label>Clinical Trial Operations</rdfs:label>
-        <owl:versionIRI>https://spec.pistoiaalliance.org/clinical/ontology/20240517/ClinicalTrialOperations/</owl:versionIRI>
-        <owl:versionInfo>0.1.0</owl:versionInfo>
-        <gdmt:Sponsor>Boehringer Ingelheim</gdmt:Sponsor>
-        <gdmt:Sponsor>Merck KGaA</gdmt:Sponsor>
-        <gdmt:Sponsor>Novartis</gdmt:Sponsor>
-        <gdmt:Sponsor>Pistoia Alliance, Inc.</gdmt:Sponsor>
-        <gdmt:Sponsor>Roche</gdmt:Sponsor>
-        <cmns-av:abbreviation>ClinOps</cmns-av:abbreviation>
-        <cmns-av:copyright>Copyright (c) 2024 Pistoia Alliance, Inc.</cmns-av:copyright>
-    </owl:Ontology>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Annotation properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://purl.org/dc/elements/1.1/created -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/created"/>
-    
-
-
-    <!-- http://www.w3.org/2002/07/owl#versionIRI -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2002/07/owl#versionIRI"/>
-    
-
-
-    <!-- https://w3id.org/gdmt/Sponsor -->
-
-    <owl:AnnotationProperty rdf:about="https://w3id.org/gdmt/Sponsor">
-        <dct:title>Sponsor</dct:title>
-        <rdfs:label>sponsor</rdfs:label>
-        <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/contributor"/>
-    </owl:AnnotationProperty>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Datatypes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.w3.org/2001/XMLSchema#date -->
-
-    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/hasKind -->
-
-    <owl:ObjectProperty rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/hasKind">
-        <rdfs:subPropertyOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/isAbout"/>
-        <rdfs:domain rdf:resource="http://purl.obolibrary.org/obo/BFO_0000002"/>
-        <rdfs:range rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalRoleKind"/>
-        <rdfs:range rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/MedicalDeviceKind"/>
-        <rdfs:range rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/SiteOfCareKind"/>
-        <rdfs:label>has kind</rdfs:label>
-        <skos:definition>relates something, such as a clinical role, site of care or medical device to a biomedical concept</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/isRequiredBefore -->
-
-    <owl:ObjectProperty rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/isRequiredBefore">
-        <rdfs:subPropertyOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/isAbout"/>
-        <rdfs:domain rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity"/>
-        <rdfs:range rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity"/>
-        <rdfs:label>is required before</rdfs:label>
-        <skos:definition>property that allows specifications to be temporally ordered</skos:definition>
-        <cmns-av:adaptedFrom>https://spec.industrialontologies.org/ontology/recipe/isRequiredBefore</cmns-av:adaptedFrom>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/plannedOccurrenceDuring -->
-
-    <owl:ObjectProperty rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/plannedOccurrenceDuring">
-        <rdfs:subPropertyOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/isAbout"/>
-        <rdfs:domain rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity"/>
-        <rdfs:range rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity"/>
-        <rdfs:label>planned occurrence during</rdfs:label>
-        <skos:definition>relation to denote when a specification is planned to occur within another specification</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/plannedOccurrenceIn -->
-
-    <owl:ObjectProperty rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/plannedOccurrenceIn">
-        <rdfs:subPropertyOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/describes"/>
-        <rdfs:domain rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity"/>
-        <rdfs:range rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept"/>
-        <rdfs:label>planned occurrence in</rdfs:label>
-        <skos:definition>relation that describes where a specification is planned to occur</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Data properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/hasTextValue -->
-
-    <owl:DatatypeProperty rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/hasTextValue">
-        <rdfs:domain rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/Identifier"/>
-        <rdfs:domain rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <rdfs:label>has text value</rdfs:label>
-        <skos:definition>string value describing an information content entity</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AdministrationDose -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AdministrationDose">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptProperty"/>
-        <rdfs:label>administration dose</rdfs:label>
-        <rdfs:seeAlso>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Dose</rdfs:seeAlso>
-        <skos:definition>specified quantity of a medicine, to be taken at one time or at stated intervals [ISO 11615:2012 Health Informatics]</skos:definition>
-        <cmns-av:directSource>http://rdf.cdisc.org/cdisc-terminology#C25488.C67497</cmns-av:directSource>
-        <cmns-av:synonym>dose</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AdministrativeActivity -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AdministrativeActivity">
-        <owl:equivalentClass>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/prescribedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedAdministrativeActivitySpecification"/>
-            </owl:Restriction>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess"/>
-        <rdfs:label>administrative activity</rdfs:label>
-        <skos:definition>activities involved in the performance of executive, supervisory, or managerial duties</skos:definition>
-        <cmns-av:directSource>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=ncit&amp;code=C49235</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Assessment -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Assessment">
-        <owl:equivalentClass>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/prescribedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedObservationSpecification"/>
-            </owl:Restriction>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/MeasurementProcess"/>
-        <rdfs:label>assessment</rdfs:label>
-        <skos:definition>interpretation or evaluation of an obtained value by using a test, tool, instrument, or expert judgement of the status of a study subject</skos:definition>
-        <iof-av:explanatoryNote>This may include a complete medical history, medical tests, a physical exam, a test of learning skills, tests to find out if the patient is able to carry out the tasks of daily living, a mental health evaluation, and a review of social support and community resources available to the patient. </iof-av:explanatoryNote>
-        <cmns-av:directSource>http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25217</cmns-av:directSource>
-        <cmns-av:synonym>assess</cmns-av:synonym>
-        <cmns-av:synonym>assessed</cmns-av:synonym>
-        <cmns-av:synonym>study assessment</cmns-av:synonym>
-        <cmns-av:synonym>study observation</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AuthorizedMedicinalProduct -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AuthorizedMedicinalProduct">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProductRole"/>
-        <rdfs:label>authorized medicinal product</rdfs:label>
-        <skos:definition>role of a medicinal product that has been authorized for some purpose in some jurisdiction</skos:definition>
-        <cmns-av:directSource>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/AuthorizedMedicinalProduct</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>biomedical concept</rdfs:label>
-        <skos:definition>unit of biomedical knowledge created from a unique combination of characteristics that include implementation details like variables and terminologies, used as building blocks for standardized, hierarchically structured clinical research information</skos:definition>
-        <cmns-av:directSource>https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptCode -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptCode">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>biomedical concept code</rdfs:label>
-        <skos:definition>concept unique identifier assigned to a biomedical concept that points to the meaning of that biomedical concept</skos:definition>
-        <cmns-av:directSource>https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT</cmns-av:directSource>
-        <cmns-av:synonym>codeable concept</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptProperty -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptProperty">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>biomedical concept property</rdfs:label>
-        <skos:definition>characteristic from a set of characteristics used to define a biomedical concept</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BriefProtocolTitle -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BriefProtocolTitle">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>brief protocol title</rdfs:label>
-        <skos:definition>short descriptive name for the protocol</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:synonym>abbreviated protocol title</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CareSiteName -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CareSiteName">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>care site name</rdfs:label>
-        <skos:definition>designative content entity by which a site of care is known, addressed or referred to</skos:definition>
-        <cmns-av:adaptedFrom>New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc.</cmns-av:adaptedFrom>
-        <cmns-av:synonym>site of care</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/City -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/City">
-        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000029"/>
-        <rdfs:label>city</rdfs:label>
-        <skos:definition>relatively large and/or densely populated area of human habitation with administrative or legal status that may be specified as a component of a postal address</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CityName -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CityName">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>city name</rdfs:label>
-        <skos:definition>designative content entity by which a city is known, addressed or referred to</skos:definition>
-        <cmns-av:adaptedFrom>New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc.</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounter -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounter">
-        <owl:equivalentClass>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/prescribedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification"/>
-            </owl:Restriction>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/describedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterType"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/designatedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterIdentifier"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/designatedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterName"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label>clinical encounter</rdfs:label>
-        <skos:definition>contact between subject/patient and healthcare practitioner/researcher, during which an assessment or activity is performed</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:explanatoryNote>Contact may be physical or virtual.</cmns-av:explanatoryNote>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterDescription -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterDescription">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000176"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label>clinical encounter description</rdfs:label>
-        <skos:definition>textual representation of the protocol-defined clinical encounter</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterIdentifier -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterIdentifier">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/Identifier"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000176"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label>clinical encounter identifier</rdfs:label>
-        <skos:definition>system identifier assigned to a clinical encounter</skos:definition>
-        <cmns-av:adaptedFrom>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:adaptedFrom>
-        <cmns-av:synonym>clinical encounter id</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterName -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterName">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000176"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label>clinical encounter name</rdfs:label>
-        <skos:definition>literal identifier (i.e., distinctive designation) for a protocol-defined clinical encounter</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/ActionSpecification"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000178"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterIdentifier"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000178"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterName"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000178"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterType"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label>clinical encounter specification</rdfs:label>
-        <skos:definition>stating the precise clinical encounter requirement for a clinical study</skos:definition>
-        <cmns-av:adaptedFrom>New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc.</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterType -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterType">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000176"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label>clinical encounter type</rdfs:label>
-        <skos:definition>characterization or classification of contact between subject/patient and healthcare practitioner/researcher, during which an assessment or activity is performed</skos:definition>
-        <iof-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</iof-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalRole -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalRole">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/AgentRole"/>
-        <rdfs:label>clinical role</rdfs:label>
-        <skos:definition>role of observing or treating patients</skos:definition>
-        <cmns-av:directSource>http://vivoweb.org/ontology/core#ClinicalRole</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalRoleKind -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalRoleKind">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept"/>
-        <rdfs:label>clinical role kind</rdfs:label>
-        <skos:definition>description content entity that describes a clinical role</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalStudy -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalStudy">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Study"/>
-        <rdfs:label>clinical study</rdfs:label>
-        <skos:definition>involves research using human volunteers (also called participants) that is intended to add to medical knowledge</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:explanatoryNote>There are two main types of clinical studies: clinical trials (also called interventional studies) and observational studies.</cmns-av:explanatoryNote>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalStudyRegistry -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalStudyRegistry">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/AgentRole"/>
-        <rdfs:label>clinical study registry</rdfs:label>
-        <skos:definition>organization (typically a government agency) that administers the registration of studies (BRIDG)</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalTrialProtocol -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalTrialProtocol">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PlanSpecification"/>
-        <rdfs:label>clinical trial protocol</rdfs:label>
-        <skos:definition>plan at a particular point in time for a formal investigation to assess the utility, impact, pharmacological, physiological, and/or psychological effects of a particular treatment, procedure, drug, device, biologic, food product, cosmetic, care plan, or subject characteristic (BRIDG)</skos:definition>
-        <cmns-av:directSource>http://rdf.cdisc.org/cdisc-terminology#C67497.C142451</cmns-av:directSource>
-        <cmns-av:synonym>clinical protocol</cmns-av:synonym>
-        <cmns-av:synonym>clinical study protocol</cmns-av:synonym>
-        <cmns-av:synonym>study protocol</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalTrialProtocolDevelopmentProcess -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalTrialProtocolDevelopmentProcess">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess"/>
-        <rdfs:label>clinical trial protocol development process</rdfs:label>
-        <skos:definition>process to create a protocol that describes how a clinical trial will be conducted (the objectives, design, methodology, statistical considerations, and organization of a clinical study), and ensures the safety of the trial subjects and integrity of the data collected</skos:definition>
-        <cmns-av:adaptedFrom>https://hub.ucsf.edu/protocol-development#:~:text=The protocol is a document,integrity of the data collected.</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ConceptCodeSource -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ConceptCodeSource">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>concept code source</rdfs:label>
-        <skos:definition>descriptive information content entity that describes from which a biomedical concept code was obtained</skos:definition>
-        <cmns-av:adaptedFrom>New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc.</cmns-av:adaptedFrom>
-        <cmns-av:synonym>code source</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ContactModeType -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ContactModeType">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept"/>
-        <rdfs:label>contact mode type</rdfs:label>
-        <skos:definition>description of the means by which an interaction occurs between the subject/participant and person or entity</skos:definition>
-        <skos:example>a device</skos:example>
-        <cmns-av:adaptedFrom>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Country -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Country">
-        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000029"/>
-        <rdfs:label>country</rdfs:label>
-        <skos:definition>sovereign nation occupying a distinct territory and ruled by an autonomous government</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CountryCode -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CountryCode">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>country code</rdfs:label>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CountryName -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CountryName">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>country name</rdfs:label>
-        <skos:definition>designative content entity by which a country is known, addressed or referred to</skos:definition>
-        <cmns-av:adaptedFrom>New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc.</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/DoseForm -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/DoseForm">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptProperty"/>
-        <rdfs:label>dose form</rdfs:label>
-        <skos:definition>form in which active and/or inert ingredient(s) are physically presented</skos:definition>
-        <cmns-av:abbreviation>DOSFRM</cmns-av:abbreviation>
-        <cmns-av:directSource>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=ncit&amp;code=C42636</cmns-av:directSource>
-        <cmns-av:synonym>dosage form</cmns-av:synonym>
-        <cmns-av:synonym>pharmaceutical dose form</cmns-av:synonym>
-        <cmns-av:synonym>pharmaceutical form</cmns-av:synonym>
-        <cmns-av:synonym>pharmaceutical formulation</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/DoseFrequency -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/DoseFrequency">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptProperty"/>
-        <rdfs:label>dose frequency</rdfs:label>
-        <skos:definition>number of doses administered per a specific interval</skos:definition>
-        <cmns-av:directSource>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=ncit&amp;code=C89081</cmns-av:directSource>
-        <cmns-av:synonym>administration frequency</cmns-av:synonym>
-        <cmns-av:synonym>dosing frequency</cmns-av:synonym>
-        <cmns-av:synonym>treatment frequency</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/EnvironmentalSettingType -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/EnvironmentalSettingType">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>environmental setting type</rdfs:label>
-        <skos:definition>description of the environment or setting where the event, intervention, or finding occurred</skos:definition>
-        <cmns-av:adaptedFrom>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/EstimatedStudyDurationForSubject -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/EstimatedStudyDurationForSubject">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/TemporalDurationValueExpression"/>
-        <rdfs:label>estimated study duration for subject</rdfs:label>
-        <skos:definition>temporal value expression that identifies the expected length of time a study will take to complete all of the planned activities for each study participant</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Indication -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Indication">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept"/>
-        <rdfs:label>indication</rdfs:label>
-        <skos:definition>health problem or disease that is identified as likely to be benefited by a therapy being studied in clinical trials</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:explanatoryNote>Where such a benefit has been established and approved by regulatory authorities, the therapy is said to be approved for such an indication.</cmns-av:explanatoryNote>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Intervention -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Intervention">
-        <owl:equivalentClass>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/prescribedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedInterventionSpecification"/>
-            </owl:Restriction>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Procedure"/>
-        <rdfs:label>intervention</rdfs:label>
-        <skos:definition>activity or measure that produces an effect or that is intended to alter the course of a disease in patient or population</skos:definition>
-        <cmns-av:directSource>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=ncit&amp;code=C16197</cmns-av:directSource>
-        <cmns-av:explanatoryNote>This is a general term encompassing medical, social, behavioral, environmental and other acts that can have preventive and/or therapeutic impact.</cmns-av:explanatoryNote>
-        <cmns-av:synonym>intervention strategies</cmns-av:synonym>
-        <cmns-av:synonym>investigational intervention</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/InterventionalStudy -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/InterventionalStudy">
-        <owl:equivalentClass>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000117"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Intervention"/>
-            </owl:Restriction>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalStudy"/>
-        <rdfs:label>interventional study</rdfs:label>
-        <skos:definition>studies in which individuals are assigned by an investigator based on a protocol to receive specific interventions</skos:definition>
-        <cmns-av:directSource>http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C98388</cmns-av:directSource>
-        <cmns-av:explanatoryNote>Subjects may receive diagnostic, therapeutic or other types of interventions. The assignment of the intervention may or may not be random. The individuals are then followed and biomedical and/or health outcomes are assessed. </cmns-av:explanatoryNote>
-        <cmns-av:synonym>interventional clinical trial</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/InvestigationalMedicinalProduct -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/InvestigationalMedicinalProduct">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProductRole"/>
-        <rdfs:label>investigational medicinal product</rdfs:label>
-        <skos:definition>role of a pharmaceutical product or combination of pharmaceutical products or placebo(s) being tested or used as a reference in a clinical trial, including products already with a marketing authorization but used or assembled (packaged) in a way different from the authorized form, used for an unauthorized indication, or used to gain further information about the authorized form</skos:definition>
-        <cmns-av:abbreviation>IMP</cmns-av:abbreviation>
-        <cmns-av:adaptedFrom>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/InvestigationalMedicinalProduct</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/MedicalDevice -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/MedicalDevice">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PieceOfEquipment"/>
-        <rdfs:label>medical device</rdfs:label>
-        <skos:definition>any physical object that is useful for prevention, diagnosis, monitoring, or treatment of disease or other conditions</skos:definition>
-        <cmns-av:directSource>http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C16830</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/MedicalDeviceKind -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/MedicalDeviceKind">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept"/>
-        <rdfs:label>medical device kind</rdfs:label>
-        <skos:definition>description content entity that describes a type of medical device</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ObservationalStudy -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ObservationalStudy">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <owl:Class>
-                        <owl:complementOf>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000117"/>
-                                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Intervention"/>
-                            </owl:Restriction>
-                        </owl:complementOf>
-                    </owl:Class>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000117"/>
-                        <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Assessment"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalStudy"/>
-        <rdfs:label>observational study</rdfs:label>
-        <skos:definition>study in which biomedical and/or health outcomes are assessed in pre-defined groups of individuals</skos:definition>
-        <cmns-av:directSource>http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C16084</cmns-av:directSource>
-        <cmns-av:explanatoryNote>Subjects in the study may receive diagnostic, therapeutic, or other interventions, but the investigator does not assign specific interventions to the subjects of the study. A non-interventional study in which the researchers observe the effect of a risk factor (e.g., exposure), diagnostic test, treatment or other covariate, within a study population, and where the independent variable is not under the control of the researcher. </cmns-av:explanatoryNote>
-        <cmns-av:synonym>observational trial </cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OfficialProtocolTitle -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OfficialProtocolTitle">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>official protocol title</rdfs:label>
-        <skos:definition>formal descriptive name for the protocol</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OrganizationName -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OrganizationName">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>organization name</rdfs:label>
-        <skos:definition>non-unique textual identifier for the organization (BRIDG)</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Outcome -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Outcome">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/MeasurementInformationContentEntity"/>
-        <rdfs:label>outcome</rdfs:label>
-        <skos:definition>measureable characteristic (clinical outcome assessment, biomarker) that is influenced or affected by an individual&apos;s baseline state or an intervention, as in a clinical trial or other exposure</skos:definition>
-        <cmns-av:directSource>http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C20200</cmns-av:directSource>
-        <cmns-av:explanatoryNote>Outcome can be a result of analysis and is more general than endpoint in that it does not necessarily relate to a planned objective of the study outcome (SDTM).</cmns-av:explanatoryNote>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OutcomeComponentType -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OutcomeComponentType">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>outcome component type</rdfs:label>
-        <skos:definition>descriptive information content entity that denotes the type of objective or endpoint</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OutcomeMeasure -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OutcomeMeasure">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/MeasurementInformationContentEntity"/>
-        <rdfs:label>outcome measure</rdfs:label>
-        <skos:definition>specific key measurement(s) or observation(s) used to determine the effect of experimental variables on the participants in a study, or for observational studies, to describe patterns of diseases or traits or associations with exposures, risk factors or treatment (After BRIDG)</skos:definition>
-        <cmns-av:directSource>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=ncit&amp;code=C93407</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecification -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecification">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/ActionSpecification"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://purl.obolibrary.org/obo/BFO_0000176"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalTrialProtocol"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/describedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/plannedOccurrenceDuring"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/plannedOccurrenceDuring"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochSpecification"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label>planned activity specification</rdfs:label>
-        <skos:definition>description of an activity that is intended to occur or start at some point in the context of a particular study</skos:definition>
-        <cmns-av:directSource>http://purl.org/net/OCRe/study_protocol.owl#OCRE300011</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecificationIdentifier -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecificationIdentifier">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/Identifier"/>
-        <rdfs:label>planned activity specification identifier</rdfs:label>
-        <skos:definition>unique set of characters that designates a particular planned activity specification</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedAdministrativeActivitySpecification -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedAdministrativeActivitySpecification">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecification"/>
-        <rdfs:label>planned administrative activity specification</rdfs:label>
-        <skos:definition>description of a planned activity that is not directly related to hypothesis evaluation or testing, but is typically essential to the efficient and/or effective coordination and execution of a study, such as obtaining informed consent, verifying eligibility criteria, and completing study visits</skos:definition>
-        <cmns-av:directSource>http://purl.org/net/OCRe/study_protocol.owl#OCRE300004</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedInterventionSpecification -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedInterventionSpecification">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedProcedureSpecification"/>
-        <rdfs:label>planned intervention specification</rdfs:label>
-        <skos:definition>description of a planned activity whose primary intention is to produce an effect or that is intended to alter the course of a disease in a patient or population</skos:definition>
-        <cmns-av:adaptedFrom>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=ncit&amp;code=C16197</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedObservationSpecification -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedObservationSpecification">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecification"/>
-        <rdfs:label>planned observation specification</rdfs:label>
-        <skos:definition>description of a planned activity whose immediate and primary intention is to obtain a result by observing, monitoring, measuring or otherwise qualitatively or quantitatively gathering data or information about some aspect of a subject&apos;s, study subject&apos;s or experimental unit&apos;s state and whose immediate and primary intention is NOT the alteration of the state of the subject, study subject or experimental unit</skos:definition>
-        <cmns-av:directSource>http://purl.org/net/OCRe/study_protocol.owl#OCRE300008</cmns-av:directSource>
-        <cmns-av:synonym>planned assessment specification</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedProcedureSpecification -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedProcedureSpecification">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecification"/>
-        <rdfs:label>planned procedure specification</rdfs:label>
-        <skos:definition>description of a planned activity whose immediate and primary intention is the alteration of the state of the subject, study subject or experimental unit</skos:definition>
-        <cmns-av:directSource>http://purl.org/net/OCRe/OCRe.owl#OCRE300009</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PostalCode -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PostalCode">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>postal code</rdfs:label>
-        <skos:definition>alphanumeric code assigned to a mail delivery area</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PostalCodeRegion -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PostalCodeRegion">
-        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000029"/>
-        <rdfs:label>postal code region</rdfs:label>
-        <skos:definition>mail delivery area</skos:definition>
-        <cmns-av:adaptedFrom>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Procedure -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Procedure">
-        <owl:equivalentClass>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/prescribedBy"/>
-                <owl:someValuesFrom rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedProcedureSpecification"/>
-            </owl:Restriction>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/MeasurementProcess"/>
-        <rdfs:label>procedure</rdfs:label>
-        <skos:definition>any activity performed by manual and/or instrumental means for the purpose of diagnosis, assessment, therapy, prevention, or palliative care</skos:definition>
-        <cmns-av:directSource>https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProductRole -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProductRole">
-        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
-        <rdfs:label>product role</rdfs:label>
-        <skos:definition>functional role played by a product that is part of or used in the preparation of some manufactured item, or pharmaceutical product, medication, or drug, or in some investigation</skos:definition>
-        <cmns-av:adaptedFrom>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/ProductRole</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProtocolIdentifierAssignmentActivity -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProtocolIdentifierAssignmentActivity">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess"/>
-        <rdfs:label>protocol identifier assignment activity</rdfs:label>
-        <skos:definition>planned process where an organization assigns a unique sequence of characters to identify a clinical trial protocol</skos:definition>
-        <cmns-av:adaptedFrom>https://clinicaltrials.gov/policy/protocol-definitions</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProtocolIdentifyingNumber -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProtocolIdentifyingNumber">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/Identifier"/>
-        <rdfs:label>protocol identifying number</rdfs:label>
-        <skos:definition>any of one or more unique codes that refers to a specific protocol</skos:definition>
-        <cmns-av:directSource>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=ncit&amp;code=C132299</cmns-av:directSource>
-        <cmns-av:explanatoryNote>There may be multiple numbers (National number, coop group number). [EudraCT]</cmns-av:explanatoryNote>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PublicProtocolTitle -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PublicProtocolTitle">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>public protocol title</rdfs:label>
-        <skos:definition>brief description intended for the lay public in easily understood language</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ScientificProtocolTitle -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ScientificProtocolTitle">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>scientific protocol title</rdfs:label>
-        <skos:definition>more extensive descriptive name of the protocol that is intended for medical professionals, written using medical and scientific language</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/SiteOfCare -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/SiteOfCare">
-        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000029"/>
-        <rdfs:label>site of care</rdfs:label>
-        <skos:definition>any establishment where health services are delivered</skos:definition>
-        <cmns-av:adaptedFrom>https://www.lawinsider.com/dictionary/health-care-site</cmns-av:adaptedFrom>
-        <cmns-av:synonym>care site</cmns-av:synonym>
-        <cmns-av:synonym>health care site</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/SiteOfCareKind -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/SiteOfCareKind">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept"/>
-        <rdfs:label>site of care kind</rdfs:label>
-        <skos:definition>biomedical concept describing the type of clinical care site</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/State -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/State">
-        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000029"/>
-        <rdfs:label>state</rdfs:label>
-        <skos:definition>sub-division of a country that forms part of a federal union. States are usually, but not always, more autonomous than provinces and may have different laws from the central government</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StateCode -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StateCode">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>state code</rdfs:label>
-        <skos:definition>short alphanumeric identification code for states</skos:definition>
-        <cmns-av:adaptedFrom>https://en.wikipedia.org/wiki/Country_code</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StateName -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StateName">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>state name</rdfs:label>
-        <skos:definition>designative content entity by which a state is known, addressed or referred to</skos:definition>
-        <cmns-av:adaptedFrom>New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc.</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StreetAddress -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StreetAddress">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>street address</rdfs:label>
-        <skos:definition>street name and number, building number, apartment or unit number, or post office box number where an entity is physically located</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StreetAddressLocation -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StreetAddressLocation">
-        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000029"/>
-        <rdfs:label>street address (location)</rdfs:label>
-        <skos:definition>where an entity is physically located within a street and building or unit</skos:definition>
-        <cmns-av:adaptedFrom>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:adaptedFrom>
-        <cmns-av:synonym>address line</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Study -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Study">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess"/>
-        <rdfs:label>study</rdfs:label>
-        <skos:definition>study is a program of data collection and of analysis of the data collected to answer a particular question, to reach conclusions about subject(s) or situation(s)</skos:definition>
-        <cmns-av:directSource>http://purl.org/net/OCRe/OCRe.owl#OCRE400029</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyAcronym -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyAcronym">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>study acronym</rdfs:label>
-        <skos:definition>word or words formed from the beginning letters or a combination of syllables and letters of a compound term, which identifies a clinical study</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpoint -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpoint">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Outcome"/>
-        <rdfs:label>study endpoint</rdfs:label>
-        <skos:definition>defined variable intended to reflect an outcome of interest to address a particular research question</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:explanatoryNote>A precise definition of an endpoint typically specifies the type of assessments made, the timing of those assessments, the assessment tools used, and possibly other details, as applicable, such as how multiple assessments within an individual are to be combined. Primary endpoints are usually statistically analyzed. [After BEST Resource] </cmns-av:explanatoryNote>
-        <cmns-av:synonym>endpoint</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointIdentifier -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointIdentifier">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/Identifier"/>
-        <rdfs:label>study endpoint identifier</rdfs:label>
-        <skos:definition>unique set of characters that designates a particular planned activity specification</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-        <cmns-av:synonym>study endpoint id</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointLevel -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointLevel">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>study endpoint level</rdfs:label>
-        <skos:definition>a characterization or classification of the study endpoint that determines its category of importance relative to other study endpoints</skos:definition>
-        <cmns-av:directSource>https://ncithesaurus.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;version=23.12d&amp;ns=ncit&amp;code=C188826</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointSpecification -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointSpecification">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PlanSpecification"/>
-        <rdfs:label>study endpoint specification</rdfs:label>
-        <skos:definition>stating the precise study endpoint that will be assessed within a clinical trial</skos:definition>
-        <cmns-av:adaptedFrom>New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc.</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpoch -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpoch">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess"/>
-        <rdfs:label>study epoch</rdfs:label>
-        <skos:definition>named time period defined in the protocol, wherein a study activity is specified and unchanging throughout the interval, to support a study-specific purpose</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochDescription -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochDescription">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>study epoch description</rdfs:label>
-        <skos:definition>textual representation of the study epoch</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochIdentifier -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochIdentifier">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/Identifier"/>
-        <rdfs:label>study epoch identifier</rdfs:label>
-        <skos:definition>system identifier assigned to an epoch</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:synonym>study epoch id</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochName -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochName">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>study epoch name</rdfs:label>
-        <skos:definition>literal identifier (i.e., distinctive designation) of the study epoch, i.e., the named time period defined in the protocol, wherein a study activity is specified and unchanging throughout the interval, to support a study-specific purpose</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochSpecification -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochSpecification">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/ActionSpecification"/>
-        <rdfs:label>study epoch specification</rdfs:label>
-        <skos:definition>stating the precise study epoch requirement for a clinical study</skos:definition>
-        <cmns-av:adaptedFrom>New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc.</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochType -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochType">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>study epoch type</rdfs:label>
-        <skos:definition>characterization or classification of the study epoch, i.e., the named time period defined in the protocol, wherein a study activity is specified and unchanging throughout the interval, to support a study-specific purpose</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyIdentifier -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyIdentifier">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/Identifier"/>
-        <rdfs:label>study identifier</rdfs:label>
-        <skos:definition>sequence of characters used to identify, name, or characterize the study</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjective -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjective">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/ObjectiveSpecification"/>
-        <rdfs:label>study objective</rdfs:label>
-        <skos:definition>reason for performing a study in terms of the scientific questions to be answered by the analysis of data collected during the study</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:synonym>objective</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjectiveIdentifier -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjectiveIdentifier">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/Identifier"/>
-        <rdfs:label>study objective identifier</rdfs:label>
-        <skos:definition>unique set of characters that designates a particular study objective</skos:definition>
-        <cmns-av:directSource>Pistoia Alliance</cmns-av:directSource>
-        <cmns-av:synonym>study objective id</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjectiveLevel -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjectiveLevel">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>study objective level</rdfs:label>
-        <skos:definition>characterization or classification of the study objective that determines its category of importance relative to other study objectives</skos:definition>
-        <cmns-av:directSource>https://ncithesaurus.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;version=23.12d&amp;ns=ncit&amp;code=C188725</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolStatus -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolStatus">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>study protocol status</rdfs:label>
-        <skos:definition>characterization or classification of the study objective that determines its category of importance relative to other study objectives</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolVersionEffectiveDate -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolVersionEffectiveDate">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/TemporalInstantValueExpression"/>
-        <rdfs:label>study protocol version effective date</rdfs:label>
-        <skos:definition>date and time specifying when the study protocol version takes effect or becomes operative</skos:definition>
-        <cmns-av:directSource>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=ncit&amp;code=C188817</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolVersionNumber -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolVersionNumber">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>study protocol version number</rdfs:label>
-        <skos:definition>string of numerals that uniquely identifies a specific version of a study protocol</skos:definition>
-        <cmns-av:directSource>http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C181232</cmns-av:directSource>
-        <cmns-av:synonym>study protocol amendment number</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyRationale -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyRationale">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>study rationale</rdfs:label>
-        <skos:definition>statement describing the overall rationale of the study</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:explanatoryNote>This describes the contribution of this study to product development, i.e., what knowledge is being contributed from the conduct of this study.</cmns-av:explanatoryNote>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudySiteRole -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudySiteRole">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/AgentRole"/>
-        <rdfs:label>study site role</rdfs:label>
-        <skos:definition>physical area or areas designated for activities necessary to test drugs, medical devices and other therapies on human beings</skos:definition>
-        <cmns-av:directSource>https://meirxrs.com/clinical-trial-sites-work/#:~:text=Clinical trial sites are where,help you answer important questions.  AND https://nam.edu/its-time-to-harmonize-clinical-trial-site-standards/</cmns-av:directSource>
-        <cmns-av:synonym>clinical site</cmns-av:synonym>
-        <cmns-av:synonym>clinical trial site</cmns-av:synonym>
-        <cmns-av:synonym>study site</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyTitle -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyTitle">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>study title</rdfs:label>
-        <skos:definition>sponsor-defined name of the clinical study</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:synonym>official study title</cmns-av:synonym>
-        <cmns-av:synonym>trial title</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyVersion -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyVersion">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity"/>
-        <rdfs:label>study version</rdfs:label>
-        <skos:definition>string of numerals that uniquely identifies a specific version of a study</skos:definition>
-        <cmns-av:adaptedFrom>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TimeFromStart -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TimeFromStart">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>time from start</rdfs:label>
-        <skos:definition>descriptive information content entity that describes the time elapsed between the beginning of an event  and another event</skos:definition>
-        <cmns-av:adaptedFrom>http://purl.obolibrary.org/obo/CMO_0003589</cmns-av:adaptedFrom>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TrialExploratoryEndpointLevel -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TrialExploratoryEndpointLevel">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointLevel"/>
-        <rdfs:label>trial exploratory endpoint</rdfs:label>
-        <skos:definition>endpoint(s) that may include clinically important events that are expected to occur too infrequently to show a treatment effect or endpoints that for other reasons are thought to be less likely to show an effect but are included to explore new hypotheses (After FDA-NIH Protocol Template)</skos:definition>
-        <cmns-av:directSource>https://ncithesaurus.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;version=23.12d&amp;ns=ncit&amp;code=C170559</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TrialPhase -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TrialPhase">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity"/>
-        <rdfs:label>trial phase</rdfs:label>
-        <skos:definition>step in the clinical research and development of a therapy from initial clinical trials to post-approval studies</skos:definition>
-        <cmns-av:directSource>USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]</cmns-av:directSource>
-        <cmns-av:explanatoryNote>Clinical trials are generally categorized into four (sometimes five) phases. A therapeutic intervention may be evaluated in two or more phases simultaneously in different trials, and some trials may overlap two different phases. [21 CFR section 312.21; After ICH Topic E8 NOTE FOR GUIDANCE ON GENERAL CONSIDERATIONS FOR CLINICAL TRIALS,  CPMP/ICH/291/95 March 1998]</cmns-av:explanatoryNote>
-        <cmns-av:synonym>trial phase classification</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinalProduct -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinalProduct">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/DirectiveInformationContentEntity"/>
-        <rdfs:label>medicinal product</rdfs:label>
-        <skos:definition>specification for a pharmaceutical product or combination of pharmaceutical products that may be administered to human beings (or animals) for treating or preventing disease, with the aim/purpose of making a medical diagnosis or to restore, correct or modify physiological functions</skos:definition>
-        <cmns-av:directSource>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinalProduct</cmns-av:directSource>
-        <cmns-av:synonym>medicinal product specification</cmns-av:synonym>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinesRegulatoryAgency -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinesRegulatoryAgency">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/AgentRole"/>
-        <rdfs:label>medicines regulatory agency</rdfs:label>
-        <skos:definition>institutional body that, according to the legal system under which it has been established, is responsible for the granting of marketing authorizations, clinical trial authorizations and manufacturing authorizations for medicinal products</skos:definition>
-        <cmns-av:directSource>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinesRegulatoryAgency</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/PhysicalMedicinalProduct -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/PhysicalMedicinalProduct">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/MaterialArtifact"/>
-        <rdfs:label>physical medicinal product</rdfs:label>
-        <skos:definition>pharmaceutical product or combination of pharmaceutical products that may be administered to human beings (or animals) for treating or preventing disease, with the aim/purpose of making a medical diagnosis or to restore, correct or modify physiological functions</skos:definition>
-        <cmns-av:directSource>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/PhysicalMedicinalProduct</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Placebo -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Placebo">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProductRole"/>
-        <rdfs:label>placebo</rdfs:label>
-        <skos:definition>inactive substance, treatment or procedure that is intended to provide baseline measurements for the experimental protocol of a clinical trial</skos:definition>
-        <cmns-av:directSource>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Placebo</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/RouteOfAdministration -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/RouteOfAdministration">
-        <rdfs:subClassOf rdf:resource="https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptProperty"/>
-        <rdfs:label>route of administration</rdfs:label>
-        <skos:definition>specification for the path by which the pharmaceutical product is taken into or makes contact with the body</skos:definition>
-        <cmns-av:directSource>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/RouteOfAdministration</cmns-av:directSource>
-    </owl:Class>
-    
-
-
-    <!-- https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Sponsor -->
-
-    <owl:Class rdf:about="https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Sponsor">
-        <rdfs:subClassOf rdf:resource="https://spec.industrialontologies.org/ontology/core/Core/AgentRole"/>
-        <rdfs:label>sponsor</rdfs:label>
-        <skos:definition>individual, company, institution or organization (party), which takes responsibility for the initiation, management and/or financing of a clinical trial</skos:definition>
-        <cmns-av:directSource>https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Sponsor</cmns-av:directSource>
-    </owl:Class>
-</rdf:RDF>
-
-
-
-<!-- Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi -->
-
+@prefix : <https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix bfo: <http://purl.obolibrary.org/obo/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix gdmt: <https://w3id.org/gdmt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix iof-av: <https://spec.industrialontologies.org/ontology/core/meta/AnnotationVocabulary/> .
+@prefix clinops: <https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/> .
+@prefix cmns-av: <https://www.omg.org/spec/Commons/AnnotationVocabulary/> .
+@prefix iof-core: <https://spec.industrialontologies.org/iof/ontology/core/Core/> .
+@prefix idmp-mprd: <https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/> .
+@base <https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/> .
+
+<https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/> rdf:type owl:Ontology ;
+                                                                               owl:versionIRI <https://spec.pistoiaalliance.org/clinical/ontology/20240510/ClinicalTrialOperations/> ;
+                                                                               owl:imports bfo:bfo.owl ,
+                                                                                           <https://spec.industrialontologies.org/ontology/core/Core/> ,
+                                                                                           cmns-av: ;
+                                                                               dc:created "2024-05-17" ;
+                                                                               dct:abstract "The Clinical Trial Operations ontology is based on the CDISC USDM 2.0 DDF, SNOMED and other standards to develop the details of a semantic data model for clinical operation protocol execution. The use of this ontology will enable data usability at a wide scale and advance collaboration across organizational boundaries. Target use-cases are related to identification and linking of protocol information across different departments in the pharma industry, Clinical Research Organization (CRO), vendors and regulatory health authorities." ;
+                                                                               dct:contributor "Boehringer Ingelheim" ,
+                                                                                               "Crown Point Technologies, LLC" ,
+                                                                                               "Merck KGaA" ,
+                                                                                               "Novartis" ,
+                                                                                               "Pistoia Alliance, Inc." ,
+                                                                                               "Roche" ;
+                                                                               dct:issued "2024-05-17"^^xsd:date ;
+                                                                               dct:license "https://opensource.org/licenses/MIT"^^xsd:anyURI ;
+                                                                               dct:title "Clinical Trial Operations" ;
+                                                                               rdfs:label "Clinical Trial Operations" ;
+                                                                               owl:versionIRI "https://spec.pistoiaalliance.org/clinical/ontology/20240517/ClinicalTrialOperations/" ;
+                                                                               owl:versionInfo "0.1.0" ;
+                                                                               gdmt:Sponsor "Boehringer Ingelheim" ,
+                                                                                            "Merck KGaA" ,
+                                                                                            "Novartis" ,
+                                                                                            "Pistoia Alliance, Inc." ,
+                                                                                            "Roche" ;
+                                                                               cmns-av:abbreviation "ClinOps" ;
+                                                                               cmns-av:copyright "Copyright (c) 2024 Pistoia Alliance, Inc." .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/created
+dc:created rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#versionIRI
+owl:versionIRI rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/gdmt/Sponsor
+gdmt:Sponsor rdf:type owl:AnnotationProperty ;
+             dct:title "Sponsor" ;
+             rdfs:label "sponsor" ;
+             rdfs:subPropertyOf dct:contributor .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://purl.obolibrary.org/obo/BFO_0000176
+bfo:BFO_0000176 rdf:type owl:ObjectProperty .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/hasKind
+clinops:hasKind rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <https://spec.industrialontologies.org/ontology/core/Core/isAbout> ;
+                rdfs:domain bfo:BFO_0000002 ;
+                rdfs:range clinops:ClinicalRoleKind ,
+                           clinops:MedicalDeviceKind ,
+                           clinops:SiteOfCareKind ;
+                rdfs:label "has kind" ;
+                skos:definition "relates something, such as a clinical role, site of care or medical device to a biomedical concept" ;
+                cmns-av:directSource "Pistoia Alliance" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/isRequiredBefore
+clinops:isRequiredBefore rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf <https://spec.industrialontologies.org/ontology/core/Core/isAbout> ;
+                         rdfs:domain <https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity> ;
+                         rdfs:range <https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity> ;
+                         rdfs:label "is required before" ;
+                         skos:definition "property that allows specifications to be temporally ordered" ;
+                         cmns-av:adaptedFrom "https://spec.industrialontologies.org/ontology/recipe/isRequiredBefore" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/plannedOccurrenceDuring
+clinops:plannedOccurrenceDuring rdf:type owl:ObjectProperty ;
+                                rdfs:subPropertyOf <https://spec.industrialontologies.org/ontology/core/Core/isAbout> ;
+                                rdfs:domain <https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity> ;
+                                rdfs:range <https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity> ;
+                                rdfs:label "planned occurrence during" ;
+                                skos:definition "relation to denote when a specification is planned to occur within another specification" ;
+                                cmns-av:directSource "Pistoia Alliance" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/plannedOccurrenceIn
+clinops:plannedOccurrenceIn rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf <https://spec.industrialontologies.org/ontology/core/Core/describes> ;
+                            rdfs:domain <https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity> ;
+                            rdfs:range clinops:BiomedicalConcept ;
+                            rdfs:label "planned occurrence in" ;
+                            skos:definition "relation that describes where a specification is planned to occur" ;
+                            cmns-av:directSource "Pistoia Alliance" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/hasTextValue
+clinops:hasTextValue rdf:type owl:DatatypeProperty ;
+                     rdfs:domain <https://spec.industrialontologies.org/ontology/core/Core/Identifier> ,
+                                 <https://spec.industrialontologies.org/ontology/core/Core/InformationContentEntity> ;
+                     rdfs:range xsd:string ;
+                     rdfs:label "has text value" ;
+                     skos:definition "string value describing an information content entity" ;
+                     cmns-av:directSource "Pistoia Alliance" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://spec.industrialontologies.org/ontology/core/Core/TemporalDurationValueExpression
+<https://spec.industrialontologies.org/ontology/core/Core/TemporalDurationValueExpression> rdf:type owl:Class .
+
+
+###  https://spec.industrialontologies.org/ontology/core/Core/TemporalInstantValueExpression
+<https://spec.industrialontologies.org/ontology/core/Core/TemporalInstantValueExpression> rdf:type owl:Class .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AdministrationDose
+clinops:AdministrationDose rdf:type owl:Class ;
+                           rdfs:subClassOf clinops:BiomedicalConceptProperty ;
+                           rdfs:label "administration dose" ;
+                           rdfs:seeAlso "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Dose" ;
+                           skos:definition "specified quantity of a medicine, to be taken at one time or at stated intervals [ISO 11615:2012 Health Informatics]" ;
+                           cmns-av:directSource "http://rdf.cdisc.org/cdisc-terminology#C25488.C67497" ;
+                           cmns-av:synonym "dose" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AdministrativeActivity
+clinops:AdministrativeActivity rdf:type owl:Class ;
+                               owl:equivalentClass [ rdf:type owl:Restriction ;
+                                                     owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/prescribedBy> ;
+                                                     owl:someValuesFrom clinops:PlannedAdministrativeActivitySpecification
+                                                   ] ;
+                               rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess> ;
+                               rdfs:label "administrative activity" ;
+                               skos:definition "activities involved in the performance of executive, supervisory, or managerial duties" ;
+                               cmns-av:directSource "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C49235" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Assessment
+clinops:Assessment rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Restriction ;
+                                         owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/prescribedBy> ;
+                                         owl:someValuesFrom clinops:PlannedObservationSpecification
+                                       ] ;
+                   rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/MeasurementProcess> ;
+                   rdfs:label "assessment" ;
+                   skos:definition "interpretation or evaluation of an obtained value by using a test, tool, instrument, or expert judgement of the status of a study subject" ;
+                   iof-av:explanatoryNote "This may include a complete medical history, medical tests, a physical exam, a test of learning skills, tests to find out if the patient is able to carry out the tasks of daily living, a mental health evaluation, and a review of social support and community resources available to the patient. " ;
+                   cmns-av:directSource "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25217" ;
+                   cmns-av:synonym "assess" ,
+                                   "assessed" ,
+                                   "study assessment" ,
+                                   "study observation" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/AuthorizedMedicinalProduct
+clinops:AuthorizedMedicinalProduct rdf:type owl:Class ;
+                                   rdfs:subClassOf clinops:ProductRole ;
+                                   rdfs:label "authorized medicinal product" ;
+                                   skos:definition "role of a medicinal product that has been authorized for some purpose in some jurisdiction" ;
+                                   cmns-av:directSource "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/AuthorizedMedicinalProduct" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConcept
+clinops:BiomedicalConcept rdf:type owl:Class ;
+                          rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                          rdfs:label "biomedical concept" ;
+                          skos:definition "unit of biomedical knowledge created from a unique combination of characteristics that include implementation details like variables and terminologies, used as building blocks for standardized, hierarchically structured clinical research information" ;
+                          cmns-av:directSource "https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptCode
+clinops:BiomedicalConceptCode rdf:type owl:Class ;
+                              rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                              rdfs:label "biomedical concept code" ;
+                              skos:definition "concept unique identifier assigned to a biomedical concept that points to the meaning of that biomedical concept" ;
+                              cmns-av:directSource "https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT" ;
+                              cmns-av:synonym "codeable concept" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BiomedicalConceptProperty
+clinops:BiomedicalConceptProperty rdf:type owl:Class ;
+                                  rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                                  rdfs:label "biomedical concept property" ;
+                                  skos:definition "characteristic from a set of characteristics used to define a biomedical concept" ;
+                                  cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/BriefProtocolTitle
+clinops:BriefProtocolTitle rdf:type owl:Class ;
+                           rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                           rdfs:label "brief protocol title" ;
+                           skos:definition "short descriptive name for the protocol" ;
+                           cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                           cmns-av:synonym "abbreviated protocol title" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CareSiteName
+clinops:CareSiteName rdf:type owl:Class ;
+                     rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                     rdfs:label "care site name" ;
+                     skos:definition "designative content entity by which a site of care is known, addressed or referred to" ;
+                     cmns-av:adaptedFrom "New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc." ;
+                     cmns-av:synonym "site of care" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/City
+clinops:City rdf:type owl:Class ;
+             rdfs:subClassOf bfo:BFO_0000029 ;
+             rdfs:label "city" ;
+             skos:definition "relatively large and/or densely populated area of human habitation with administrative or legal status that may be specified as a component of a postal address" ;
+             cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CityName
+clinops:CityName rdf:type owl:Class ;
+                 rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                 rdfs:label "city name" ;
+                 skos:definition "designative content entity by which a city is known, addressed or referred to" ;
+                 cmns-av:adaptedFrom "New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounter
+clinops:ClinicalEncounter rdf:type owl:Class ;
+                          owl:equivalentClass [ rdf:type owl:Restriction ;
+                                                owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/prescribedBy> ;
+                                                owl:someValuesFrom clinops:ClinicalEncounterSpecification
+                                              ] ;
+                          rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess> ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/describedBy> ;
+                                            owl:someValuesFrom clinops:ClinicalEncounterType
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/designatedBy> ;
+                                            owl:someValuesFrom clinops:ClinicalEncounterIdentifier
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/designatedBy> ;
+                                            owl:someValuesFrom clinops:ClinicalEncounterName
+                                          ] ;
+                          rdfs:label "clinical encounter" ;
+                          skos:definition "contact between subject/patient and healthcare practitioner/researcher, during which an assessment or activity is performed" ;
+                          cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                          cmns-av:explanatoryNote "Contact may be physical or virtual." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterDescription
+clinops:ClinicalEncounterDescription rdf:type owl:Class ;
+                                     rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty bfo:BFO_0000176 ;
+                                                       owl:someValuesFrom clinops:ClinicalEncounterSpecification
+                                                     ] ;
+                                     rdfs:label "clinical encounter description" ;
+                                     skos:definition "textual representation of the protocol-defined clinical encounter" ;
+                                     cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterIdentifier
+clinops:ClinicalEncounterIdentifier rdf:type owl:Class ;
+                                    rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/Identifier> ,
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty bfo:BFO_0000176 ;
+                                                      owl:someValuesFrom clinops:ClinicalEncounterSpecification
+                                                    ] ;
+                                    rdfs:label "clinical encounter identifier" ;
+                                    skos:definition "system identifier assigned to a clinical encounter" ;
+                                    cmns-av:adaptedFrom "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                                    cmns-av:synonym "clinical encounter id" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterName
+clinops:ClinicalEncounterName rdf:type owl:Class ;
+                              rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty bfo:BFO_0000176 ;
+                                                owl:someValuesFrom clinops:ClinicalEncounterSpecification
+                                              ] ;
+                              rdfs:label "clinical encounter name" ;
+                              skos:definition "literal identifier (i.e., distinctive designation) for a protocol-defined clinical encounter" ;
+                              cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterSpecification
+clinops:ClinicalEncounterSpecification rdf:type owl:Class ;
+                                       rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/ActionSpecification> ,
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty bfo:BFO_0000178 ;
+                                                         owl:someValuesFrom clinops:ClinicalEncounterIdentifier
+                                                       ] ,
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty bfo:BFO_0000178 ;
+                                                         owl:someValuesFrom clinops:ClinicalEncounterName
+                                                       ] ,
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty bfo:BFO_0000178 ;
+                                                         owl:someValuesFrom clinops:ClinicalEncounterType
+                                                       ] ;
+                                       rdfs:label "clinical encounter specification" ;
+                                       skos:definition "stating the precise clinical encounter requirement for a clinical study" ;
+                                       cmns-av:adaptedFrom "New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalEncounterType
+clinops:ClinicalEncounterType rdf:type owl:Class ;
+                              rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty bfo:BFO_0000176 ;
+                                                owl:someValuesFrom clinops:ClinicalEncounterSpecification
+                                              ] ;
+                              rdfs:label "clinical encounter type" ;
+                              skos:definition "characterization or classification of contact between subject/patient and healthcare practitioner/researcher, during which an assessment or activity is performed" ;
+                              iof-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalRole
+clinops:ClinicalRole rdf:type owl:Class ;
+                     rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/AgentRole> ;
+                     rdfs:label "clinical role" ;
+                     skos:definition "role of observing or treating patients" ;
+                     cmns-av:directSource "http://vivoweb.org/ontology/core#ClinicalRole" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalRoleKind
+clinops:ClinicalRoleKind rdf:type owl:Class ;
+                         rdfs:subClassOf clinops:BiomedicalConcept ;
+                         rdfs:label "clinical role kind" ;
+                         skos:definition "description content entity that describes a clinical role" ;
+                         cmns-av:directSource "Pistoia Alliance" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalStudy
+clinops:ClinicalStudy rdf:type owl:Class ;
+                      rdfs:subClassOf clinops:Study ;
+                      rdfs:label "clinical study" ;
+                      skos:definition "involves research using human volunteers (also called participants) that is intended to add to medical knowledge" ;
+                      cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                      cmns-av:explanatoryNote "There are two main types of clinical studies: clinical trials (also called interventional studies) and observational studies." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalStudyRegistry
+clinops:ClinicalStudyRegistry rdf:type owl:Class ;
+                              rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/AgentRole> ;
+                              rdfs:label "clinical study registry" ;
+                              skos:definition "organization (typically a government agency) that administers the registration of studies (BRIDG)" ;
+                              cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalTrialProtocol
+clinops:ClinicalTrialProtocol rdf:type owl:Class ;
+                              rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PlanSpecification> ;
+                              rdfs:label "clinical trial protocol" ;
+                              skos:definition "plan at a particular point in time for a formal investigation to assess the utility, impact, pharmacological, physiological, and/or psychological effects of a particular treatment, procedure, drug, device, biologic, food product, cosmetic, care plan, or subject characteristic (BRIDG)" ;
+                              cmns-av:directSource "http://rdf.cdisc.org/cdisc-terminology#C67497.C142451" ;
+                              cmns-av:synonym "clinical protocol" ,
+                                              "clinical study protocol" ,
+                                              "study protocol" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ClinicalTrialProtocolDevelopmentProcess
+clinops:ClinicalTrialProtocolDevelopmentProcess rdf:type owl:Class ;
+                                                rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess> ;
+                                                rdfs:label "clinical trial protocol development process" ;
+                                                skos:definition "process to create a protocol that describes how a clinical trial will be conducted (the objectives, design, methodology, statistical considerations, and organization of a clinical study), and ensures the safety of the trial subjects and integrity of the data collected" ;
+                                                cmns-av:adaptedFrom "https://hub.ucsf.edu/protocol-development#:~:text=The protocol is a document,integrity of the data collected." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ConceptCodeSource
+clinops:ConceptCodeSource rdf:type owl:Class ;
+                          rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                          rdfs:label "concept code source" ;
+                          skos:definition "descriptive information content entity that describes from which a biomedical concept code was obtained" ;
+                          cmns-av:adaptedFrom "New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc." ;
+                          cmns-av:synonym "code source" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ContactModeType
+clinops:ContactModeType rdf:type owl:Class ;
+                        rdfs:subClassOf clinops:BiomedicalConcept ;
+                        rdfs:label "contact mode type" ;
+                        skos:definition "description of the means by which an interaction occurs between the subject/participant and person or entity" ;
+                        skos:example "a device" ;
+                        cmns-av:adaptedFrom "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Country
+clinops:Country rdf:type owl:Class ;
+                rdfs:subClassOf bfo:BFO_0000029 ;
+                rdfs:label "country" ;
+                skos:definition "sovereign nation occupying a distinct territory and ruled by an autonomous government" ;
+                cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CountryCode
+clinops:CountryCode rdf:type owl:Class ;
+                    rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                    rdfs:label "country code" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/CountryName
+clinops:CountryName rdf:type owl:Class ;
+                    rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                    rdfs:label "country name" ;
+                    skos:definition "designative content entity by which a country is known, addressed or referred to" ;
+                    cmns-av:adaptedFrom "New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/DoseForm
+clinops:DoseForm rdf:type owl:Class ;
+                 rdfs:subClassOf clinops:BiomedicalConceptProperty ;
+                 rdfs:label "dose form" ;
+                 skos:definition "form in which active and/or inert ingredient(s) are physically presented" ;
+                 cmns-av:abbreviation "DOSFRM" ;
+                 cmns-av:directSource "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C42636" ;
+                 cmns-av:synonym "dosage form" ,
+                                 "pharmaceutical dose form" ,
+                                 "pharmaceutical form" ,
+                                 "pharmaceutical formulation" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/DoseFrequency
+clinops:DoseFrequency rdf:type owl:Class ;
+                      rdfs:subClassOf clinops:BiomedicalConceptProperty ;
+                      rdfs:label "dose frequency" ;
+                      skos:definition "number of doses administered per a specific interval" ;
+                      cmns-av:directSource "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C89081" ;
+                      cmns-av:synonym "administration frequency" ,
+                                      "dosing frequency" ,
+                                      "treatment frequency" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/EnvironmentalSettingType
+clinops:EnvironmentalSettingType rdf:type owl:Class ;
+                                 rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                                 rdfs:label "environmental setting type" ;
+                                 skos:definition "description of the environment or setting where the event, intervention, or finding occurred" ;
+                                 cmns-av:adaptedFrom "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/EstimatedStudyDurationForSubject
+clinops:EstimatedStudyDurationForSubject rdf:type owl:Class ;
+                                         rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/TemporalDurationValueExpression> ;
+                                         rdfs:label "estimated study duration for subject" ;
+                                         skos:definition "temporal value expression that identifies the expected length of time a study will take to complete all of the planned activities for each study participant" ;
+                                         cmns-av:directSource "Pistoia Alliance" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Indication
+clinops:Indication rdf:type owl:Class ;
+                   rdfs:subClassOf clinops:BiomedicalConcept ;
+                   rdfs:label "indication" ;
+                   skos:definition "health problem or disease that is identified as likely to be benefited by a therapy being studied in clinical trials" ;
+                   cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                   cmns-av:explanatoryNote "Where such a benefit has been established and approved by regulatory authorities, the therapy is said to be approved for such an indication." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Intervention
+clinops:Intervention rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Restriction ;
+                                           owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/prescribedBy> ;
+                                           owl:someValuesFrom clinops:PlannedInterventionSpecification
+                                         ] ;
+                     rdfs:subClassOf clinops:Procedure ;
+                     rdfs:label "intervention" ;
+                     skos:definition "activity or measure that produces an effect or that is intended to alter the course of a disease in patient or population" ;
+                     cmns-av:directSource "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C16197" ;
+                     cmns-av:explanatoryNote "This is a general term encompassing medical, social, behavioral, environmental and other acts that can have preventive and/or therapeutic impact." ;
+                     cmns-av:synonym "intervention strategies" ,
+                                     "investigational intervention" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/InterventionalStudy
+clinops:InterventionalStudy rdf:type owl:Class ;
+                            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                                  owl:onProperty bfo:BFO_0000117 ;
+                                                  owl:someValuesFrom clinops:Intervention
+                                                ] ;
+                            rdfs:subClassOf clinops:ClinicalStudy ;
+                            rdfs:label "interventional study" ;
+                            skos:definition "studies in which individuals are assigned by an investigator based on a protocol to receive specific interventions" ;
+                            cmns-av:directSource "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C98388" ;
+                            cmns-av:explanatoryNote "Subjects may receive diagnostic, therapeutic or other types of interventions. The assignment of the intervention may or may not be random. The individuals are then followed and biomedical and/or health outcomes are assessed. " ;
+                            cmns-av:synonym "interventional clinical trial" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/InvestigationalMedicinalProduct
+clinops:InvestigationalMedicinalProduct rdf:type owl:Class ;
+                                        rdfs:subClassOf clinops:ProductRole ;
+                                        rdfs:label "investigational medicinal product" ;
+                                        skos:definition "role of a pharmaceutical product or combination of pharmaceutical products or placebo(s) being tested or used as a reference in a clinical trial, including products already with a marketing authorization but used or assembled (packaged) in a way different from the authorized form, used for an unauthorized indication, or used to gain further information about the authorized form" ;
+                                        cmns-av:abbreviation "IMP" ;
+                                        cmns-av:adaptedFrom "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/InvestigationalMedicinalProduct" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/MedicalDevice
+clinops:MedicalDevice rdf:type owl:Class ;
+                      rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PieceOfEquipment> ;
+                      rdfs:label "medical device" ;
+                      skos:definition "any physical object that is useful for prevention, diagnosis, monitoring, or treatment of disease or other conditions" ;
+                      cmns-av:directSource "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C16830" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/MedicalDeviceKind
+clinops:MedicalDeviceKind rdf:type owl:Class ;
+                          rdfs:subClassOf clinops:BiomedicalConcept ;
+                          rdfs:label "medical device kind" ;
+                          skos:definition "description content entity that describes a type of medical device" ;
+                          cmns-av:directSource "Pistoia Alliance" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ObservationalStudy
+clinops:ObservationalStudy rdf:type owl:Class ;
+                           owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Class ;
+                                                                        owl:complementOf [ rdf:type owl:Restriction ;
+                                                                                           owl:onProperty bfo:BFO_0000117 ;
+                                                                                           owl:someValuesFrom clinops:Intervention
+                                                                                         ]
+                                                                      ]
+                                                                      [ rdf:type owl:Restriction ;
+                                                                        owl:onProperty bfo:BFO_0000117 ;
+                                                                        owl:someValuesFrom clinops:Assessment
+                                                                      ]
+                                                                    ) ;
+                                                 rdf:type owl:Class
+                                               ] ;
+                           rdfs:subClassOf clinops:ClinicalStudy ;
+                           rdfs:label "observational study" ;
+                           skos:definition "study in which biomedical and/or health outcomes are assessed in pre-defined groups of individuals" ;
+                           cmns-av:directSource "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C16084" ;
+                           cmns-av:explanatoryNote "Subjects in the study may receive diagnostic, therapeutic, or other interventions, but the investigator does not assign specific interventions to the subjects of the study. A non-interventional study in which the researchers observe the effect of a risk factor (e.g., exposure), diagnostic test, treatment or other covariate, within a study population, and where the independent variable is not under the control of the researcher. " ;
+                           cmns-av:synonym "observational trial " .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OfficialProtocolTitle
+clinops:OfficialProtocolTitle rdf:type owl:Class ;
+                              rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                              rdfs:label "official protocol title" ;
+                              skos:definition "formal descriptive name for the protocol" ;
+                              cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OrganizationName
+clinops:OrganizationName rdf:type owl:Class ;
+                         rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                         rdfs:label "organization name" ;
+                         skos:definition "non-unique textual identifier for the organization (BRIDG)" ;
+                         cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Outcome
+clinops:Outcome rdf:type owl:Class ;
+                rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/MeasurementInformationContentEntity> ;
+                rdfs:label "outcome" ;
+                skos:definition "measureable characteristic (clinical outcome assessment, biomarker) that is influenced or affected by an individual's baseline state or an intervention, as in a clinical trial or other exposure" ;
+                cmns-av:directSource "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C20200" ;
+                cmns-av:explanatoryNote "Outcome can be a result of analysis and is more general than endpoint in that it does not necessarily relate to a planned objective of the study outcome (SDTM)." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OutcomeComponentType
+clinops:OutcomeComponentType rdf:type owl:Class ;
+                             rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                             rdfs:label "outcome component type" ;
+                             skos:definition "descriptive information content entity that denotes the type of objective or endpoint" ;
+                             cmns-av:directSource "Pistoia Alliance" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/OutcomeMeasure
+clinops:OutcomeMeasure rdf:type owl:Class ;
+                       rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/MeasurementInformationContentEntity> ;
+                       rdfs:label "outcome measure" ;
+                       skos:definition "specific key measurement(s) or observation(s) used to determine the effect of experimental variables on the participants in a study, or for observational studies, to describe patterns of diseases or traits or associations with exposures, risk factors or treatment (After BRIDG)" ;
+                       cmns-av:directSource "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C93407" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecification
+clinops:PlannedActivitySpecification rdf:type owl:Class ;
+                                     rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/ActionSpecification> ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty bfo:BFO_0000176 ;
+                                                       owl:someValuesFrom clinops:ClinicalTrialProtocol
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/describedBy> ;
+                                                       owl:someValuesFrom clinops:BiomedicalConcept
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty clinops:plannedOccurrenceDuring ;
+                                                       owl:someValuesFrom clinops:ClinicalEncounterSpecification
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty clinops:plannedOccurrenceDuring ;
+                                                       owl:someValuesFrom clinops:StudyEpochSpecification
+                                                     ] ;
+                                     rdfs:label "planned activity specification" ;
+                                     skos:definition "description of an activity that is intended to occur or start at some point in the context of a particular study" ;
+                                     cmns-av:directSource "http://purl.org/net/OCRe/study_protocol.owl#OCRE300011" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedActivitySpecificationIdentifier
+clinops:PlannedActivitySpecificationIdentifier rdf:type owl:Class ;
+                                               rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/Identifier> ;
+                                               rdfs:label "planned activity specification identifier" ;
+                                               skos:definition "unique set of characters that designates a particular planned activity specification" ;
+                                               cmns-av:directSource "Pistoia Alliance" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedAdministrativeActivitySpecification
+clinops:PlannedAdministrativeActivitySpecification rdf:type owl:Class ;
+                                                   rdfs:subClassOf clinops:PlannedActivitySpecification ;
+                                                   rdfs:label "planned administrative activity specification" ;
+                                                   skos:definition "description of a planned activity that is not directly related to hypothesis evaluation or testing, but is typically essential to the efficient and/or effective coordination and execution of a study, such as obtaining informed consent, verifying eligibility criteria, and completing study visits" ;
+                                                   cmns-av:directSource "http://purl.org/net/OCRe/study_protocol.owl#OCRE300004" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedInterventionSpecification
+clinops:PlannedInterventionSpecification rdf:type owl:Class ;
+                                         rdfs:subClassOf clinops:PlannedProcedureSpecification ;
+                                         rdfs:label "planned intervention specification" ;
+                                         skos:definition "description of a planned activity whose primary intention is to produce an effect or that is intended to alter the course of a disease in a patient or population" ;
+                                         cmns-av:adaptedFrom "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C16197" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedObservationSpecification
+clinops:PlannedObservationSpecification rdf:type owl:Class ;
+                                        rdfs:subClassOf clinops:PlannedActivitySpecification ;
+                                        rdfs:label "planned observation specification" ;
+                                        skos:definition "description of a planned activity whose immediate and primary intention is to obtain a result by observing, monitoring, measuring or otherwise qualitatively or quantitatively gathering data or information about some aspect of a subject's, study subject's or experimental unit's state and whose immediate and primary intention is NOT the alteration of the state of the subject, study subject or experimental unit" ;
+                                        cmns-av:directSource "http://purl.org/net/OCRe/study_protocol.owl#OCRE300008" ;
+                                        cmns-av:synonym "planned assessment specification" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PlannedProcedureSpecification
+clinops:PlannedProcedureSpecification rdf:type owl:Class ;
+                                      rdfs:subClassOf clinops:PlannedActivitySpecification ;
+                                      rdfs:label "planned procedure specification" ;
+                                      skos:definition "description of a planned activity whose immediate and primary intention is the alteration of the state of the subject, study subject or experimental unit" ;
+                                      cmns-av:directSource "http://purl.org/net/OCRe/OCRe.owl#OCRE300009" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PostalCode
+clinops:PostalCode rdf:type owl:Class ;
+                   rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                   rdfs:label "postal code" ;
+                   skos:definition "alphanumeric code assigned to a mail delivery area" ;
+                   cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PostalCodeRegion
+clinops:PostalCodeRegion rdf:type owl:Class ;
+                         rdfs:subClassOf bfo:BFO_0000029 ;
+                         rdfs:label "postal code region" ;
+                         skos:definition "mail delivery area" ;
+                         cmns-av:adaptedFrom "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Procedure
+clinops:Procedure rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Restriction ;
+                                        owl:onProperty <https://spec.industrialontologies.org/ontology/core/Core/prescribedBy> ;
+                                        owl:someValuesFrom clinops:PlannedProcedureSpecification
+                                      ] ;
+                  rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/MeasurementProcess> ;
+                  rdfs:label "procedure" ;
+                  skos:definition "any activity performed by manual and/or instrumental means for the purpose of diagnosis, assessment, therapy, prevention, or palliative care" ;
+                  cmns-av:directSource "https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProductRole
+clinops:ProductRole rdf:type owl:Class ;
+                    rdfs:subClassOf bfo:BFO_0000023 ;
+                    rdfs:label "product role" ;
+                    skos:definition "functional role played by a product that is part of or used in the preparation of some manufactured item, or pharmaceutical product, medication, or drug, or in some investigation" ;
+                    cmns-av:adaptedFrom "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/ProductRole" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProtocolIdentifierAssignmentActivity
+clinops:ProtocolIdentifierAssignmentActivity rdf:type owl:Class ;
+                                             rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess> ;
+                                             rdfs:label "protocol identifier assignment activity" ;
+                                             skos:definition "planned process where an organization assigns a unique sequence of characters to identify a clinical trial protocol" ;
+                                             cmns-av:adaptedFrom "https://clinicaltrials.gov/policy/protocol-definitions" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ProtocolIdentifyingNumber
+clinops:ProtocolIdentifyingNumber rdf:type owl:Class ;
+                                  rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/Identifier> ;
+                                  rdfs:label "protocol identifying number" ;
+                                  skos:definition "any of one or more unique codes that refers to a specific protocol" ;
+                                  cmns-av:directSource "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C132299" ;
+                                  cmns-av:explanatoryNote "There may be multiple numbers (National number, coop group number). [EudraCT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/PublicProtocolTitle
+clinops:PublicProtocolTitle rdf:type owl:Class ;
+                            rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                            rdfs:label "public protocol title" ;
+                            skos:definition "brief description intended for the lay public in easily understood language" ;
+                            cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/ScientificProtocolTitle
+clinops:ScientificProtocolTitle rdf:type owl:Class ;
+                                rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                                rdfs:label "scientific protocol title" ;
+                                skos:definition "more extensive descriptive name of the protocol that is intended for medical professionals, written using medical and scientific language" ;
+                                cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/SiteOfCare
+clinops:SiteOfCare rdf:type owl:Class ;
+                   rdfs:subClassOf bfo:BFO_0000029 ;
+                   rdfs:label "site of care" ;
+                   skos:definition "any establishment where health services are delivered" ;
+                   cmns-av:adaptedFrom "https://www.lawinsider.com/dictionary/health-care-site" ;
+                   cmns-av:synonym "care site" ,
+                                   "health care site" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/SiteOfCareKind
+clinops:SiteOfCareKind rdf:type owl:Class ;
+                       rdfs:subClassOf clinops:BiomedicalConcept ;
+                       rdfs:label "site of care kind" ;
+                       skos:definition "biomedical concept describing the type of clinical care site" ;
+                       cmns-av:directSource "Pistoia Alliance" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/State
+clinops:State rdf:type owl:Class ;
+              rdfs:subClassOf bfo:BFO_0000029 ;
+              rdfs:label "state" ;
+              skos:definition "sub-division of a country that forms part of a federal union. States are usually, but not always, more autonomous than provinces and may have different laws from the central government" ;
+              cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StateCode
+clinops:StateCode rdf:type owl:Class ;
+                  rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                  rdfs:label "state code" ;
+                  skos:definition "short alphanumeric identification code for states" ;
+                  cmns-av:adaptedFrom "https://en.wikipedia.org/wiki/Country_code" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StateName
+clinops:StateName rdf:type owl:Class ;
+                  rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                  rdfs:label "state name" ;
+                  skos:definition "designative content entity by which a state is known, addressed or referred to" ;
+                  cmns-av:adaptedFrom "New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StreetAddress
+clinops:StreetAddress rdf:type owl:Class ;
+                      rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                      rdfs:label "street address" ;
+                      skos:definition "street name and number, building number, apartment or unit number, or post office box number where an entity is physically located" ;
+                      cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StreetAddressLocation
+clinops:StreetAddressLocation rdf:type owl:Class ;
+                              rdfs:subClassOf bfo:BFO_0000029 ;
+                              rdfs:label "street address (location)" ;
+                              skos:definition "where an entity is physically located within a street and building or unit" ;
+                              cmns-av:adaptedFrom "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                              cmns-av:synonym "address line" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/Study
+clinops:Study rdf:type owl:Class ;
+              rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess> ;
+              rdfs:label "study" ;
+              skos:definition "study is a program of data collection and of analysis of the data collected to answer a particular question, to reach conclusions about subject(s) or situation(s)" ;
+              cmns-av:directSource "http://purl.org/net/OCRe/OCRe.owl#OCRE400029" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyAcronym
+clinops:StudyAcronym rdf:type owl:Class ;
+                     rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                     rdfs:label "study acronym" ;
+                     skos:definition "word or words formed from the beginning letters or a combination of syllables and letters of a compound term, which identifies a clinical study" ;
+                     cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpoint
+clinops:StudyEndpoint rdf:type owl:Class ;
+                      rdfs:subClassOf clinops:Outcome ;
+                      rdfs:label "study endpoint" ;
+                      skos:definition "defined variable intended to reflect an outcome of interest to address a particular research question" ;
+                      cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                      cmns-av:explanatoryNote "A precise definition of an endpoint typically specifies the type of assessments made, the timing of those assessments, the assessment tools used, and possibly other details, as applicable, such as how multiple assessments within an individual are to be combined. Primary endpoints are usually statistically analyzed. [After BEST Resource] " ;
+                      cmns-av:synonym "endpoint" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointIdentifier
+clinops:StudyEndpointIdentifier rdf:type owl:Class ;
+                                rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/Identifier> ;
+                                rdfs:label "study endpoint identifier" ;
+                                skos:definition "unique set of characters that designates a particular planned activity specification" ;
+                                cmns-av:directSource "Pistoia Alliance" ;
+                                cmns-av:synonym "study endpoint id" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointLevel
+clinops:StudyEndpointLevel rdf:type owl:Class ;
+                           rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                           rdfs:label "study endpoint level" ;
+                           skos:definition "a characterization or classification of the study endpoint that determines its category of importance relative to other study endpoints" ;
+                           cmns-av:directSource "https://ncithesaurus.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&version=23.12d&ns=ncit&code=C188826" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEndpointSpecification
+clinops:StudyEndpointSpecification rdf:type owl:Class ;
+                                   rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PlanSpecification> ;
+                                   rdfs:label "study endpoint specification" ;
+                                   skos:definition "stating the precise study endpoint that will be assessed within a clinical trial" ;
+                                   cmns-av:adaptedFrom "New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpoch
+clinops:StudyEpoch rdf:type owl:Class ;
+                   rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/PlannedProcess> ;
+                   rdfs:label "study epoch" ;
+                   skos:definition "named time period defined in the protocol, wherein a study activity is specified and unchanging throughout the interval, to support a study-specific purpose" ;
+                   cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochDescription
+clinops:StudyEpochDescription rdf:type owl:Class ;
+                              rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                              rdfs:label "study epoch description" ;
+                              skos:definition "textual representation of the study epoch" ;
+                              cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochIdentifier
+clinops:StudyEpochIdentifier rdf:type owl:Class ;
+                             rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/Identifier> ;
+                             rdfs:label "study epoch identifier" ;
+                             skos:definition "system identifier assigned to an epoch" ;
+                             cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                             cmns-av:synonym "study epoch id" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochName
+clinops:StudyEpochName rdf:type owl:Class ;
+                       rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                       rdfs:label "study epoch name" ;
+                       skos:definition "literal identifier (i.e., distinctive designation) of the study epoch, i.e., the named time period defined in the protocol, wherein a study activity is specified and unchanging throughout the interval, to support a study-specific purpose" ;
+                       cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochSpecification
+clinops:StudyEpochSpecification rdf:type owl:Class ;
+                                rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/ActionSpecification> ;
+                                rdfs:label "study epoch specification" ;
+                                skos:definition "stating the precise study epoch requirement for a clinical study" ;
+                                cmns-av:adaptedFrom "New Oxford American Dictionary, Copyright © 2010, 2024 by Oxford University Press, Inc." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyEpochType
+clinops:StudyEpochType rdf:type owl:Class ;
+                       rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                       rdfs:label "study epoch type" ;
+                       skos:definition "characterization or classification of the study epoch, i.e., the named time period defined in the protocol, wherein a study activity is specified and unchanging throughout the interval, to support a study-specific purpose" ;
+                       cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyIdentifier
+clinops:StudyIdentifier rdf:type owl:Class ;
+                        rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/Identifier> ;
+                        rdfs:label "study identifier" ;
+                        skos:definition "sequence of characters used to identify, name, or characterize the study" ;
+                        cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjective
+clinops:StudyObjective rdf:type owl:Class ;
+                       rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/ObjectiveSpecification> ;
+                       rdfs:label "study objective" ;
+                       skos:definition "reason for performing a study in terms of the scientific questions to be answered by the analysis of data collected during the study" ;
+                       cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                       cmns-av:synonym "objective" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjectiveIdentifier
+clinops:StudyObjectiveIdentifier rdf:type owl:Class ;
+                                 rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/Identifier> ;
+                                 rdfs:label "study objective identifier" ;
+                                 skos:definition "unique set of characters that designates a particular study objective" ;
+                                 cmns-av:directSource "Pistoia Alliance" ;
+                                 cmns-av:synonym "study objective id" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyObjectiveLevel
+clinops:StudyObjectiveLevel rdf:type owl:Class ;
+                            rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                            rdfs:label "study objective level" ;
+                            skos:definition "characterization or classification of the study objective that determines its category of importance relative to other study objectives" ;
+                            cmns-av:directSource "https://ncithesaurus.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&version=23.12d&ns=ncit&code=C188725" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolStatus
+clinops:StudyProtocolStatus rdf:type owl:Class ;
+                            rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                            rdfs:label "study protocol status" ;
+                            skos:definition "characterization or classification of the study objective that determines its category of importance relative to other study objectives" ;
+                            cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolVersionEffectiveDate
+clinops:StudyProtocolVersionEffectiveDate rdf:type owl:Class ;
+                                          rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/TemporalInstantValueExpression> ;
+                                          rdfs:label "study protocol version effective date" ;
+                                          skos:definition "date and time specifying when the study protocol version takes effect or becomes operative" ;
+                                          cmns-av:directSource "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C188817" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyProtocolVersionNumber
+clinops:StudyProtocolVersionNumber rdf:type owl:Class ;
+                                   rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                                   rdfs:label "study protocol version number" ;
+                                   skos:definition "string of numerals that uniquely identifies a specific version of a study protocol" ;
+                                   cmns-av:directSource "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C181232" ;
+                                   cmns-av:synonym "study protocol amendment number" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyRationale
+clinops:StudyRationale rdf:type owl:Class ;
+                       rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                       rdfs:label "study rationale" ;
+                       skos:definition "statement describing the overall rationale of the study" ;
+                       cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                       cmns-av:explanatoryNote "This describes the contribution of this study to product development, i.e., what knowledge is being contributed from the conduct of this study." .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudySiteRole
+clinops:StudySiteRole rdf:type owl:Class ;
+                      rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/AgentRole> ;
+                      rdfs:label "study site role" ;
+                      skos:definition "physical area or areas designated for activities necessary to test drugs, medical devices and other therapies on human beings" ;
+                      cmns-av:directSource "https://meirxrs.com/clinical-trial-sites-work/#:~:text=Clinical trial sites are where,help you answer important questions.  AND https://nam.edu/its-time-to-harmonize-clinical-trial-site-standards/" ;
+                      cmns-av:synonym "clinical site" ,
+                                      "clinical trial site" ,
+                                      "study site" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyTitle
+clinops:StudyTitle rdf:type owl:Class ;
+                   rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                   rdfs:label "study title" ;
+                   skos:definition "sponsor-defined name of the clinical study" ;
+                   cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                   cmns-av:synonym "official study title" ,
+                                   "trial title" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/StudyVersion
+clinops:StudyVersion rdf:type owl:Class ;
+                     rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DesignativeInformationContentEntity> ;
+                     rdfs:label "study version" ;
+                     skos:definition "string of numerals that uniquely identifies a specific version of a study" ;
+                     cmns-av:adaptedFrom "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TimeFromStart
+clinops:TimeFromStart rdf:type owl:Class ;
+                      rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                      rdfs:label "time from start" ;
+                      skos:definition "descriptive information content entity that describes the time elapsed between the beginning of an event  and another event" ;
+                      cmns-av:adaptedFrom "http://purl.obolibrary.org/obo/CMO_0003589" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TrialExploratoryEndpointLevel
+clinops:TrialExploratoryEndpointLevel rdf:type owl:Class ;
+                                      rdfs:subClassOf clinops:StudyEndpointLevel ;
+                                      rdfs:label "trial exploratory endpoint" ;
+                                      skos:definition "endpoint(s) that may include clinically important events that are expected to occur too infrequently to show a treatment effect or endpoints that for other reasons are thought to be less likely to show an effect but are included to explore new hypotheses (After FDA-NIH Protocol Template)" ;
+                                      cmns-av:directSource "https://ncithesaurus.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&version=23.12d&ns=ncit&code=C170559" .
+
+
+###  https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/TrialPhase
+clinops:TrialPhase rdf:type owl:Class ;
+                   rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DescriptiveInformationContentEntity> ;
+                   rdfs:label "trial phase" ;
+                   skos:definition "step in the clinical research and development of a therapy from initial clinical trials to post-approval studies" ;
+                   cmns-av:directSource "USDM [https://github.com/cdisc-org/DDF-RA/tree/main/Deliverables/CT]" ;
+                   cmns-av:explanatoryNote "Clinical trials are generally categorized into four (sometimes five) phases. A therapeutic intervention may be evaluated in two or more phases simultaneously in different trials, and some trials may overlap two different phases. [21 CFR section 312.21; After ICH Topic E8 NOTE FOR GUIDANCE ON GENERAL CONSIDERATIONS FOR CLINICAL TRIALS,  CPMP/ICH/291/95 March 1998]" ;
+                   cmns-av:synonym "trial phase classification" .
+
+
+###  https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinalProduct
+idmp-mprd:MedicinalProduct rdf:type owl:Class ;
+                           rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/DirectiveInformationContentEntity> ;
+                           rdfs:label "medicinal product" ;
+                           skos:definition "specification for a pharmaceutical product or combination of pharmaceutical products that may be administered to human beings (or animals) for treating or preventing disease, with the aim/purpose of making a medical diagnosis or to restore, correct or modify physiological functions" ;
+                           cmns-av:directSource "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinalProduct" ;
+                           cmns-av:synonym "medicinal product specification" .
+
+
+###  https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinesRegulatoryAgency
+idmp-mprd:MedicinesRegulatoryAgency rdf:type owl:Class ;
+                                    rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/AgentRole> ;
+                                    rdfs:label "medicines regulatory agency" ;
+                                    skos:definition "institutional body that, according to the legal system under which it has been established, is responsible for the granting of marketing authorizations, clinical trial authorizations and manufacturing authorizations for medicinal products" ;
+                                    cmns-av:directSource "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/MedicinesRegulatoryAgency" .
+
+
+###  https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/PhysicalMedicinalProduct
+idmp-mprd:PhysicalMedicinalProduct rdf:type owl:Class ;
+                                   rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/MaterialArtifact> ;
+                                   rdfs:label "physical medicinal product" ;
+                                   skos:definition "pharmaceutical product or combination of pharmaceutical products that may be administered to human beings (or animals) for treating or preventing disease, with the aim/purpose of making a medical diagnosis or to restore, correct or modify physiological functions" ;
+                                   cmns-av:directSource "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/PhysicalMedicinalProduct" .
+
+
+###  https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Placebo
+idmp-mprd:Placebo rdf:type owl:Class ;
+                  rdfs:subClassOf clinops:ProductRole ;
+                  rdfs:label "placebo" ;
+                  skos:definition "inactive substance, treatment or procedure that is intended to provide baseline measurements for the experimental protocol of a clinical trial" ;
+                  cmns-av:directSource "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Placebo" .
+
+
+###  https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/RouteOfAdministration
+idmp-mprd:RouteOfAdministration rdf:type owl:Class ;
+                                rdfs:subClassOf clinops:BiomedicalConceptProperty ;
+                                rdfs:label "route of administration" ;
+                                skos:definition "specification for the path by which the pharmaceutical product is taken into or makes contact with the body" ;
+                                cmns-av:directSource "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/RouteOfAdministration" .
+
+
+###  https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Sponsor
+idmp-mprd:Sponsor rdf:type owl:Class ;
+                  rdfs:subClassOf <https://spec.industrialontologies.org/ontology/core/Core/AgentRole> ;
+                  rdfs:label "sponsor" ;
+                  skos:definition "individual, company, institution or organization (party), which takes responsibility for the initiation, management and/or financing of a clinical trial" ;
+                  cmns-av:directSource "https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/Sponsor" .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
