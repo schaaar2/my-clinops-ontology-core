@@ -16,19 +16,27 @@
     "file": "ontologies/vendor_site_readiness_ontology_v1.0.0.ttl"
   },
     {
-    "title": "Pistoia ",
-    "file": "ClinicalTrialOperations.rdf"
+    "title": "Pistoia ClinOps",
+    "file": "Pistoia_ClinicalTrialOperations.rdf"
   },
     {
-    "title": "USDM v4",
-    "file": "ontologies/USDM-ontology.ttl"
+    "title": "Pistoia ClinOps Individuals",
+    "file": "Pistoia_ClinicalTrialOperationsReferenceIndividuals.rdf"
   },
     {
-    "title": "USDM v4",
-    "file": "ontologies/USDM-ontology.ttl"
+    "title": "Pistoia BFO Core",
+    "file": "Pistoia_bfo-core.rdf"
   },
     {
-    "title": "USDM v4",
-    "file": "ontologies/USDM-ontology.ttl"
+    "title": "Pistoia IOF Core",
+    "file": "Pistoia_IOF-CoreOntology.rdf"
+  },
+      {
+    "title": "Pistoia IOF Annotation Vocabulary",
+    "file": "Pistoia_IOFAnnotationVocabulary.rdf"
+  },
+      {
+    "title": "Pistoia Annotation Vocabulary",
+    "file": "Pistoia_AnnotationVocabulary.rdf"
   }
 ]
