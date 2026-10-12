@@ -24,24 +24,21 @@
     "file": "ontologies/Pistoia_ClinicalTrialOperationsReferenceIndividuals.ttl"
   }
 
-  /*
-    {
-    "title": "Pistoia BFO Core",
-    "file": "ontologies/Pistoia_bfo-core.rdf"
-  },
-    {
-    "title": "Pistoia IOF Core",
-    "file": "ontologies/Pistoia_IOF-CoreOntology.rdf"
-  },
-      {
-    "title": "Pistoia IOF Annotation Vocabulary",
-    "file": "ontologies/Pistoia_IOFAnnotationVocabulary.rdf"
-  },
-      {
-    "title": "Pistoia Annotation Vocabulary",
-    "file": "ontologies/Pistoia_AnnotationVocabulary.rdf"
-  }
-
-  */
-  
+#    {
+#    "title": "Pistoia BFO Core",
+#    "file": "ontologies/Pistoia_bfo-core.rdf"
+#  },
+#    {
+#    "title": "Pistoia IOF Core",
+#    "file": "ontologies/Pistoia_IOF-CoreOntology.rdf"
+#  },
+#      {
+#    "title": "Pistoia IOF Annotation Vocabulary",
+#    "file": "ontologies/Pistoia_IOFAnnotationVocabulary.rdf"
+#  },
+#      {
+#    "title": "Pistoia Annotation Vocabulary",
+#    "file": "ontologies/Pistoia_AnnotationVocabulary.rdf"
+#  }
+#
 ]
