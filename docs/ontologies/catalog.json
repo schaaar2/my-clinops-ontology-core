@@ -17,11 +17,11 @@
   },
     {
     "title": "Pistoia ClinOps",
-    "file": "Pistoia_ClinicalTrialOperations.rdf"
+    "file": "Pistoia_ClinicalTrialOperations.ttl"
   },
     {
     "title": "Pistoia ClinOps Individuals",
-    "file": "Pistoia_ClinicalTrialOperationsReferenceIndividuals.rdf"
+    "file": "Pistoia_ClinicalTrialOperationsReferenceIndividuals.ttl"
   },
     {
     "title": "Pistoia BFO Core",
