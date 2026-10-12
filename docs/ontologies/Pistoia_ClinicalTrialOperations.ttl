@@ -17,6 +17,7 @@
 @prefix idmp-mprd: <https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/> .
 @base <https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/> .
 
+
 <https://spec.pistoiaalliance.org/clinical/ontology/ClinicalTrialOperations/> rdf:type owl:Ontology ;
                                                                                owl:versionIRI <https://spec.pistoiaalliance.org/clinical/ontology/20240510/ClinicalTrialOperations/> ;
                                                                                owl:imports bfo:bfo.owl ,
